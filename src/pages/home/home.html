@@ -1,14 +1,35 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+<ion-header no-border>
+
+  <ion-navbar color="navColor">
+	<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>whisper</ion-title>
   </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+<ion-content padding class="row">
+
+<ion-grid class="margin">
+  <div text-center class="menu-buttons">
+    <ion-row>
+  	    <ion-col class="buttons">
+  	    	<button fab-center ion-button outline round default (click)="getContraceptive()">Get a Contraceptive</button>
+  	    </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="buttons">
+          <button fab-center ion-button outline round default (click)="askHealthProvider()">Ask a health provider</button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="buttons">
+          <button fab-center ion-button outline round default (click)="goToAssessmentId()">Find a doctor</button>
+        </ion-col>
+    </ion-row>
+  </div>
+</ion-grid>
+
 </ion-content>

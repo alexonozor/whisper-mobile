@@ -1,3 +1,10 @@
 page-home {
-
+    .menu-buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        flex-wrap: nowrap;
+        height: 350px;
+    }
 }
