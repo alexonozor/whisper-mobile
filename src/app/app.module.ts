@@ -15,6 +15,8 @@ import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
 import { ContraceptiveProvider } from '../providers/contraceptive/contraceptive';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { ContraceptiveInfoPage } from '../pages/contraceptive-info/contraceptive-info';
+
 
 
 export function getAuthHttp(http) {
@@ -35,7 +37,8 @@ export function getAuthHttp(http) {
     IntroPage,
     SignupPage,
     LoginPage,
-    ContraceptivePage
+    ContraceptivePage,
+    ContraceptiveInfoPage
   ],
   imports: [
     BrowserModule,
@@ -49,8 +52,10 @@ export function getAuthHttp(http) {
     IntroPage,
     SignupPage,
     LoginPage,
-    ContraceptivePage
+    ContraceptivePage,
+    ContraceptiveInfoPage
   ],
+  
   providers: [
     StatusBar,
     SplashScreen,

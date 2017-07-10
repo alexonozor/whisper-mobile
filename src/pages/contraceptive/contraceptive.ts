@@ -1,7 +1,19 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
+import { 
+  IonicPage, 
+  NavController, 
+  NavParams, 
+  ToastController, 
+  LoadingController,
+  ModalController
+} from 'ionic-angular';
+
+//pages
 import { LoginPage } from '../../pages/login/login';
+import { ContraceptiveInfoPage } from '../../pages/contraceptive-info/contraceptive-info';
+
+// providers
+import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 /**
@@ -24,7 +36,8 @@ export class ContraceptivePage {
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public _contraceptiveService: ContraceptiveProvider,
-    public _authService: AuthenticationProvider) {
+    public _authService: AuthenticationProvider,
+    public modalCtrl: ModalController) {
   }
 
 
@@ -61,6 +74,12 @@ export class ContraceptivePage {
         });
      }
    })
+  }
+
+
+  contraceptiveInfo(params) {
+   let profileModal = this.modalCtrl.create(ContraceptiveInfoPage,  { contraceptive: params } );
+    profileModal.present();
   }
 
 }
