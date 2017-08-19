@@ -38,7 +38,7 @@
         </ion-col> -->
         <ion-col width-15></ion-col>
   	    <ion-col width-45>
-  	    	<button ion-button outline round small (click)="goToAssessment()">{{contraceptive.name}}</button>
+  	    	<button ion-button outline round small (click)="goToAssesment(contraceptive._id, contraceptive.name)">{{contraceptive.name}}</button>
   	    </ion-col>
         <button ion-button class="info" clear icon-only (click)="contraceptiveInfo(contraceptive)">
           <ion-icon name="information-circle"></ion-icon>

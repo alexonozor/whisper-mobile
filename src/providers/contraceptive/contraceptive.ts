@@ -26,12 +26,15 @@ export class ContraceptiveProvider {
       public _authService: AuthenticationProvider
   ) { }
 
-        
   getAll(): Observable<any> {
     return this.authHttp.get(`${this.host}/contraceptives`)
 			.map((res:Response) => res.json())
 			.catch((error:any) => Observable.throw(error || 'server error'));
   }
 
-
+  getAssesment(id: string): Observable<any> {
+    return this.authHttp.get(`${this.host}/contraceptive/${id}/assessments`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error || 'server error'));
+  }
 }
