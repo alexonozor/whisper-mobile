@@ -44,7 +44,7 @@ export class AuthenticationProvider {
         err => console.log(err),
         () => console.log('Complete')
       );
-}
+  }
 
   loggedIn() {
     return !tokenNotExpired(this.getToken('token'));

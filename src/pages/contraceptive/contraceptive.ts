@@ -44,7 +44,7 @@ export class ContraceptivePage {
      if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.contraceptives = resp.contraceptives;
-        console.log('contraceptive id ', this.contraceptives);
+        console.log('contraceptives ', resp.contraceptives);
      } else {
      }
    }, (err) => {
@@ -66,17 +66,14 @@ export class ContraceptivePage {
   }
 
   goToAssesment(id,name) {
-    this.loadAssesments(id, name);
-    // console.log(conid)
+    this.navCtrl.push(AssesmentPage,{id: id, name: name});
   }
 
   loadAssesments(id, name) {
-    this.navCtrl.push(AssesmentPage,{id: id, name: name});
     this._contraceptiveService.getAssesment(id)
    .subscribe((resp) => {
      if (resp.success && resp.status == 200) {
        this.assesment = resp.assessments
-       console.log('assesment ', this.assesment);
      } else {
      }
    }, (err) => {
