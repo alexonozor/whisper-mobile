@@ -23,7 +23,7 @@
           <ion-grid>
             <ion-row>
               <ion-col col-10 class="welcome">
-                <h3>Hello, Are you ready to start your assessment</h3>
+                <h3 class="title">Hello, Are you ready to start your assessment</h3>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -39,7 +39,7 @@
           <ion-grid>
             <ion-row>
               <ion-col col-10 class="welcome">
-                <h3>{{question.question}}</h3>
+                <h4 class="title">{{question.question}} ?</h4>
               </ion-col>
             </ion-row>
             <div text-center>
@@ -58,12 +58,12 @@
           <ion-grid>
             <ion-row>
               <ion-col col-10 class="welcome">
-                <h4 class="compliments">Thanks for completing the assesment</h4>
+                <h4 class="title compliments">Thanks for completing the assesment</h4>
                 <ion-list>
                   <ion-item>
                     <ion-textarea placeholder="Feel free to drop a message"></ion-textarea>
                   </ion-item>
-                  <button class="submit_assesment" ion-button outline round (click)="nextSlide()">Submit assesment</button>
+                  <button class="submit_assesment" ion-button outline round color="rounded_buttons" (click)="nextSlide()">Submit assesment</button>
                 </ion-list>
               </ion-col>
             </ion-row>
