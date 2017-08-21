@@ -16,11 +16,11 @@ import { tokenNotExpired, JwtHelper, AuthHttp } from 'angular2-jwt';
 */
 @Injectable()
 export class AuthenticationProvider {
-  
-   constructor(
-     public http: Http, 
-     public _base_url: BaseurlProvider,
-     public authHttp: AuthHttp,
+
+  constructor(
+    public http: Http,
+    public _base_url: BaseurlProvider,
+    public authHttp: AuthHttp,
      ) {
   }
 
@@ -52,6 +52,15 @@ export class AuthenticationProvider {
 
   saveToken(tokenName, token) {
     localStorage.setItem(tokenName, token);
+  }
+
+  saveUser(userParams){
+    let user = JSON.stringify(userParams);
+    localStorage.setItem('user', user);
+  }
+
+  getUser(){
+    return (localStorage.getItem('user'));
   }
 
   getToken(token: string) {

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { LoginPage } from '../../pages/login/login';
@@ -21,12 +21,26 @@ export class AssesmentPage {
   @ViewChild('slides') slides: any;
   questions: any;
   slideOptions : any;
-  assesment: Array<{id: string, question: string, answer: {} }> = [];
+  assesmentParams: any = {
+      user: '',
+      contraceptive: '',
+      assesments: [
+        {
+          acceptedAnswer: '',
+          question: ''
+        }
+      ]
+  };
+
+  assesment: any;
   contraceptive_id: string;
   contraceptive_name: string;
   isEnd: boolean = false;
+  userId: string;
+  username: string;
 
   constructor(
+    private alertCtrl: AlertController,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
@@ -37,19 +51,27 @@ export class AssesmentPage {
 
   ionViewDidLoad(){
     this.loadAssesments(this.navParams.get('id'));
+    this.contraceptive_id =  this.navParams.get('id');
+    this.getUser();
+  }
+
+  getUser(){
+    let userParams:any = JSON.parse(localStorage.getItem('user'));
+    this.userId = userParams._id;
+    this.username = userParams.userName;
   }
 
   loadAssesments(id) {
     this._contraceptiveService.getAssesment(id)
-   .subscribe((resp) => {
-     console.log('response ', resp);
-     if (resp.success && resp.status == 200) {
-       this.assesment = resp.assesments
-       console.log('assesment ', this.assesment);
-     } else {
-     }
-   }, (err) => {
-     if (err.status == 401) {
+    .subscribe((resp) => {
+       console.log('response ', resp);
+       if (resp.success && resp.status == 200) {
+         this.assesment = resp.assesments
+         console.log('assesment ', this.assesment);
+       } else {
+       }
+    }, (err) => {
+      if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({
           message: err.statusText,
@@ -61,11 +83,28 @@ export class AssesmentPage {
         this.navCtrl.setRoot(LoginPage).then(() => {
             this.navCtrl.popToRoot();
         });
-     }
-   })
+      }
+    })
   }
 
-  nextSlide(){
+  startAssesment(){
+    this.getUser();
+    this.slides.slideNext();
+  }
+
+  nextSlide(question_id, question, answer) {
+    console.log('question ', question);
+    console.log('answer ', answer);
+    this.assesmentParams.user_id = this.userId;
+    this.assesmentParams.contraceptive_id = this.contraceptive_id;
+    let assesment_obj = {
+      'acceptedAnswer' : answer,
+      'question' : question_id
+    }
+    this.assesmentParams.assesments.push(assesment_obj);
+    console.log('assesment params ', this.assesmentParams);
+    console.log('assesment objects ', assesment_obj);
+
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();

@@ -23,13 +23,13 @@
           <ion-grid>
             <ion-row>
               <ion-col col-10 class="welcome">
-                <h3 class="title">Hello, Are you ready to start your assessment</h3>
+                <h3 class="title">Hello <i class="username">{{username}}</i>, are you ready to start your assessment</h3>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col col-4></ion-col>
               <ion-col col-4>
-                <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()">Start Assesment</button>
+                <button ion-button outline round small color="rounded_buttons" (click)="startAssesment()">Start Assesment</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -46,7 +46,7 @@
               <ion-row *ngFor="let answer of question._answers;">
                   <ion-col col-5></ion-col>
                   <ion-col col-6 class="button-container">
-                    <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()"> {{answer.name}}</button>
+                    <button ion-button outline round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name)"> {{answer.name}}</button>
                   </ion-col>
               </ion-row>
             </div>
@@ -63,7 +63,7 @@
                   <ion-item>
                     <ion-textarea placeholder="Feel free to drop a message"></ion-textarea>
                   </ion-item>
-                  <button class="submit_assesment" ion-button outline round color="rounded_buttons" (click)="nextSlide()">Submit assesment</button>
+                  <button class="submit_assesment" ion-button outline round small color="rounded_buttons" (click)="nextSlide()">Submit assesment</button>
                 </ion-list>
               </ion-col>
             </ion-row>
