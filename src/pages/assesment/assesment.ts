@@ -64,10 +64,8 @@ export class AssesmentPage {
   loadAssesments(id) {
     this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
-       console.log('response ', resp);
        if (resp.success && resp.status == 200) {
          this.assesment = resp.assesments
-         console.log('assesment ', this.assesment);
        } else {
        }
     }, (err) => {
@@ -93,8 +91,6 @@ export class AssesmentPage {
   }
 
   nextSlide(question_id, question, answer) {
-    console.log('question ', question);
-    console.log('answer ', answer);
     this.assesmentParams.user_id = this.userId;
     this.assesmentParams.contraceptive_id = this.contraceptive_id;
     let assesment_obj = {
@@ -102,13 +98,10 @@ export class AssesmentPage {
       'question' : question_id
     }
     this.assesmentParams.assesments.push(assesment_obj);
-    console.log('assesment params ', this.assesmentParams);
-    console.log('assesment objects ', assesment_obj);
 
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
-    console.log('has slide ended', this.isEnd);
 
   }
 

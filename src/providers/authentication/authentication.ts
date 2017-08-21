@@ -59,10 +59,6 @@ export class AuthenticationProvider {
     localStorage.setItem('user', user);
   }
 
-  getUser(){
-    return (localStorage.getItem('user'));
-  }
-
   getToken(token: string) {
     return (localStorage.getItem(token));
   }
