@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>whisper</ion-title>
+    <ion-title>Whisper</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -26,14 +26,12 @@
                 <h3>Hello, Are you ready to start your assessment</h3>
               </ion-col>
             </ion-row>
-            <div text-center>
-              <ion-row>
-                <ion-col width-15></ion-col>
-                <ion-col width-45>
-                  <button ion-button outline round small (click)="nextSlide()">Start Assesment</button>
-                </ion-col>
-              </ion-row>
-            </div>
+            <ion-row>
+              <ion-col col-4></ion-col>
+              <ion-col col-4>
+                <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()">Start Assesment</button>
+              </ion-col>
+            </ion-row>
           </ion-grid>
         </ion-slide>
 
@@ -46,10 +44,9 @@
             </ion-row>
             <div text-center>
               <ion-row *ngFor="let answer of question._answers;">
-
-                  <ion-col width-15></ion-col>
-                  <ion-col width-45>
-                    <button ion-button outline round small (click)="nextSlide()"> {{answer.name}}</button>
+                  <ion-col col-5></ion-col>
+                  <ion-col col-7 class="button-container">
+                    <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()"> {{answer.name}}</button>
                   </ion-col>
               </ion-row>
             </div>
