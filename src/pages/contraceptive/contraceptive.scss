@@ -1,3 +1,9 @@
 page-contraceptive {
-
+  ion-row {
+    flex: 1;
+  }
+  .button-container {
+    align-self: flex-end;
+    text-align: right;
+  }
 }

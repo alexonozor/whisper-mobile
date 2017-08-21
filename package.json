@@ -31,6 +31,9 @@
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.12"
   },
+  "config": {
+    "ionic_source_map_type": "eval" //fixes ionic serve issues
+  },
   "devDependencies": {
     "@ionic/app-scripts": "^2.1.4",
     "@ionic/cli-plugin-cordova": "1.4.0",
