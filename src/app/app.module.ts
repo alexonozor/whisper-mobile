@@ -8,14 +8,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
+import { AssesmentPage } from '../pages/assesment/assesment';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
+import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
 import { ContraceptiveProvider } from '../providers/contraceptive/contraceptive';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-
 
 export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
@@ -35,7 +36,9 @@ export function getAuthHttp(http) {
     IntroPage,
     SignupPage,
     LoginPage,
-    ContraceptivePage
+    AssesmentPage,
+    ContraceptivePage,
+    ContraceptiveDescPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,9 @@ export function getAuthHttp(http) {
     IntroPage,
     SignupPage,
     LoginPage,
-    ContraceptivePage
+    ContraceptivePage,
+    ContraceptiveDescPage,
+    AssesmentPage
   ],
   providers: [
     StatusBar,

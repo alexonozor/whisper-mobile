@@ -11,14 +11,14 @@ export class BaseurlProvider {
         // environment = "iplandev.promasidor.com";
         environment = window.location.hostname;
         switch (environment) {
-            case'iplandev.promasidor.com':
+            case'https://whisper-admin.herokuapp.com':
                 data = {
-                    endPoint: 'http://iplandev.promasidor.com:8080'
+                    endPoint: 'https://whisper-admin.herokuapp.com'
                 };
                 break;
              case 'localhost':
                 data = {
-                    endPoint: 'http://localhost:7777'
+                    endPoint: 'https://whisper-admin.herokuapp.com'
                 };
                 break;
 

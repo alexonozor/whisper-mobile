@@ -26,23 +26,17 @@
 <ion-grid>
   <ion-row>
     <ion-col col-10 class="welcome">
-    	<p class="title">Hi Esom. Please select the contraceptive you want</p>
+    	<h3>Hello, Please select the contraceptive you want</h3>
     </ion-col>
   </ion-row>
-  <div text-center>
-    <ion-row *ngFor="let contraceptive of contraceptives">
-        <!-- <ion-col col-2>
-          <button ion-button color="dark" class="info" clear icon-only>
-            <ion-icon name="information"></ion-icon>
-          </button>
-        </ion-col> -->
-        <ion-col width-15></ion-col>
-  	    <ion-col width-45>
-  	    	<button ion-button outline round small (click)="goToAssessment()">{{contraceptive.name}}</button>
-  	    </ion-col>
-        <button ion-button class="info" clear icon-only (click)="contraceptiveInfo(contraceptive)">
-          <ion-icon name="information-circle"></ion-icon>
-        </button>
-    </ion-row>
-  </div>
+
+  <ion-row *ngFor="let contraceptive of contraceptives">
+    <ion-col col-12 class="button-container">
+      <button color="rounded_buttons" ion-button outline round small (click)="goToAssesment(contraceptive._id, contraceptive.name)">{{contraceptive.name}}</button>
+      <button ion-button color="info_button" class="info" clear icon-only
+        (click)="contraceptiveInfo(contraceptive.name, contraceptive.description)">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 </ion-grid>

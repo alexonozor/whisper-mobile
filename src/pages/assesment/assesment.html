@@ -1,0 +1,74 @@
+<!--
+  Generated template for the AssesmentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="navColor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Whisper</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+    <ion-slides #slides>
+
+        <ion-slide class="start-slide">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-10 class="welcome">
+                <h3>Hello, Are you ready to start your assessment</h3>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4></ion-col>
+              <ion-col col-4>
+                <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()">Start Assesment</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+
+        <ion-slide *ngFor="let question of assesment;">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-10 class="welcome">
+                <h3>{{question.question}}</h3>
+              </ion-col>
+            </ion-row>
+            <div text-center>
+              <ion-row *ngFor="let answer of question._answers;">
+                  <ion-col col-5></ion-col>
+                  <ion-col col-6 class="button-container">
+                    <button ion-button outline round small color="rounded_buttons" (click)="nextSlide()"> {{answer.name}}</button>
+                  </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </ion-slide>
+
+        <ion-slide class="end-slide" *ngIf="isEnd">
+
+          <ion-grid>
+            <ion-row>
+              <ion-col col-10 class="welcome">
+                <h4 class="compliments">Thanks for completing the assesment</h4>
+                <ion-list>
+                  <ion-item>
+                    <ion-textarea placeholder="Feel free to drop a message"></ion-textarea>
+                  </ion-item>
+                  <button class="submit_assesment" ion-button outline round (click)="nextSlide()">Submit assesment</button>
+                </ion-list>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>
