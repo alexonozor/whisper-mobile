@@ -49,9 +49,7 @@
 
                   <ion-col width-15></ion-col>
                   <ion-col width-45>
-                    <!-- <ion-label>{{i+1}}. {{answer.name}}</ion-label> -->
                     <button ion-button outline round small (click)="nextSlide()"> {{answer.name}}</button>
-                    <!-- <ion-radio (click)="selectAnswer(answer, question)" [checked]="answer.selected" [disabled]="hasAnswered"></ion-radio> -->
                   </ion-col>
               </ion-row>
             </div>
@@ -71,12 +69,6 @@
                   <button class="submit_assesment" ion-button outline round (click)="nextSlide()">Submit assesment</button>
                 </ion-list>
               </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col width-10></ion-col>
-                <ion-col width-40>
-                  <button ion-button outline round (click)="nextSlide()">Submit assesment</button>
-                </ion-col>
             </ion-row>
           </ion-grid>
         </ion-slide>
