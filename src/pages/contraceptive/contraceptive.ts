@@ -71,13 +71,13 @@ export class ContraceptivePage {
 
   loadAssesments(id, name) {
     this._contraceptiveService.getAssesment(id)
-   .subscribe((resp) => {
+    .subscribe((resp) => {
      if (resp.success && resp.status == 200) {
        this.assesment = resp.assessments
      } else {
      }
-   }, (err) => {
-     if (err.status == 401) {
+    }, (err) => {
+      if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({
           message: err.statusText,
@@ -89,8 +89,38 @@ export class ContraceptivePage {
         this.navCtrl.setRoot(LoginPage).then(() => {
             this.navCtrl.popToRoot();
         });
-     }
+      }
    })
+  }
+
+  contraceptiveInfo(name, description){
+    this.navCtrl.push(ContraceptiveDescPage, {name: name, description: description});
+  }
+
+}
+
+@Component({
+  selector: 'page-contraceptive-desc',
+  templateUrl: 'contraceptive_desc.html',
+})
+
+export class ContraceptiveDescPage{
+  contraceptive_name : string;
+  contraceptive_description : string;
+
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams) {
+  }
+
+  ionViewDidLoad() {
+    this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
+  }
+
+  contraceptiveInfo(name, description) {
+    this.contraceptive_name = name;
+    this.contraceptive_description = description;
   }
 
 }
