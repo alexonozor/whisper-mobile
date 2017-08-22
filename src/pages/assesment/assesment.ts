@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
-import { LoginPage } from '../../pages/login/login';
+import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the AssesmentPage page.
@@ -46,7 +48,8 @@ export class AssesmentPage {
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public _contraceptiveService: ContraceptiveProvider,
-    public _authService: AuthenticationProvider) {
+    public _authService: AuthenticationProvider,
+    public _assesmentService: AssesmentProvider) {
   }
 
   ionViewDidLoad(){
@@ -55,7 +58,7 @@ export class AssesmentPage {
     this.getUser();
   }
 
-  getUser(){
+  getUser() {
     let userParams:any = JSON.parse(localStorage.getItem('user'));
     this.userId = userParams._id;
     this.username = userParams.userName;
@@ -85,14 +88,14 @@ export class AssesmentPage {
     })
   }
 
-  startAssesment(){
+  startAssesment() {
     this.getUser();
     this.slides.slideNext();
   }
 
   nextSlide(question_id, question, answer) {
-    this.assesmentParams.user_id = this.userId;
-    this.assesmentParams.contraceptive_id = this.contraceptive_id;
+    this.assesmentParams.user = this.userId;
+    this.assesmentParams.contraceptive = this.contraceptive_id;
     let assesment_obj = {
       'acceptedAnswer' : answer,
       'question' : question_id
@@ -103,6 +106,32 @@ export class AssesmentPage {
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
 
+  }
+
+  submitAssesment() {
+    console.log('assesment ', this.assesmentParams)
+    this._assesmentService.submitAssesment(this.assesmentParams)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.navCtrl.push(HomePage)
+      } else {
+          // Unable to submit assesment
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+        }
+    }, (err) => {
+      // Unable to submit assesment
+      let toast = this.toastCtrl.create({
+        message: 'internal server error',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
   }
 
 }
