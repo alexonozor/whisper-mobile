@@ -32,7 +32,7 @@
     "zone.js": "0.8.12"
   },
   "config": {
-    "ionic_source_map_type": "eval" //fixes ionic serve issues
+    "ionic_source_map_type": "eval"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^2.1.4",

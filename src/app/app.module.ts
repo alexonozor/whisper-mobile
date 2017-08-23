@@ -17,6 +17,7 @@ import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
 import { ContraceptiveProvider } from '../providers/contraceptive/contraceptive';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AssesmentProvider } from '../providers/assesment/assesment';
 
 export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
@@ -68,7 +69,8 @@ export function getAuthHttp(http) {
       provide: AuthHttp,
       useFactory: getAuthHttp,
       deps: [Http]
-    }
+    },
+    AssesmentProvider
   ]
 })
 export class AppModule {}

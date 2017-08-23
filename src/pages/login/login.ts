@@ -30,7 +30,9 @@ export class LoginPage {
     this._authService.login(this.form.value)
     .subscribe((resp) => {
       if (resp.success) {
+        console.log('user object ', resp);
         this._authService.saveToken('token', resp.token);
+        this._authService.saveUser(resp.user);
         this.navCtrl.push(HomePage)
       } else {
           // Unable to log in

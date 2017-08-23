@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
-import { LoginPage } from '../../pages/login/login';
+import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the AssesmentPage page.
@@ -21,35 +23,56 @@ export class AssesmentPage {
   @ViewChild('slides') slides: any;
   questions: any;
   slideOptions : any;
-  assesment: Array<{id: string, question: string, answer: {} }> = [];
+  assesmentParams: any = {
+      user: '',
+      contraceptive: '',
+      assesments: [
+        {
+          acceptedAnswer: '',
+          question: ''
+        }
+      ]
+  };
+
+  assesment: any;
   contraceptive_id: string;
   contraceptive_name: string;
   isEnd: boolean = false;
+  userId: string;
+  username: string;
 
   constructor(
+    private alertCtrl: AlertController,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public _contraceptiveService: ContraceptiveProvider,
-    public _authService: AuthenticationProvider) {
+    public _authService: AuthenticationProvider,
+    public _assesmentService: AssesmentProvider) {
   }
 
   ionViewDidLoad(){
     this.loadAssesments(this.navParams.get('id'));
+    this.contraceptive_id =  this.navParams.get('id');
+    this.getUser();
+  }
+
+  getUser() {
+    let userParams:any = JSON.parse(localStorage.getItem('user'));
+    this.userId = userParams._id;
+    this.username = userParams.userName;
   }
 
   loadAssesments(id) {
     this._contraceptiveService.getAssesment(id)
-   .subscribe((resp) => {
-     console.log('response ', resp);
-     if (resp.success && resp.status == 200) {
-       this.assesment = resp.assesments
-       console.log('assesment ', this.assesment);
-     } else {
-     }
-   }, (err) => {
-     if (err.status == 401) {
+    .subscribe((resp) => {
+       if (resp.success && resp.status == 200) {
+         this.assesment = resp.assesments
+       } else {
+       }
+    }, (err) => {
+      if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({
           message: err.statusText,
@@ -61,16 +84,54 @@ export class AssesmentPage {
         this.navCtrl.setRoot(LoginPage).then(() => {
             this.navCtrl.popToRoot();
         });
-     }
-   })
+      }
+    })
   }
 
-  nextSlide(){
+  startAssesment() {
+    this.getUser();
+    this.slides.slideNext();
+  }
+
+  nextSlide(question_id, question, answer) {
+    this.assesmentParams.user = this.userId;
+    this.assesmentParams.contraceptive = this.contraceptive_id;
+    let assesment_obj = {
+      'acceptedAnswer' : answer,
+      'question' : question_id
+    }
+    this.assesmentParams.assesments.push(assesment_obj);
+
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
-    console.log('has slide ended', this.isEnd);
 
+  }
+
+  submitAssesment() {
+    console.log('assesment ', this.assesmentParams)
+    this._assesmentService.submitAssesment(this.assesmentParams)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.navCtrl.push(HomePage)
+      } else {
+          // Unable to submit assesment
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+        }
+    }, (err) => {
+      // Unable to submit assesment
+      let toast = this.toastCtrl.create({
+        message: 'internal server error',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
   }
 
 }
