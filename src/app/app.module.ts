@@ -11,6 +11,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage } from '../pages/assesment/assesment';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
+import { StartPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { UserProvider } from '../providers/user/user';
@@ -39,7 +40,8 @@ export function getAuthHttp(http) {
     LoginPage,
     AssesmentPage,
     ContraceptivePage,
-    ContraceptiveDescPage
+    StartPage,
+    ContraceptiveDescPage,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +57,7 @@ export function getAuthHttp(http) {
     LoginPage,
     ContraceptivePage,
     ContraceptiveDescPage,
+    StartPage,
     AssesmentPage
   ],
   providers: [

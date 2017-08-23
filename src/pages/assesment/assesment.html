@@ -18,28 +18,11 @@
 <ion-content>
 
     <ion-slides #slides>
-
-        <ion-slide class="start-slide">
-          <ion-grid>
-            <ion-row>
-              <ion-col col-10 class="welcome">
-                <h3 class="title">Hello <i class="username">{{username}}</i>, are you ready to start your assessment</h3>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-4></ion-col>
-              <ion-col col-4>
-                <button ion-button outline round small color="rounded_buttons" (click)="startAssesment()">Start Assesment</button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-slide>
-
         <ion-slide *ngFor="let question of assesment;">
           <ion-grid>
             <ion-row>
               <ion-col col-10 class="welcome">
-                <h4 class="title">{{question.question}} ?</h4>
+                <h4 class="title">{{question.question}}</h4>
               </ion-col>
             </ion-row>
             <div text-center>
