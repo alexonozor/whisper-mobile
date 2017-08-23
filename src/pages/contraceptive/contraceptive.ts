@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
-import { LoginPage } from '../../pages/login/login';
-import { AssesmentPage } from '../../pages/assesment/assesment';
+import { LoginPage } from '../login/login';
+import { AssesmentPage } from '../assesment/assesment';
 
 /**
  * Generated class for the ContraceptivePage page.
@@ -66,7 +66,8 @@ export class ContraceptivePage {
   }
 
   goToAssesment(id,name) {
-    this.navCtrl.push(AssesmentPage,{id: id, name: name});
+    console.log(id,name)
+    this.navCtrl.push(StartPage, {id: id, name: name});
   }
 
   loadAssesments(id, name) {
@@ -121,6 +122,32 @@ export class ContraceptiveDescPage{
   contraceptiveInfo(name, description) {
     this.contraceptive_name = name;
     this.contraceptive_description = description;
+  }
+}
+
+@Component({
+  selector: 'start-assesment',
+  templateUrl: 'start-assesment.html',
+})
+
+export class StartPage{
+  contraceptive_name : string;
+  contraceptive_description : string;
+  contraceptive_id: string;
+
+
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams) {
+  }
+
+  ionViewDidLoad() {
+    console.log('start page params id ',this.navParams.get('id'))
+  }
+
+  startAssesment() {
+    this.navCtrl.push(AssesmentPage, {id: this.navParams.get('id')});
   }
 
 }

@@ -89,11 +89,12 @@ export class AssesmentPage {
   }
 
   startAssesment() {
-    this.getUser();
     this.slides.slideNext();
+    // this.slides.lockSwipeToNext(true);
   }
 
   nextSlide(question_id, question, answer) {
+    // this.slides.lockSwipeToNext(true);
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
     let assesment_obj = {
@@ -103,14 +104,12 @@ export class AssesmentPage {
     this.assesmentParams.questions.push(assesment_obj);
     console.log(this.assesmentParams)
 
-    this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
-
   }
 
   submitAssesment() {
-    console.log('assesment ', this.assesmentParams)
+    this.assesmentParams.assesments.shift();
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
