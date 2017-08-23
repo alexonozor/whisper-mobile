@@ -26,7 +26,7 @@ export class AssesmentPage {
   assesmentParams: any = {
       user: '',
       contraceptive: '',
-      assesments: [
+      questions: [
         {
           acceptedAnswer: '',
           question: ''
@@ -97,10 +97,11 @@ export class AssesmentPage {
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
     let assesment_obj = {
-      'acceptedAnswer' : answer,
-      'question' : question_id
+      'question' : question_id,
+      'acceptedAnswer' : answer
     }
-    this.assesmentParams.assesments.push(assesment_obj);
+    this.assesmentParams.questions.push(assesment_obj);
+    console.log(this.assesmentParams)
 
     this.slides.lockSwipes(false);
     this.slides.slideNext();
