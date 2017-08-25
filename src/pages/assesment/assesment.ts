@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -35,9 +35,15 @@ export class AssesmentPage {
       ]
   };
 
+  // resizes textarea on keydown
+  @ViewChild('myInput') myInput: ElementRef;
+
   assesment: any;
   contraceptive_id: string;
   contraceptive_name: string;
+  editedInput: boolean = false;
+  showButton: boolean =  false;
+  editedInputLabel: string;
   isEnd: boolean = false;
   userId: string;
   username: string;
@@ -70,6 +76,7 @@ export class AssesmentPage {
     .subscribe((resp) => {
        if (resp.success && resp.status == 200) {
          this.assesment = resp.assesments
+         console.log('assesment ', this.assesment);
        } else {
        }
     }, (err) => {
@@ -94,7 +101,8 @@ export class AssesmentPage {
     // this.slides.lockSwipeToNext(true);
   }
 
-  nextSlide(question_id, question, answer) {
+  nextSlide(question_id, question, answer, isEditedAnswer, label) {
+    console.log('is answer editable ', isEditedAnswer);
     // this.slides.lockSwipeToNext(true);
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
@@ -102,9 +110,52 @@ export class AssesmentPage {
       'question' : question_id,
       'acceptedAnswer' : answer
     }
-    this.assesmentParams.questions.push(assesment_obj);
-    this.slides.slideNext();
-    this.isEnd = this.slides.isEnd();
+
+    let answer_not_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, assesment_obj)
+    console.log('does answer exist ', answer_not_exists);
+    if(answer_not_exists){
+      this.assesmentParams.questions.push(assesment_obj);
+      console.log('answers ',this.assesmentParams.questions );
+    }
+
+    if(isEditedAnswer) {
+      this.editedInput = true;
+      this.editedInputLabel = label;
+    } else {
+      // this.slides.slideNext();
+    }
+    // this.slides.slideNext();
+    // this.isEnd = this.slides.isEnd();
+  }
+
+  findOrReplaceAnswer(assesment, key, value, object){
+    for( let question in this.assesmentParams.questions){
+      if(assesment[question][key] === value) {
+        this.assesmentParams.questions.splice(question,question,object);
+        console.log('answers after splicing ',this.assesmentParams.questions );
+        console.log('answer exists');
+        return false;
+      }
+      console.log('answer does not exist');
+      return true;
+    }
+  }
+
+  getEditedAnswer(text){
+    console.log('event ', text);
+  }
+
+  getFocus(event) {
+    console.log('focus event ', event);
+    //resizes textarea
+    var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + 'px';
+    this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
+
+    if(event.target.value != "") {
+      this.showButton = true;
+    }
   }
 
   submitAssesment(value) {

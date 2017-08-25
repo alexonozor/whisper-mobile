@@ -20,7 +20,26 @@ page-assesment {
     text-align: right;
   }
   i.username {
-      font-style: normal;
-      text-transform: capitalize;
+    font-style: normal;
+    text-transform: capitalize;
+  }
+  .text-input[placeholder] {
+    font-size: 12px;
+  }
+  .item-ios.item-block .item-inner,
+  .item-md.item-block .item-inner {
+    padding-right: inherit;
+    border: 1px solid #c8c7cc;
+    border-radius: 30px;
+  }
+
+  .item-md.item-input.item-input-has-focus .item-inner,
+  .item-md.item-input.input-has-focus .item-inner {
+    box-shadow: none;
+    border: 1.2px solid #c8c7cc;
+  }
+
+  .input_button span.button-inner{
+    text-transform: capitalize;
   }
 }
