@@ -26,6 +26,7 @@ export class AssesmentPage {
   assesmentParams: any = {
       user: '',
       contraceptive: '',
+      note: '',
       questions: [
         {
           acceptedAnswer: '',
@@ -102,14 +103,13 @@ export class AssesmentPage {
       'acceptedAnswer' : answer
     }
     this.assesmentParams.questions.push(assesment_obj);
-    console.log(this.assesmentParams)
-
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
   }
 
-  submitAssesment() {
-    this.assesmentParams.assesments.shift();
+  submitAssesment(value) {
+    this.assesmentParams.note = value.value;
+    this.assesmentParams.questions.shift();
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {

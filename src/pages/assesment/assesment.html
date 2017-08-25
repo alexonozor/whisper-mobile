@@ -44,9 +44,9 @@
                 <h4 class="title compliments">Thanks for completing the assesment</h4>
                 <ion-list>
                   <ion-item>
-                    <ion-textarea placeholder="Feel free to drop a message"></ion-textarea>
+                    <ion-textarea #value placeholder="Feel free to drop a message"></ion-textarea>
                   </ion-item>
-                  <button class="submit_assesment" ion-button outline round small color="rounded_buttons" (click)="submitAssesment()">Submit assesment</button>
+                  <button class="submit_assesment" ion-button outline round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
                 </ion-list>
               </ion-col>
             </ion-row>
