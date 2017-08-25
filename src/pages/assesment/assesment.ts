@@ -102,7 +102,7 @@ export class AssesmentPage {
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label) {
-    console.log('is answer editable ', isEditedAnswer);
+    // console.log('is answer editable ', isEditedAnswer);
     // this.slides.lockSwipeToNext(true);
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
@@ -111,33 +111,35 @@ export class AssesmentPage {
       'acceptedAnswer' : answer
     }
 
-    let answer_not_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, assesment_obj)
-    console.log('does answer exist ', answer_not_exists);
-    if(answer_not_exists){
+    let answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, assesment_obj)
+    console.log('does answer exist ', answer_exists);
+    if(!answer_exists){
       this.assesmentParams.questions.push(assesment_obj);
-      console.log('answers ',this.assesmentParams.questions );
+      console.log('new answers ',this.assesmentParams.questions );
     }
 
     if(isEditedAnswer) {
       this.editedInput = true;
       this.editedInputLabel = label;
-    } else {
+    } else {}
       // this.slides.slideNext();
-    }
-    // this.slides.slideNext();
+        // this.slides.slideNext();
     // this.isEnd = this.slides.isEnd();
   }
 
-  findOrReplaceAnswer(assesment, key, value, object){
+  findOrReplaceAnswer(assesment, key, value, obj) {
     for( let question in this.assesmentParams.questions){
       if(assesment[question][key] === value) {
-        this.assesmentParams.questions.splice(question,question,object);
+        this.assesmentParams.questions.splice(question,question,obj);
         console.log('answers after splicing ',this.assesmentParams.questions );
         console.log('answer exists');
-        return false;
+        return true;
       }
-      console.log('answer does not exist');
-      return true;
+      else{
+        console.log('answer does not exist');
+        // return false
+        // this.assesmentParams.questions.push(obj);
+      }
     }
   }
 
