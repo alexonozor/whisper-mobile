@@ -110,7 +110,6 @@ export class AssesmentPage {
   slideNext(){
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
-    console.log('end of slide? ', this.isEnd);
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label) {
@@ -128,10 +127,8 @@ export class AssesmentPage {
       this.editedInputLabel = label;
     } else {
       this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, this.assesment_obj)
-      console.log('does answer exist? ', this.answer_exists);
       if(!this.answer_exists){
         this.assesmentParams.questions.push(this.assesment_obj);
-        console.log('pushed assesment obj ', this.assesmentParams);
         this.slideNext();
       }else{
         this.slideNext();
@@ -143,7 +140,6 @@ export class AssesmentPage {
     for( let question in this.assesmentParams.questions){
       if(assesment[question][key] === value) {
         this.assesmentParams.questions.splice(question,question,obj);
-        console.log('spliced obj ', this.assesmentParams);
         this.slideNext();
         return true;
       }
@@ -163,7 +159,6 @@ export class AssesmentPage {
   }
 
   getText(event) {
-    console.log('on blur ', event._value);
     this.edited_answer = event._value;
   }
 
@@ -174,11 +169,9 @@ export class AssesmentPage {
     }
 
     this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', this.question_id, this.assesment_obj)
-    console.log('does answer exist? ', this.answer_exists);
 
     if(!this.answer_exists){
       this.assesmentParams.questions.push(this.assesment_obj);
-      console.log('pushed edited assesment params ',this.assesmentParams);
       this.slideNext();
     }
   }
@@ -186,7 +179,6 @@ export class AssesmentPage {
   submitAssesment(value) {
     this.assesmentParams.note = value.value;
     this.assesmentParams.questions.shift();
-    console.log('params to be submitted ', this.assesmentParams);
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
