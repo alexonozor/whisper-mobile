@@ -35,6 +35,11 @@ export class AssesmentPage {
       ]
   };
 
+  assesment_obj : any = {
+    'acceptedAnswer' : '',
+    'question' : ''
+  }
+
   // resizes textarea on keydown
   @ViewChild('myInput') myInput: ElementRef;
 
@@ -43,10 +48,13 @@ export class AssesmentPage {
   contraceptive_name: string;
   editedInput: boolean = false;
   showButton: boolean =  false;
+  answer_exists: boolean;
   editedInputLabel: string;
+  edited_answer: string;
   isEnd: boolean = false;
   userId: string;
   username: string;
+  question_id: string;
 
   constructor(
     private alertCtrl: AlertController,
@@ -76,7 +84,6 @@ export class AssesmentPage {
     .subscribe((resp) => {
        if (resp.success && resp.status == 200) {
          this.assesment = resp.assesments
-         console.log('assesment ', this.assesment);
        } else {
        }
     }, (err) => {
@@ -98,57 +105,52 @@ export class AssesmentPage {
 
   startAssesment() {
     this.slides.slideNext();
-    // this.slides.lockSwipeToNext(true);
+  }
+
+  slideNext(){
+    this.slides.slideNext();
+    this.isEnd = this.slides.isEnd();
+    console.log('end of slide? ', this.isEnd);
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label) {
-    // console.log('is answer editable ', isEditedAnswer);
-    // this.slides.lockSwipeToNext(true);
+    this.question_id = question_id;
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
-    let assesment_obj = {
-      'question' : question_id,
-      'acceptedAnswer' : answer
-    }
 
-    let answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, assesment_obj)
-    console.log('does answer exist ', answer_exists);
-    if(!answer_exists){
-      this.assesmentParams.questions.push(assesment_obj);
-      console.log('new answers ',this.assesmentParams.questions );
+    this.assesment_obj = {
+      'acceptedAnswer':answer,
+      'question':question_id
     }
 
     if(isEditedAnswer) {
       this.editedInput = true;
       this.editedInputLabel = label;
-    } else {}
-      // this.slides.slideNext();
-        // this.slides.slideNext();
-    // this.isEnd = this.slides.isEnd();
+    } else {
+      this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, this.assesment_obj)
+      console.log('does answer exist? ', this.answer_exists);
+      if(!this.answer_exists){
+        this.assesmentParams.questions.push(this.assesment_obj);
+        console.log('pushed assesment obj ', this.assesmentParams);
+        this.slideNext();
+      }else{
+        this.slideNext();
+      }
+    }
   }
 
   findOrReplaceAnswer(assesment, key, value, obj) {
     for( let question in this.assesmentParams.questions){
       if(assesment[question][key] === value) {
         this.assesmentParams.questions.splice(question,question,obj);
-        console.log('answers after splicing ',this.assesmentParams.questions );
-        console.log('answer exists');
+        console.log('spliced obj ', this.assesmentParams);
+        this.slideNext();
         return true;
-      }
-      else{
-        console.log('answer does not exist');
-        // return false
-        // this.assesmentParams.questions.push(obj);
       }
     }
   }
 
-  getEditedAnswer(text){
-    console.log('event ', text);
-  }
-
   getFocus(event) {
-    console.log('focus event ', event);
     //resizes textarea
     var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
     var scrollHeight = element.scrollHeight;
@@ -160,9 +162,31 @@ export class AssesmentPage {
     }
   }
 
+  getText(event) {
+    console.log('on blur ', event._value);
+    this.edited_answer = event._value;
+  }
+
+  submitEditedAnswer() {
+    this.assesment_obj = {
+      'acceptedAnswer':this.edited_answer,
+      'question':this.question_id
+    }
+
+    this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', this.question_id, this.assesment_obj)
+    console.log('does answer exist? ', this.answer_exists);
+
+    if(!this.answer_exists){
+      this.assesmentParams.questions.push(this.assesment_obj);
+      console.log('pushed edited assesment params ',this.assesmentParams);
+      this.slideNext();
+    }
+  }
+
   submitAssesment(value) {
     this.assesmentParams.note = value.value;
     this.assesmentParams.questions.shift();
+    console.log('params to be submitted ', this.assesmentParams);
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
