@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -35,12 +35,26 @@ export class AssesmentPage {
       ]
   };
 
+  assesment_obj : any = {
+    'acceptedAnswer' : '',
+    'question' : ''
+  }
+
+  // resizes textarea on keydown
+  @ViewChild('myInput') myInput: ElementRef;
+
   assesment: any;
   contraceptive_id: string;
   contraceptive_name: string;
+  editedInput: boolean = false;
+  showButton: boolean =  false;
+  answer_exists: boolean;
+  editedInputLabel: string;
+  edited_answer: string;
   isEnd: boolean = false;
   userId: string;
   username: string;
+  question_id: string;
 
   constructor(
     private alertCtrl: AlertController,
@@ -91,20 +105,75 @@ export class AssesmentPage {
 
   startAssesment() {
     this.slides.slideNext();
-    // this.slides.lockSwipeToNext(true);
   }
 
-  nextSlide(question_id, question, answer) {
-    // this.slides.lockSwipeToNext(true);
-    this.assesmentParams.user = this.userId;
-    this.assesmentParams.contraceptive = this.contraceptive_id;
-    let assesment_obj = {
-      'question' : question_id,
-      'acceptedAnswer' : answer
-    }
-    this.assesmentParams.questions.push(assesment_obj);
+  slideNext(){
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
+  }
+
+  nextSlide(question_id, question, answer, isEditedAnswer, label) {
+    this.question_id = question_id;
+    this.assesmentParams.user = this.userId;
+    this.assesmentParams.contraceptive = this.contraceptive_id;
+
+    this.assesment_obj = {
+      'acceptedAnswer':answer,
+      'question':question_id
+    }
+
+    if(isEditedAnswer) {
+      this.editedInput = true;
+      this.editedInputLabel = label;
+    } else {
+      this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, this.assesment_obj)
+      if(!this.answer_exists){
+        this.assesmentParams.questions.push(this.assesment_obj);
+        this.slideNext();
+      }else{
+        this.slideNext();
+      }
+    }
+  }
+
+  findOrReplaceAnswer(assesment, key, value, obj) {
+    for( let question in this.assesmentParams.questions){
+      if(assesment[question][key] === value) {
+        this.assesmentParams.questions.splice(question,question,obj);
+        this.slideNext();
+        return true;
+      }
+    }
+  }
+
+  getFocus(event) {
+    //resizes textarea
+    var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + 'px';
+    this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
+
+    if(event.target.value != "") {
+      this.showButton = true;
+    }
+  }
+
+  getText(event) {
+    this.edited_answer = event._value;
+  }
+
+  submitEditedAnswer() {
+    this.assesment_obj = {
+      'acceptedAnswer':this.edited_answer,
+      'question':this.question_id
+    }
+
+    this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', this.question_id, this.assesment_obj)
+
+    if(!this.answer_exists){
+      this.assesmentParams.questions.push(this.assesment_obj);
+      this.slideNext();
+    }
   }
 
   submitAssesment(value) {

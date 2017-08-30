@@ -25,18 +25,26 @@
                 <h4 class="title">{{question.question}}</h4>
               </ion-col>
             </ion-row>
-            <div text-center>
-              <ion-row *ngFor="let answer of question._answers;">
-                  <ion-col col-5></ion-col>
-                  <ion-col col-6 class="button-container">
-                    <button ion-button outline round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name)"> {{answer.name}}</button>
-                  </ion-col>
-              </ion-row>
-            </div>
+            <ion-row>
+              <ion-col col-11 class="edited">
+                <ion-item class="line-break" [hidden]="!editedInput">
+                  <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keydown)="getFocus($event)" placeholder="{{editedInputLabel}}">
+                  </ion-textarea>
+                  <button class="input_button" (click)="submitEditedAnswer()" ion-button color="info_button" [hidden]="!showButton" clear item-right>Send</button>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let answer of question._answers;">
+              <ion-col col-5>
+              </ion-col>
+              <ion-col col-6 class="button-container">
+                <button ion-button outline round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel)"> {{answer.name}}</button>
+              </ion-col>
+            </ion-row>
           </ion-grid>
         </ion-slide>
 
-        <ion-slide class="end-slide" *ngIf="isEnd">
+        <ion-slide class="end-slide" [hidden]="!isEnd">
 
           <ion-grid>
             <ion-row>
