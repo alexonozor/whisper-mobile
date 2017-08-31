@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let pharmacy of pharmacies">
+    <img src="img/nin-live.png"/>
+    <ion-card-content>
+      <ion-card-title>{{pharmacy.name}}</ion-card-title>
+      <p>{{pharmacy.description}} </p>
+      <p>{{pharmacy.contact.address}} </p>
+    </ion-card-content>
+    
+    <ion-row>
+        <ion-col>
+        <button ion-button color="primary" (click)="updataUserAssessmentResponse(pharmacy._id)"   small icon-start>
+            Use pharmacy
+        </button>
+        </ion-col>
+        <ion-col>
+        <button ion-button color="primary" clear small icon-start>
+            info
+        </button>
+        </ion-col>
+        <!-- <ion-col align-self-center text-center>
+        <ion-note>
+            30yr ago
+        </ion-note>
+        </ion-col>  -->
+    </ion-row>
+</ion-card>
+</ion-content>
+
+

@@ -8,7 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { AssesmentPage } from '../pages/assesment/assesment';
+import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
@@ -19,6 +19,9 @@ import { BaseurlProvider } from '../providers/baseurl/baseurl';
 import { ContraceptiveProvider } from '../providers/contraceptive/contraceptive';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AssesmentProvider } from '../providers/assesment/assesment';
+import { Geolocation } from '@ionic-native/geolocation';
+import { PharmacyProvider } from '../providers/pharmacy/pharmacy';
+import { SharedProvider } from '../providers/shared/shared';
 
 export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
@@ -39,6 +42,7 @@ export function getAuthHttp(http) {
     SignupPage,
     LoginPage,
     AssesmentPage,
+    FoundPharmaciesPage,
     ContraceptivePage,
     StartPage,
     ContraceptiveDescPage,
@@ -58,9 +62,11 @@ export function getAuthHttp(http) {
     ContraceptivePage,
     ContraceptiveDescPage,
     StartPage,
-    AssesmentPage
+    AssesmentPage,
+    FoundPharmaciesPage
   ],
   providers: [
+    Geolocation,
     StatusBar,
     SplashScreen,
     AuthenticationProvider,
@@ -73,7 +79,9 @@ export function getAuthHttp(http) {
       useFactory: getAuthHttp,
       deps: [Http]
     },
-    AssesmentProvider
+    AssesmentProvider,
+    PharmacyProvider,
+    SharedProvider
   ]
 })
 export class AppModule {}

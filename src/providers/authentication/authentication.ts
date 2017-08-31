@@ -62,4 +62,8 @@ export class AuthenticationProvider {
   getToken(token: string) {
     return (localStorage.getItem(token));
   }
+
+  currentUser() {
+    return JSON.parse(localStorage.getItem('user'))
+  }
 }
