@@ -66,7 +66,6 @@ export class ContraceptivePage {
   }
 
   goToAssesment(id,name) {
-    console.log(id,name)
     this.navCtrl.push(StartPage, {id: id, name: name});
   }
 
@@ -95,7 +94,7 @@ export class ContraceptivePage {
   }
 
   contraceptiveInfo(name, description){
-    this.navCtrl.push(ContraceptiveDescPage, {name: name, description: description});
+    this.navCtrl.push(ContraceptiveDescPage, { name: name, description: description });
   }
 
 }
@@ -105,7 +104,7 @@ export class ContraceptivePage {
   templateUrl: 'contraceptive_desc.html',
 })
 
-export class ContraceptiveDescPage{
+export class ContraceptiveDescPage {
   contraceptive_name : string;
   contraceptive_description : string;
 
@@ -125,12 +124,16 @@ export class ContraceptiveDescPage{
   }
 }
 
+
+
+
+
 @Component({
   selector: 'start-assesment',
   templateUrl: 'start-assesment.html',
 })
 
-export class StartPage{
+export class StartPage {
   contraceptive_name : string;
   contraceptive_description : string;
   contraceptive_id: string;
@@ -143,7 +146,7 @@ export class StartPage{
   }
 
   ionViewDidLoad() {
-    console.log('start page params id ',this.navParams.get('id'))
+    
   }
 
   startAssesment() {

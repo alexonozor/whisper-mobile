@@ -5,7 +5,9 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
-
+import { Geolocation } from '@ionic-native/geolocation';
+import { Http } from '@angular/http';
+import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 /**
  * Generated class for the AssesmentPage page.
  *
@@ -55,6 +57,7 @@ export class AssesmentPage {
   userId: string;
   username: string;
   question_id: string;
+  responseId: number;
 
   constructor(
     private alertCtrl: AlertController,
@@ -64,7 +67,10 @@ export class AssesmentPage {
     public toastCtrl: ToastController,
     public _contraceptiveService: ContraceptiveProvider,
     public _authService: AuthenticationProvider,
-    public _assesmentService: AssesmentProvider) {
+    private geolocation: Geolocation,
+    public _assesmentService: AssesmentProvider,
+    public _pharmacyService: PharmacyProvider,
+    public http: Http) {
   }
 
   ionViewDidLoad(){
@@ -74,7 +80,7 @@ export class AssesmentPage {
   }
 
   getUser() {
-    let userParams:any = JSON.parse(localStorage.getItem('user'));
+    let userParams:any = this._authService.currentUser();
     this.userId = userParams._id;
     this.username = userParams.userName;
   }
@@ -84,7 +90,6 @@ export class AssesmentPage {
     .subscribe((resp) => {
        if (resp.success && resp.status == 200) {
          this.assesment = resp.assesments
-       } else {
        }
     }, (err) => {
       if (err.status == 401) {
@@ -107,7 +112,7 @@ export class AssesmentPage {
     this.slides.slideNext();
   }
 
-  slideNext(){
+  slideNext() {
     this.slides.slideNext();
     this.isEnd = this.slides.isEnd();
   }
@@ -122,15 +127,15 @@ export class AssesmentPage {
       'question':question_id
     }
 
-    if(isEditedAnswer) {
+    if (isEditedAnswer) {
       this.editedInput = true;
       this.editedInputLabel = label;
     } else {
       this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, this.assesment_obj)
-      if(!this.answer_exists){
+      if (!this.answer_exists) {
         this.assesmentParams.questions.push(this.assesment_obj);
         this.slideNext();
-      }else{
+      } else {
         this.slideNext();
       }
     }
@@ -164,8 +169,8 @@ export class AssesmentPage {
 
   submitEditedAnswer() {
     this.assesment_obj = {
-      'acceptedAnswer':this.edited_answer,
-      'question':this.question_id
+      'acceptedAnswer': this.edited_answer,
+      'question': this.question_id
     }
 
     this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', this.question_id, this.assesment_obj)
@@ -182,7 +187,8 @@ export class AssesmentPage {
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
-        this.navCtrl.push(HomePage)
+        this.responseId = resp.responseId;
+        this.showConfirm(this._authService.currentUser());
       } else {
           // Unable to submit assesment
         let toast = this.toastCtrl.create({
@@ -203,4 +209,137 @@ export class AssesmentPage {
     });
   }
 
+  showConfirm(currentUser) {
+    let confirm = this.alertCtrl.create({
+      title: 'Select Location to search Pharmacy',
+      message: `Your current location is ${currentUser.contact.address}. Whisper wants to find a pharmacy close to you for your contraceptive?`,
+      buttons: [
+        {
+          text: 'Use location',
+          handler: () => {
+            let user = this._authService.currentUser();
+            this.findPharmacies(user.contact.lng, user.contact.lat);
+          }
+        },
+        {
+          text: 'Use GPS',
+          handler: () => {
+           this.getLocation();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  getLocation() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: 'finding location...'
+   });
+
+   loading.present();
+    this.geolocation.getCurrentPosition().then((resp) => {
+        var lat=resp.coords.latitude;
+        var long=resp.coords.longitude;
+       this.http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=true&key=AIzaSyDXKmoSEMQW6mAI_WVZqwDP3M9tMhsKTRk').map(res=>res.json()).subscribe(data => {
+            loading.dismiss();    
+            let addresses = data.results;
+            this.showFoundAddresses(addresses);
+           });
+        }).catch((error) => {
+          loading.dismiss();
+          console.log('Error getting location', error);
+        });
+  }
+
+    showFoundAddresses(addresses) {
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Select Address');
+      addresses.forEach(element => {
+        alert.addInput({
+          type: 'radio',
+          label: element.formatted_address,
+          value: element.geometry.location,
+          checked: false
+        });
+      });
+
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'OK',
+        handler: data => {
+          this.findPharmacies(data.lng, data.lat)
+        }
+      });
+      alert.present();
+  }
+
+  findPharmacies(longitude, latitude) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: 'finding pharmacies...'
+   });
+
+    loading.present();
+    this._pharmacyService.getNearerPharmacies(longitude, latitude)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.navCtrl.push(FoundPharmaciesPage, { pharmacies: resp.pharmacies, responseId: this.responseId })
+        loading.dismiss();
+      } 
+    }, err => {
+      // caugh error
+    })
+  }
+
 }
+
+
+@Component({
+  selector: 'page-found-pharmacies',
+  templateUrl: 'found-pharmacies.html',
+})
+
+export class FoundPharmaciesPage {
+  public pharmacies = [];
+  public responseId: number;
+
+  constructor(
+    public _assesmentService: AssesmentProvider,
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+  ) {
+    this.pharmacies = navParams.get('pharmacies');
+    this.responseId = navParams.get('responseId');
+  }
+
+  updataUserAssessmentResponse(pharmacyId) {
+     let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: 'finding pharmacies...'
+   });
+    loading.present();
+    this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
+    .subscribe((resp) => {
+      if (resp.success) {
+        loading.dismiss();
+        let toast = this.toastCtrl.create({
+           message: 'You pickup order has been placed an administartor will contact you shortly',
+            duration: 3000,
+            position: 'top'
+        })
+
+        toast.present();
+        this.navCtrl.push(HomePage);
+      }
+    }, err => {
+
+    })
+  }
+};

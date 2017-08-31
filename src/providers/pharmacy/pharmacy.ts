@@ -7,14 +7,15 @@ import { Observable } from 'rxjs/Rx';
 import { BaseurlProvider } from '../baseurl/baseurl';
 import { AuthenticationProvider } from '../authentication/authentication';
 
+
 /*
-  Generated class for the AssesmentProvider provider.
+  Generated class for the ContraceptiveProvider provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
 @Injectable()
-export class AssesmentProvider {
+export class PharmacyProvider {
   public host = this._baseUrl.getEnvironmentVariable();
   public token = '';
 
@@ -25,15 +26,9 @@ export class AssesmentProvider {
       public _authService: AuthenticationProvider
   ) { }
 
-  submitAssesment(assesmentParams: any) : Observable<any> {
-    return this.http.post(`${this.host}/assessment-responses`, assesmentParams)
-      .map((res:Response) => res.json())
-      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
-  }
-
-  updatAssessmenteResponse(id: number, pharmacyId: number) : Observable<any> {
-    return this.http.put(`${this.host}/update-assessment-responses/${id}`, { selectedPharmacy: pharmacyId})
-      .map((res:Response) => res.json())
-      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  getNearerPharmacies(lng: number, lat: number): Observable<any> {
+    return this.authHttp.get(`${this.host}/get-nearer-pharmacies?longitude=${lng}&latitude=${lat}`)
+			.map((res:Response) => res.json())
+			.catch((error:any) => Observable.throw(error || 'server error'));
   }
 }
