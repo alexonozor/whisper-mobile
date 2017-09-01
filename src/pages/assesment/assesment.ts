@@ -59,6 +59,7 @@ export class AssesmentPage {
   username: string;
   question_id: string;
   responseId: number;
+  lock_swipes: boolean = true;
 
   constructor(
     private alertCtrl: AlertController,
@@ -78,6 +79,7 @@ export class AssesmentPage {
     this.loadAssesments(this.navParams.get('id'));
     this.contraceptive_id =  this.navParams.get('id');
     this.getUser();
+    this.slides.lockSwipes(true);
   }
 
   getUser() {
@@ -114,8 +116,16 @@ export class AssesmentPage {
   }
 
   slideNext() {
+    this.slides.lockSwipes(false);
     this.slides.slideNext();
+    this.slides.lockSwipes(true);
+    this.slides.lockSwipeToPrev(false);
     this.isEnd = this.slides.isEnd();
+    if(this.isEnd) {
+      this.slides.lockSwipeToPrev(true);
+    }
+    console.log('current slide index: ', this.slides.getActiveIndex());
+    console.log('has slide ended ', this.isEnd);
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label) {
