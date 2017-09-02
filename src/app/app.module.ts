@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
+import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
@@ -46,6 +47,7 @@ export function getAuthHttp(http) {
     ContraceptivePage,
     StartPage,
     ContraceptiveDescPage,
+    ContraceptiveQuantityPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ export function getAuthHttp(http) {
     ContraceptiveDescPage,
     StartPage,
     AssesmentPage,
-    FoundPharmaciesPage
+    FoundPharmaciesPage,
+    ContraceptiveQuantityPage
   ],
   providers: [
     Geolocation,
