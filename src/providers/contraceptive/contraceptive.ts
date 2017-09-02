@@ -32,6 +32,12 @@ export class ContraceptiveProvider {
 			.catch((error:any) => Observable.throw(error || 'server error'));
   }
 
+  getContraceptive(id: number): Observable<any> {
+    return this.authHttp.get(`${this.host}/contraceptive/${id}`)
+			.map((res:Response) => res.json())
+			.catch((error:any) => Observable.throw(error || 'server error'));
+  }
+
   getAssesment(id: string): Observable<any> {
     return this.authHttp.get(`${this.host}/contraceptive/${id}/assessments`)
       .map((res:Response) => res.json())

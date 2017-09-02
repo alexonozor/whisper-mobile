@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
+import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
 /**
  * Generated class for the AssesmentPage page.
  *
@@ -144,7 +145,7 @@ export class AssesmentPage {
   findOrReplaceAnswer(assesment, key, value, obj) {
     for( let question in this.assesmentParams.questions){
       if(assesment[question][key] === value) {
-        this.assesmentParams.questions.splice(question,question,obj);
+        this.assesmentParams.questions.splice(question, question,obj);
         this.slideNext();
         return true;
       }
@@ -173,9 +174,14 @@ export class AssesmentPage {
       'question': this.question_id
     }
 
-    this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', this.question_id, this.assesment_obj)
+    this.answer_exists = this.findOrReplaceAnswer(
+      this.assesmentParams.questions, 
+      'question', 
+      this.question_id, 
+      this.assesment_obj
+    );
 
-    if(!this.answer_exists){
+    if (!this.answer_exists){
       this.assesmentParams.questions.push(this.assesment_obj);
       this.slideNext();
     }
@@ -188,7 +194,7 @@ export class AssesmentPage {
     .subscribe((resp) => {
       if (resp.success) {
         this.responseId = resp.responseId;
-        this.showConfirm(this._authService.currentUser());
+        this.comfirmIfUserOnceToPurchase(this._authService.currentUser(), this.responseId);
       } else {
           // Unable to submit assesment
         let toast = this.toastCtrl.create({
@@ -197,7 +203,7 @@ export class AssesmentPage {
           position: 'top'
         });
         toast.present();
-        }
+      }
     }, (err) => {
       // Unable to submit assesment
       let toast = this.toastCtrl.create({
@@ -209,22 +215,24 @@ export class AssesmentPage {
     });
   }
 
-  showConfirm(currentUser) {
+  comfirmIfUserOnceToPurchase(user, assesmentId) {
     let confirm = this.alertCtrl.create({
-      title: 'Select Location to search Pharmacy',
-      message: `Your current location is ${currentUser.contact.address}. Whisper wants to find a pharmacy close to you for your contraceptive?`,
+      title: 'Purchase Contraceptive',
+      message: `Do you want to purchase this contraceptive?`,
       buttons: [
         {
-          text: 'Use location',
+          text: 'No',
           handler: () => {
-            let user = this._authService.currentUser();
-            this.findPharmacies(user.contact.lng, user.contact.lat);
+            this.navCtrl.popToRoot()
           }
         },
         {
-          text: 'Use GPS',
+          text: 'Yes',
           handler: () => {
-           this.getLocation();
+           this.navCtrl.push(
+             ContraceptiveQuantityPage, 
+            { contraceptive: this.contraceptive_id, user: user, assesmentId: assesmentId }
+          );
           }
         }
       ]
@@ -232,68 +240,6 @@ export class AssesmentPage {
     confirm.present();
   }
 
-  getLocation() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'show',
-      showBackdrop: false,
-      content: 'finding location...'
-   });
-
-   loading.present();
-    this.geolocation.getCurrentPosition().then((resp) => {
-        var lat=resp.coords.latitude;
-        var long=resp.coords.longitude;
-       this.http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=true&key=AIzaSyDXKmoSEMQW6mAI_WVZqwDP3M9tMhsKTRk').map(res=>res.json()).subscribe(data => {
-            loading.dismiss();    
-            let addresses = data.results;
-            this.showFoundAddresses(addresses);
-           });
-        }).catch((error) => {
-          loading.dismiss();
-          console.log('Error getting location', error);
-        });
-  }
-
-    showFoundAddresses(addresses) {
-      let alert = this.alertCtrl.create();
-      alert.setTitle('Select Address');
-      addresses.forEach(element => {
-        alert.addInput({
-          type: 'radio',
-          label: element.formatted_address,
-          value: element.geometry.location,
-          checked: false
-        });
-      });
-
-      alert.addButton('Cancel');
-      alert.addButton({
-        text: 'OK',
-        handler: data => {
-          this.findPharmacies(data.lng, data.lat)
-        }
-      });
-      alert.present();
-  }
-
-  findPharmacies(longitude, latitude) {
-    let loading = this.loadingCtrl.create({
-      spinner: 'show',
-      showBackdrop: false,
-      content: 'finding pharmacies...'
-   });
-
-    loading.present();
-    this._pharmacyService.getNearerPharmacies(longitude, latitude)
-    .subscribe((resp) => {
-      if (resp.success) {
-        this.navCtrl.push(FoundPharmaciesPage, { pharmacies: resp.pharmacies, responseId: this.responseId })
-        loading.dismiss();
-      } 
-    }, err => {
-      // caugh error
-    })
-  }
 
 }
 

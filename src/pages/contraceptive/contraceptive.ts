@@ -31,12 +31,16 @@ export class ContraceptivePage {
 
 
   ionViewDidLoad() {
+    this.getAllcCOntraceptive()
+  }
+
+  getAllcCOntraceptive() {
     this._authService.tokenSubscription()
-    let loading = this.loadingCtrl.create({
-    spinner: 'show',
-    showBackdrop: false,
-    content: 'Loading Please Wait...'
-   });
+      let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: 'Loading Please Wait...'
+    });
    loading.present();
 
   this._contraceptiveService.getAll()
@@ -44,7 +48,6 @@ export class ContraceptivePage {
      if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.contraceptives = resp.contraceptives;
-        console.log('contraceptives ', resp.contraceptives);
      } else {
      }
    }, (err) => {
