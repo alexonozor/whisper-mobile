@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Select Quantity</ion-title>
+    <ion-title>Quantity & Shipping</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,30 +17,23 @@
   <h3>{{contraceptive?.name}}</h3>
   <p>{{contraceptive?.description}}</p>
   
- <ion-list>
-  <ion-item>
-   <ion-label>Select Quantity</ion-label>
-   <ion-select (ionChange)="yearChange($event)" interface="popover">
-      <ion-option>1989</ion-option>
-      <ion-option>1990</ion-option>
-      <ion-option>1991</ion-option>
-      <ion-option>1992</ion-option>
-      <ion-option>1993</ion-option>
-    </ion-select>
-  </ion-item>
-  </ion-list> 
+<form [formGroup]="quantityForm" (ngSubmit)="updateResponse()"> 
+  <ion-list>
+    <ion-item>
+    <ion-label>Select Quantity</ion-label>
+    <ion-select formControlName="grandTotal" interface="popover">
+        <ion-option *ngFor="let quantity of qunatityRange">{{quantity}}</ion-option>
+      </ion-select>
+    </ion-item>
+    </ion-list> 
 
-  <ion-list radio-group [(ngModel)]="relationship">
-  <ion-item>
-    <ion-label>I will pick up from a close by pharmcy</ion-label>
-    <ion-radio value="friends" checked></ion-radio>
-  </ion-item>
-  <ion-item>
-    <ion-label>I want it delevered to my home</ion-label>
-    <ion-radio value="family"></ion-radio>
-  </ion-item>
-</ion-list>
-
+    <ion-list radio-group formControlName="shippingMethod">
+    <ion-item *ngFor="let shipping of contraceptive.shippingMethods">
+      <ion-label>{{shipping?.name}}</ion-label>
+      <ion-radio [value]="shipping._id"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <button ion-button full >Submit</button>  
+</form> 
   
-<button ion-button full (click)="updateAssesmentResponseWithQuantity()">Submit</button>  
 </ion-content>

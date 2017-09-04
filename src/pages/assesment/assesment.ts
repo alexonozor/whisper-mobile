@@ -194,7 +194,7 @@ export class AssesmentPage {
     .subscribe((resp) => {
       if (resp.success) {
         this.responseId = resp.responseId;
-        this.comfirmIfUserOnceToPurchase(this._authService.currentUser(), this.responseId);
+        this.comfirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
       } else {
           // Unable to submit assesment
         let toast = this.toastCtrl.create({
@@ -215,7 +215,7 @@ export class AssesmentPage {
     });
   }
 
-  comfirmIfUserOnceToPurchase(user, assesmentId) {
+  comfirmIfUserWantsToPurchase(user, assesmentId) {
     let confirm = this.alertCtrl.create({
       title: 'Purchase Contraceptive',
       message: `Do you want to purchase this contraceptive?`,
@@ -239,8 +239,6 @@ export class AssesmentPage {
     });
     confirm.present();
   }
-
-
 }
 
 

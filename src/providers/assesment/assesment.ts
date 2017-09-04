@@ -36,4 +36,14 @@ export class AssesmentProvider {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
+
+  updateResponse(id: number, params) : Observable<any> {
+    return this.http.put(`${this.host}/update-assessment-responses/${id}`, params)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+ 
+
+ 
 }
