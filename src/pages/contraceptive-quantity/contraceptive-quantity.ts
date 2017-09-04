@@ -7,6 +7,7 @@ import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FoundPharmaciesPage } from '../assesment/assesment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Generated class for the ContraceptiveQuantityPage page.
@@ -19,11 +20,14 @@ import { FoundPharmaciesPage } from '../assesment/assesment';
   selector: 'page-contraceptive-quantity',
   templateUrl: 'contraceptive-quantity.html',
 })
+
 export class ContraceptiveQuantityPage {
     public user = {};
     public contraceptiveId: number;
     public assesmentId: number;  
     public contraceptive = {};
+    public qunatityRange = [];
+    public quantityForm: FormGroup
 
     constructor(
       private alertCtrl: AlertController,
@@ -36,15 +40,25 @@ export class ContraceptiveQuantityPage {
       private geolocation: Geolocation,
       public _assesmentService: AssesmentProvider,
       public _pharmacyService: PharmacyProvider,
-      public http: Http
+      public http: Http,
+      public fb: FormBuilder
   ) {
       this.user = this.navParams.get('user');
       this.contraceptiveId = this.navParams.get('contraceptive');
       this.assesmentId = this.navParams.get('assesmentId');
+      this.createForm();
+
   }
 
   ionViewDidLoad() {
     this.getContraceptive(this.contraceptiveId)
+  }
+
+  createForm() {
+    this.quantityForm = this.fb.group({
+      grandTotal: ['', Validators.required],
+      shippingMethod: ['', Validators.required]
+    })
   }
 
   getContraceptive(id) {
@@ -52,14 +66,52 @@ export class ContraceptiveQuantityPage {
     .subscribe((resp) => {
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
+        this.qunatityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
       }
     }, err => {
       // caught errors
     })
   }
 
+  updateResponse() {
+    this._assesmentService.updateResponse(this.assesmentId, this.quantityForm.value)
+    .subscribe((resp) => {
+      console.log('response ', resp);
+      if (resp.success) {
+        console.log('response ', resp.success);
+        this.updateAssesmentResponseWithQuantity();
+      } else {
+          // Unable to update response
+        let toast = this.toastCtrl.create({
+          message: resp.message,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+      }
+    }, (err) => {
+      // Unable to update response
+      let toast = this.toastCtrl.create({
+        message: 'internal server error',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
+  }
+
+  range(lowEnd, highEnd) {
+    var arr = [],
+    c = highEnd - lowEnd + 1;
+    while ( c-- ) {
+      arr[c] = highEnd--
+    }
+    return arr;
+  }
+
+
   updateAssesmentResponseWithQuantity() {
-    this.confirmUsersLocation(this.user)
+    this.confirmUsersLocation(this.user);
   }
 
   confirmUsersLocation(user) {

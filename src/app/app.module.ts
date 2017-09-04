@@ -23,6 +23,7 @@ import { AssesmentProvider } from '../providers/assesment/assesment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { PharmacyProvider } from '../providers/pharmacy/pharmacy';
 import { SharedProvider } from '../providers/shared/shared';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
@@ -52,6 +53,7 @@ export function getAuthHttp(http) {
   imports: [
     BrowserModule,
     HttpModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
