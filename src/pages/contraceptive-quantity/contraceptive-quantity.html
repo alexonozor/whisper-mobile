@@ -4,9 +4,12 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
-  <ion-navbar>
+  <ion-navbar color="navColor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Quantity & Shipping</ion-title>
   </ion-navbar>
 
@@ -16,24 +19,25 @@
 <ion-content padding>
   <h3>{{contraceptive?.name}}</h3>
   <p>{{contraceptive?.description}}</p>
-  
-<form [formGroup]="quantityForm" (ngSubmit)="updateResponse()"> 
-  <ion-list>
-    <ion-item>
-    <ion-label>Select Quantity</ion-label>
-    <ion-select formControlName="grandTotal" interface="popover">
-        <ion-option *ngFor="let quantity of qunatityRange">{{quantity}}</ion-option>
-      </ion-select>
-    </ion-item>
-    </ion-list> 
 
-    <ion-list radio-group formControlName="shippingMethod">
-    <ion-item *ngFor="let shipping of contraceptive.shippingMethods">
-      <ion-label>{{shipping?.name}}</ion-label>
-      <ion-radio [value]="shipping._id"></ion-radio>
-    </ion-item>
-  </ion-list>
-  <button ion-button full >Submit</button>  
-</form> 
-  
+  <form [formGroup]="quantityForm" (ngSubmit)="updateResponse()">
+    <ion-list>
+      <ion-item>
+      <ion-label>Select Quantity</ion-label>
+      <ion-select formControlName="grandTotal" interface="popover">
+          <ion-option *ngFor="let quantity of qunatityRange">{{quantity}}</ion-option>
+        </ion-select>
+      </ion-item>
+      </ion-list>
+
+      <ion-list radio-group formControlName="shippingMethod">
+      <ion-item *ngFor="let shipping of contraceptive.shippingMethods">
+        <ion-label>{{shipping?.name}}</ion-label>
+        <ion-radio [value]="shipping._id"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <div text-right>
+      <button small ion-button outline round color="rounded_buttons" right (click)="updateAssesmentResponseWithQuantity()">Submit</button>
+    </div>
+  </form>
 </ion-content>
