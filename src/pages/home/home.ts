@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { MenuController, NavController } from 'ionic-angular';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 
 @Component({
@@ -8,7 +8,9 @@ import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(
+    public navCtrl: NavController,
+    public menuCtlr: MenuController) {
 
   }
 
@@ -19,5 +21,4 @@ export class HomePage {
   askHealthProvider() {
     this.navCtrl.push(ContraceptivePage)
   }
-
 }

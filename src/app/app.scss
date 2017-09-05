@@ -29,8 +29,19 @@ h4.title {
   font-size: 1.5rem;
 }
 
-.line-break{
+.line-break {
   overflow: inherit ;
   text-overflow: inherit ;
   white-space: normal;
 }
+
+.toolbar-background {
+  background: none;
+  border: none;
+}
+
+.menu-bg, .menu-button { background-color: #fafafa; }
+
+ion-backdrop { background-color: #fff;}
+
+

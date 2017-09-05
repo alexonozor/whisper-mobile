@@ -14,6 +14,9 @@ import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
+import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { SettingsPage } from '../pages/settings/settings';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
@@ -47,6 +50,9 @@ export function getAuthHttp(http) {
     FoundPharmaciesPage,
     ContraceptivePage,
     StartPage,
+    SettingsPage,
+    UserProfilePage,
+    UserAssesmentsPage,
     ContraceptiveDescPage,
     ContraceptiveQuantityPage
   ],
@@ -66,6 +72,9 @@ export function getAuthHttp(http) {
     ContraceptivePage,
     ContraceptiveDescPage,
     StartPage,
+    SettingsPage,
+    UserProfilePage,
+    UserAssesmentsPage,
     AssesmentPage,
     FoundPharmaciesPage,
     ContraceptiveQuantityPage
