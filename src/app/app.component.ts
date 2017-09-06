@@ -43,20 +43,24 @@ export class MyApp {
 
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home', color: "home" },
-      { title: 'Assesments', component: UserAssesmentsPage, icon: 'archive', color: "archive"},
+      { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive"},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile"},
       { title: 'Settings', component: SettingsPage, icon: 'settings', color: "settings"}
     ];
 
     statusBar.styleDefault();
     splashScreen.hide();
-    this.menu.enable(true, 'whisper-menu');
+    // this.menu.enable(true, 'whisper-menu');
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    console.log('nav page ', page);
+    this.menu.close();
+    this.nav.push(page.component);
+    // this.menu.enable(false, 'whisper-menu');
+
   }
 }
 
