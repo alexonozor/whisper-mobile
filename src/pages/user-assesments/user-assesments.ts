@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { LoginPage } from '../login/login';
@@ -17,6 +17,7 @@ export class UserAssesmentsPage {
     public navParams: NavParams,
     public _authService: AuthenticationProvider,
     public _assesmentService: AssesmentProvider,
+    public loadingCtrl: LoadingController,
     public toastCtrl: ToastController
     ) {
   }
@@ -26,10 +27,21 @@ export class UserAssesmentsPage {
   }
 
   getUserAssesment() {
+
+
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: 'getting user assesment...'
+   });
+
+    loading.present();
+
     this._assesmentService.getAssementResponses()
     .subscribe((resp) => {
       console.log('response ', resp);
       if (resp.success && resp.status == 200) {
+        loading.dismiss();
         this.userAssesments = resp.responses;
         console.log('user assesments ', this.userAssesments);
       }
@@ -48,7 +60,6 @@ export class UserAssesmentsPage {
         });
       }
     })
-
   }
 
 }
