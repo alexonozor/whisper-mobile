@@ -1,15 +1,13 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>basicInformation</ion-title>
+<ion-header no-border>
+  <ion-navbar color="navColor">
+    <ion-title>Basic Information</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
 
-  <form [formGroup]="basicInfoForm" (ngSubmit)="updateResponse()">
+  <form [formGroup]="basicInfoForm" (submit)="updateUser()">
     <ion-list>
       <ion-item>
         <ion-label stacked>First name</ion-label>
@@ -26,6 +24,9 @@
         <ion-datetime displayFormat="MMM DD YYYY" formControlName="dateOfBirth" [(ngModel)]="dob"></ion-datetime>
       </ion-item>
     </ion-list>
+    <div text-right>
+      <button [disabled]="!basicInfoForm.valid && !submited" small ion-button outline round color="rounded_buttons" right>Save</button>
+    </div>
   </form>
 
 </ion-content>

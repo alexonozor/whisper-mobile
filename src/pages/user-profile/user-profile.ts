@@ -16,6 +16,7 @@ export class UserProfilePage {
   public lastName: string;
   public birthDate: Date;
   public userBirthDate: Date;
+  public userId: string;
   public userAge: Number;
   public ageless: boolean =  false;
   public ageInMonths: Number;
@@ -45,6 +46,7 @@ export class UserProfilePage {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.userBirthDate = user.dateOfBirth;
+    this.userId = user._id;
     let today = new Date();
     this.birthDate = new Date(user.dateOfBirth);
     this.userAge = today.getFullYear() - this.birthDate.getFullYear();
@@ -60,7 +62,8 @@ export class UserProfilePage {
     this.navCtrl.push(BasicInformationPage, {
       'firstName': this.firstName,
       'lastName': this.lastName,
-      'dateOfBirth': this.userBirthDate
+      'dateOfBirth': this.userBirthDate,
+      'userId': this.userId
     });
   }
 
