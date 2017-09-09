@@ -43,7 +43,9 @@ export class AssesmentProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
- 
-
- 
+  getAssementResponses() : Observable<any> {
+    return this.authHttp.get(`${this.host}/assessment-responses`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
 }

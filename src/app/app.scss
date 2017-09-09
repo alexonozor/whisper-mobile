@@ -29,8 +29,40 @@ h4.title {
   font-size: 1.5rem;
 }
 
-.line-break{
+.line-break {
   overflow: inherit ;
   text-overflow: inherit ;
   white-space: normal;
 }
+
+.toolbar-background {
+  background: none;
+  border: none;
+}
+
+.menu-bg, .menu-button { background-color: #fafafa; }
+
+ion-backdrop { background-color: #fff;}
+
+.toolbar-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-align: center;
+  position: relative;
+  left: -10%;
+}
+
+.alert-button {
+  color: #e91e63 !important;
+}
+
+.alert-wrapper {
+  border-radius: 2px;
+  max-width: 280px;
+  background-color: #FAFAFA;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.1);
+}
+
+

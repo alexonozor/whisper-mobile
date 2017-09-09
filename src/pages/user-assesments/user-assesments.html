@@ -1,0 +1,62 @@
+<!--
+  Generated template for the UserAssesmentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="navColor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Assesments</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-1>
+        <div class="timeline">
+          <ul *ngFor="let assesment of userAssesments">
+            <li *ngIf="assesment?.user"></li>
+          </ul>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+      <ion-col col-10>
+        <ion-card *ngFor="let assesment of userAssesments">
+          <ion-card-content *ngIf="assesment?.user">
+            <div text-left>
+              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="assesment.createdAt"></ion-datetime>
+            </div>
+            <!-- Shows assesment time -->
+            <!-- <div text-right>
+              <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="assesment.createdAt"></ion-datetime>
+            </div> -->
+            <ion-grid>
+              <ion-row>
+                <ion-col col-9>
+                  <ion-card-title>
+                    {{assesment?.contraceptive?.name}}
+                  </ion-card-title>
+                  <p class="assesments_user_info">
+                    {{assesment?.user?.firstName}}, {{ assesment?.user?.gender}}
+                  </p>
+                </ion-col>
+                <ion-col col-3>
+                  <div text-right>
+                    <ion-icon name="clipboard" color="home" class="clip"></ion-icon>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

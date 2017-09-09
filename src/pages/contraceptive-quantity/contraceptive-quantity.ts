@@ -26,7 +26,7 @@ export class ContraceptiveQuantityPage {
     public contraceptiveId: number;
     public assesmentId: number;  
     public contraceptive = {};
-    public qunatityRange = [];
+    public quantityRange = [];
     public quantityForm: FormGroup
 
     constructor(
@@ -47,7 +47,6 @@ export class ContraceptiveQuantityPage {
       this.contraceptiveId = this.navParams.get('contraceptive');
       this.assesmentId = this.navParams.get('assesmentId');
       this.createForm();
-
   }
 
   ionViewDidLoad() {
@@ -62,14 +61,17 @@ export class ContraceptiveQuantityPage {
   }
 
   getContraceptive(id) {
+    console.log('contraceptive id ', id);
     this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
+      console.log('response ', resp);
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
-        this.qunatityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
+        this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
       }
     }, err => {
       // caught errors
+      console.log('An error occured, can\'t find contraceptive');
     })
   }
 

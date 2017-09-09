@@ -1,1 +1,21 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" no-border>
+
+  <ion-content class="menu-bg" no-border>
+    <ion-toolbar>
+      <ion-title></ion-title>
+      <button ion-button menuToggle right>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-toolbar>
+    <ion-list no-lines>
+      <button menuClose="whisper-menu" ion-item *ngFor="let p of pages" (click)="openPage(p)" class="menu-button">
+        <ion-icon name="{{p.icon}}" color="{{p.color}}"></ion-icon>  {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav id="nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+<!-- <ion-nav [root]="rootPage"></ion-nav> -->
