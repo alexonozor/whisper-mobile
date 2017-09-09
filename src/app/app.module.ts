@@ -17,6 +17,8 @@ import { IntroPage } from '../pages/intro/intro';
 import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SettingsPage } from '../pages/settings/settings';
+import { BasicInformationPage } from '../pages/basic-information/basic-information';
+import { PersonalInformationPage } from '../pages/personal-information/personal-information';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
@@ -26,7 +28,7 @@ import { AssesmentProvider } from '../providers/assesment/assesment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { PharmacyProvider } from '../providers/pharmacy/pharmacy';
 import { SharedProvider } from '../providers/shared/shared';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
@@ -54,11 +56,14 @@ export function getAuthHttp(http) {
     UserProfilePage,
     UserAssesmentsPage,
     ContraceptiveDescPage,
-    ContraceptiveQuantityPage
+    ContraceptiveQuantityPage,
+    BasicInformationPage,
+    PersonalInformationPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
@@ -77,7 +82,9 @@ export function getAuthHttp(http) {
     UserAssesmentsPage,
     AssesmentPage,
     FoundPharmaciesPage,
-    ContraceptiveQuantityPage
+    ContraceptiveQuantityPage,
+    BasicInformationPage,
+    PersonalInformationPage
   ],
   providers: [
     Geolocation,

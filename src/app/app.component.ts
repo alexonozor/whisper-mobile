@@ -9,6 +9,8 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { BasicInformationPage } from '../pages/basic-information/basic-information';
+import { PersonalInformationPage } from '../pages/personal-information/personal-information';
 
 @Component({
   templateUrl: 'app.html'
