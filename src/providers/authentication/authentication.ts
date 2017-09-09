@@ -40,10 +40,10 @@ export class AuthenticationProvider {
 
   tokenSubscription() {
     this.authHttp.tokenStream.subscribe(
-        data => console.log(data),
-        err => console.log(err),
-        () => console.log('Complete')
-      );
+      data => console.log(data),
+      err => console.log(err),
+      () => console.log('Complete')
+    );
   }
 
   loggedIn() {

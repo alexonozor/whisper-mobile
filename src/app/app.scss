@@ -46,8 +46,8 @@ ion-backdrop { background-color: #fff;}
 
 .toolbar-title {
   font-weight: bold;
-  text-transform: uppercase;
-  font-size: 15px;
+  text-transform: capitalize;
+  font-size: 14px;
   text-align: center;
   position: relative;
   left: -10%;
