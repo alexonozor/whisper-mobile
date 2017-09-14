@@ -28,12 +28,8 @@
         <ion-card *ngFor="let assesment of userAssesments">
           <ion-card-content *ngIf="assesment?.user">
             <div text-left>
-              <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="assesment.createdAt"></ion-datetime>
+              <h3>{{birthDate | date:'longDate'}}</h3>
             </div>
-            <!-- Shows assesment time -->
-            <!-- <div text-right>
-              <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="assesment.createdAt"></ion-datetime>
-            </div> -->
             <ion-grid>
               <ion-row>
                 <ion-col col-9>

@@ -7,7 +7,7 @@ import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  rootPage: any = HomePage;
   constructor(
     public navCtrl: NavController,
     public menuCtlr: MenuController) {

@@ -18,13 +18,13 @@ export class BaseurlProvider {
                 break;
              case 'localhost':
                 data = {
-                    endPoint: 'https://whisper-admin.herokuapp.com'
+                    endPoint: 'http://192.168.8.101:7777'
                 };
                 break;
 
             default:
                 data = {
-                    endPoint: 'https://whisper-admin.herokuapp.com'
+                    endPoint: 'http://192.168.8.101:7777'
                 };
         }
         return data['endPoint'];
