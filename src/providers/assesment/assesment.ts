@@ -37,14 +37,14 @@ export class AssesmentProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  updateResponse(id: number, params) : Observable<any> {
+  updateResponse(id: string, params) : Observable<any> {
     return this.http.put(`${this.host}/update-assessment-responses/${id}`, params)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  getAssementResponses() : Observable<any> {
-    return this.authHttp.get(`${this.host}/assessment-responses`)
+  getAssementResponses(id: string) : Observable<any> {
+    return this.authHttp.get(`${this.host}/user-assessment-responses/${id}`)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }

@@ -15,6 +15,7 @@ export class LoginPage {
     'email': ['', Validators.required],
     'password': ['', Validators.required]
   });
+  rootPage:any;
 
   constructor(
     public navCtrl: NavController,
@@ -31,9 +32,10 @@ export class LoginPage {
     .subscribe((resp) => {
       if (resp.success) {
         console.log('user object ', resp);
+        this.rootPage = HomePage;
+        this.navCtrl.setRoot(HomePage);
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
-        this.navCtrl.push(HomePage)
       } else {
           // Unable to log in
         let toast = this.toastCtrl.create({

@@ -28,7 +28,7 @@
             <ion-row>
               <ion-col col-11 class="edited">
                 <ion-item class="line-break" [hidden]="!editedInput">
-                  <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keydown)="getFocus($event)" placeholder="{{editedInputLabel}}">
+                  <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keyup)="getFocus($event)" placeholder="{{editedInputLabel}}">
                   </ion-textarea>
                   <button class="input_button" (click)="submitEditedAnswer()" ion-button color="info_button" [hidden]="!showButton" clear item-right>Send</button>
                 </ion-item>

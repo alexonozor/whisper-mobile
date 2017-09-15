@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe, I18nPluralPipe } from '@angular/common';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { BasicInformationPage } from '../basic-information/basic-information';
+import { BasicInformationPage } from '../user-profile/basic-information/basic-information';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
@@ -49,6 +49,7 @@ export class UserProfilePage {
     this.userId = user._id;
     let today = new Date();
     this.birthDate = new Date(user.dateOfBirth);
+    console.log('birth date ', this.birthDate);
     this.userAge = today.getFullYear() - this.birthDate.getFullYear();
     if(this.userAge < 1) {
       this.ageless = true;

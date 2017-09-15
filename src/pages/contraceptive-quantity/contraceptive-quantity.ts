@@ -24,7 +24,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ContraceptiveQuantityPage {
     public user = {};
     public contraceptiveId: number;
-    public assesmentId: number;  
+    public assesmentId: string;
     public contraceptive = {};
     public quantityRange = [];
     public quantityForm: FormGroup

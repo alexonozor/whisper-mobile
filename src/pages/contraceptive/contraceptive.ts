@@ -31,15 +31,15 @@ export class ContraceptivePage {
 
 
   ionViewDidLoad() {
-    this.getAllcCOntraceptive()
+    this.getAllContraceptive();
   }
 
-  getAllcCOntraceptive() {
+  getAllContraceptive() {
     this._authService.tokenSubscription()
       let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: 'Loading Please Wait...'
+      content: ''
     });
    loading.present();
 
@@ -68,8 +68,8 @@ export class ContraceptivePage {
    })
   }
 
-  goToAssesment(id,name) {
-    this.navCtrl.push(StartPage, {id: id, name: name});
+  goToAssesment(id,name,appointment) {
+    this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment});
   }
 
   loadAssesments(id, name) {
@@ -153,7 +153,10 @@ export class StartPage {
   }
 
   startAssesment() {
-    this.navCtrl.push(AssesmentPage, {id: this.navParams.get('id')});
+    this.navCtrl.push(AssesmentPage, {
+      id: this.navParams.get('id'),
+      appointment: this.navParams.get('appointment')
+    });
   }
 
 }
