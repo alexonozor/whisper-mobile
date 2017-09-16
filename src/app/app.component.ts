@@ -12,6 +12,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
 import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
+import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,7 +36,7 @@ export class MyApp {
             console.log('intro shown? ', token);
             if (_authService.loggedIn()) {
                // this.rootPage =  HomePage;
-               this.rootPage = AssesmentResponsePage;
+               this.rootPage = UserNotificationsPage;
             } else {
               this.nav.push(LoginPage);
             }
