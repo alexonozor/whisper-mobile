@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
 
   <ion-navbar>
     <ion-title>Sign up</ion-title>
@@ -8,20 +8,24 @@
 
 
 <ion-content>
-  <form [formGroup]="form" (submit)="doSignup()">
-    <ion-list>
-      <ion-item>
-        <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
-      </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+        <form [formGroup]="form" (submit)="doSignup()">
+          <ion-list>
+            <ion-item>
+              <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
+            </ion-item>
 
-      <ion-item>
-        <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
-      </ion-item>
-
-      <div padding>
-        <button ion-button color="primary" block>SIGNUP</button>
-      </div>
-
-    </ion-list>
-  </form>
+            <ion-item>
+              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+            </ion-item>
+          </ion-list>
+          <div text-right>
+            <button [disabled]="!form.valid" small ion-button outline round color="rounded_buttons" right>Signup</button>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

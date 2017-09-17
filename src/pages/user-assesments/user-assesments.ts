@@ -11,9 +11,12 @@ import { LoginPage } from '../login/login';
 })
 export class UserAssesmentsPage {
   userAssesments: Array<any>;
+  birthDate: Date;
+  user: Array<any>;
+  userId: string;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public _authService: AuthenticationProvider,
     public _assesmentService: AssesmentProvider,
@@ -23,12 +26,21 @@ export class UserAssesmentsPage {
   }
 
   ionViewDidLoad() {
-    this.getUserAssesment();
+    this.getUser();
   }
 
-  getUserAssesment() {
+  getUser() {
+    this.user = this._authService.currentUser();
+    this.getUserDetails(this.user);
+  }
 
+  getUserDetails(user){
+    this.birthDate = new Date(user.dateOfBirth);
+    this.userId = user._id;
+    this.getUserAssesment(this.userId);
+  }
 
+  getUserAssesment(user_id) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
@@ -37,13 +49,12 @@ export class UserAssesmentsPage {
 
     loading.present();
 
-    this._assesmentService.getAssementResponses()
+    this._assesmentService.getAssementResponses(user_id)
     .subscribe((resp) => {
       console.log('response ', resp);
       if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.userAssesments = resp.responses;
-        console.log('user assesments ', this.userAssesments);
       }
     }, (err) => {
       if (err.status == 401) {
@@ -61,5 +72,7 @@ export class UserAssesmentsPage {
       }
     })
   }
+
+
 
 }

@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
+import { BookAppointmentPage  } from '../book-appointment/book-appointment';
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
 /**
  * Generated class for the AssesmentPage page.
@@ -60,6 +61,7 @@ export class AssesmentPage {
   question_id: string;
   responseId: number;
   lock_swipes: boolean = true;
+  isAppointment: boolean;
 
   constructor(
     private alertCtrl: AlertController,
@@ -78,22 +80,27 @@ export class AssesmentPage {
   ionViewDidLoad(){
     this.loadAssesments(this.navParams.get('id'));
     this.contraceptive_id =  this.navParams.get('id');
+    this.isAppointment = this.navParams.get('appointment');
     this.getUser();
     this.slides.lockSwipes(true);
   }
 
   getUser() {
     let userParams:any = this._authService.currentUser();
-    this.userId = userParams._id;
-    this.username = userParams.userName;
+    if(userParams) {
+      this.userId = userParams._id;
+      this.username = userParams.userName;
+    }
   }
 
   loadAssesments(id) {
     this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
-       if (resp.success && resp.status == 200) {
-         this.assesment = resp.assesments
-       }
+      if (resp.success && resp.status == 200) {
+        this.assesment = resp.assesments
+        console.log('assesment response ', this.assesment);
+        console.log('appointment ', this.isAppointment);
+      }
     }, (err) => {
       if (err.status == 401) {
           // Unable to log in
@@ -124,8 +131,6 @@ export class AssesmentPage {
     if(this.isEnd) {
       this.slides.lockSwipeToPrev(true);
     }
-    console.log('current slide index: ', this.slides.getActiveIndex());
-    console.log('has slide ended ', this.isEnd);
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label) {
@@ -171,6 +176,8 @@ export class AssesmentPage {
 
     if(event.target.value != "") {
       this.showButton = true;
+    }else {
+      this.showButton = false;
     }
   }
 
@@ -203,8 +210,10 @@ export class AssesmentPage {
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
+        console.log('response ', resp);
+        console.log('response id ', resp.responseId);
         this.responseId = resp.responseId;
-        this.comfirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
+        this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
       } else {
           // Unable to submit assesment
         let toast = this.toastCtrl.create({
@@ -225,7 +234,7 @@ export class AssesmentPage {
     });
   }
 
-  comfirmIfUserWantsToPurchase(user, assesmentId) {
+  confirmIfUserWantsToPurchase(user, assesmentId) {
     let confirm = this.alertCtrl.create({
       title: 'Purchase Contraceptive',
       message: `Do you want to purchase this contraceptive?`,
@@ -239,10 +248,15 @@ export class AssesmentPage {
         {
           text: 'Yes',
           handler: () => {
-           this.navCtrl.push(
-             ContraceptiveQuantityPage, 
-            { contraceptive: this.contraceptive_id, user: user, assesmentId: assesmentId }
-          );
+            if(this.isAppointment) {
+              this.navCtrl.push(BookAppointmentPage, {responseId: this.responseId});
+            }
+            else{
+              this.navCtrl.push(
+                 ContraceptiveQuantityPage,
+                { contraceptive: this.contraceptive_id, user: user, assesmentId: assesmentId }
+              );
+            }
           }
         }
       ]
