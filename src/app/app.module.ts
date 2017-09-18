@@ -6,9 +6,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule, Http } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { BookAppointmentPage } from '../pages/book-appointment/book-appointment';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
+import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
@@ -17,8 +19,8 @@ import { IntroPage } from '../pages/intro/intro';
 import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SettingsPage } from '../pages/settings/settings';
-import { BasicInformationPage } from '../pages/basic-information/basic-information';
-import { PersonalInformationPage } from '../pages/personal-information/personal-information';
+import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
+import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { UserProvider } from '../providers/user/user';
 import { BaseurlProvider } from '../providers/baseurl/baseurl';
@@ -58,7 +60,9 @@ export function getAuthHttp(http) {
     ContraceptiveDescPage,
     ContraceptiveQuantityPage,
     BasicInformationPage,
-    PersonalInformationPage
+    PersonalInformationPage,
+    BookAppointmentPage,
+    AssesmentResponsePage
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,9 @@ export function getAuthHttp(http) {
     FoundPharmaciesPage,
     ContraceptiveQuantityPage,
     BasicInformationPage,
-    PersonalInformationPage
+    PersonalInformationPage,
+    BookAppointmentPage,
+    AssesmentResponsePage
   ],
   providers: [
     Geolocation,

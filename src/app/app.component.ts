@@ -9,8 +9,9 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 import { LoginPage } from '../pages/login/login';
 import { SettingsPage } from '../pages/settings/settings';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
-import { BasicInformationPage } from '../pages/basic-information/basic-information';
-import { PersonalInformationPage } from '../pages/personal-information/personal-information';
+import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
+import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
+import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,9 +34,10 @@ export class MyApp {
         if (token) {
             console.log('intro shown? ', token);
             if (_authService.loggedIn()) {
-               this.rootPage =  HomePage;
+               // this.rootPage =  HomePage;
+               this.rootPage = AssesmentResponsePage;
             } else {
-              this.rootPage = LoginPage;
+              this.nav.push(LoginPage);
             }
         } else {
             _authService.saveToken('introShown', 'true');

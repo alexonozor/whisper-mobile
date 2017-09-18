@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserProvider } from '../../providers/user/user';
+import { UserProvider } from '../../../providers/user/user';
 
 @IonicPage()
 @Component({
