@@ -1,3 +1,13 @@
 page-user-notifications {
-  h4.notifications { color: #000 ;}
+  h4.notifications {
+    color: #000;
+    font-size: 1.4rem;
+  }
+  h5.timeline {
+    color: #616161;
+    font-size: 1.2rem;
+  }
+  .button-inner {
+    flex-flow: column;
+  }
 }

@@ -9,17 +9,23 @@
 
 <ion-content padding>
   <ion-list no-lines>
-    <ion-item>
-      <button ion-button icon-only clear>
-        <ion-icon name="chatboxes" item-start color="rounded_buttons"></ion-icon>
-        <h4 class="Notifications">Reni just replied to your assesment</h4>
-      </button>
-    </ion-item>
-  </ion-list>
-  <ion-list no-lines>
-    <ion-item>
-      <ion-icon name="chatboxes" item-start color="rounded_buttons"></ion-icon>
-        <h3>Reni just replied to your assesment</h3>
-    </ion-item>
+    <button ion-button icon-only clear>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1>
+            <ion-icon name="chatboxes" item-start color="rounded_buttons"></ion-icon>
+          </ion-col>
+          <ion-col col-1></ion-col>
+          <ion-col col-10>
+            <h4 class="notifications">Reni just replied to your assesment</h4> <br/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-7>
+            <h5 class="timeline">1 month ago</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </button>
   </ion-list>
 </ion-content>
