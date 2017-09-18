@@ -18,7 +18,8 @@ export class BaseurlProvider {
                 break;
              case 'localhost':
                 data = {
-                    endPoint: 'http://192.168.8.101:7777'
+                    endPoint: 'http://localhost:7777'
+
                 };
                 break;
 

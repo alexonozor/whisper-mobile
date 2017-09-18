@@ -32,10 +32,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       let token = _authService.getToken('introShown');
         if (token) {
-            console.log('intro shown? ', token);
             if (_authService.loggedIn()) {
-               // this.rootPage =  HomePage;
-               this.rootPage = AssesmentResponsePage;
+               this.rootPage =  HomePage;
+              //  this.rootPage = AssesmentResponsePage;
             } else {
               this.nav.push(LoginPage);
             }
