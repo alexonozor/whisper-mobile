@@ -16,6 +16,7 @@ import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
+import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SettingsPage } from '../pages/settings/settings';
@@ -62,7 +63,8 @@ export function getAuthHttp(http) {
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
-    AssesmentResponsePage
+    AssesmentResponsePage,
+    UserNotificationsPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ export function getAuthHttp(http) {
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
-    AssesmentResponsePage
+    AssesmentResponsePage,
+    UserNotificationsPage
   ],
   providers: [
     Geolocation,
