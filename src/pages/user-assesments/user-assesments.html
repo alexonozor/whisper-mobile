@@ -25,7 +25,7 @@
       </ion-col>
       <ion-col col-1></ion-col>
       <ion-col col-10>
-        <ion-card *ngFor="let assesment of userAssesments">
+        <ion-card *ngFor="let assesment of userAssesments; let i = index" (press)="openOptions(assesment, i)">
           <ion-card-content *ngIf="assesment?.user">
             <div text-left>
               <h3>{{birthDate | date:'longDate'}}</h3>
