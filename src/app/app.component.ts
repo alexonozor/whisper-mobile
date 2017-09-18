@@ -12,6 +12,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
 import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
+import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,8 +34,13 @@ export class MyApp {
       let token = _authService.getToken('introShown');
         if (token) {
             if (_authService.loggedIn()) {
+<<<<<<< 10761e7c46e2027703989fbfe9c90f97fafda263
                this.rootPage =  HomePage;
               //  this.rootPage = AssesmentResponsePage;
+=======
+               // this.rootPage =  HomePage;
+               this.rootPage = UserNotificationsPage;
+>>>>>>> notifications page
             } else {
               this.nav.push(LoginPage);
             }
