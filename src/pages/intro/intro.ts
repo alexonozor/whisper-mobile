@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../../pages/login/login';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the IntroPage page.
  *
@@ -36,7 +36,7 @@ export class IntroPage {
   ];
 
   skipIntro() {
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.push(HomePage);
   }
 
 }

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
+import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
+
 
 @Component({
   selector: 'page-login',
@@ -19,11 +21,13 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     public toastCtrl: ToastController,
     public formBuilder: FormBuilder,
     public _userService: UserProvider,
     public _authService: AuthenticationProvider
     ) {
+    console.log("previous page: ", this.navParams.get('prev_page'));
   }
 
   // Attempt to login in through our User service
@@ -31,6 +35,7 @@ export class LoginPage {
     this._authService.login(this.form.value)
     .subscribe((resp) => {
       if (resp.success) {
+        let prev_page= this.navParams.get('prev_page');
         console.log('user object ', resp);
         this.rootPage = HomePage;
         this.navCtrl.setRoot(HomePage);

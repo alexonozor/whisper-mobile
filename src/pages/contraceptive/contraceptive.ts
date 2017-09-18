@@ -35,6 +35,9 @@ export class ContraceptivePage {
   }
 
   getAllContraceptive() {
+    let prev_page = this.navCtrl.getActive().name;
+    console.log('current page ', prev_page);
+
     this._authService.tokenSubscription()
       let loading = this.loadingCtrl.create({
       spinner: 'show',
@@ -61,9 +64,10 @@ export class ContraceptivePage {
         });
         toast.present();
 
-        this.navCtrl.setRoot(LoginPage).then(() => {
-            this.navCtrl.popToRoot();
-        });
+        // this.navCtrl.setRoot(LoginPage).then(() => {
+        //     this.navCtrl.popToRoot();
+        // });
+        this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
      }
    })
   }
