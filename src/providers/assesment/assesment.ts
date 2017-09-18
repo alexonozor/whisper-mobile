@@ -48,4 +48,29 @@ export class AssesmentProvider {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
+
+  getAssementResponsesMessage(id: string) : Observable<any> {
+    return this.authHttp.get(`${this.host}/conversation/${id}/messages`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  deleteAssementResponse(id: string) : Observable<any> {
+    return this.authHttp.put(`${this.host}/delete-assessment-responses/${id}`, {})
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  
+  startAssessmentConversation(params) : Observable<any> {
+    return this.authHttp.post(`${this.host}/create-conversation`, params)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  sendResponsesMessage(params) : Observable<any> {
+    return this.authHttp.post(`${this.host}/messages`, params)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
 }

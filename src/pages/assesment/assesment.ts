@@ -98,8 +98,6 @@ export class AssesmentPage {
     .subscribe((resp) => {
       if (resp.success && resp.status == 200) {
         this.assesment = resp.assesments
-        console.log('assesment response ', this.assesment);
-        console.log('appointment ', this.isAppointment);
       }
     }, (err) => {
       if (err.status == 401) {
