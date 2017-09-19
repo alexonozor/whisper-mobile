@@ -31,7 +31,7 @@
       </ion-list>
 
       <ion-list radio-group formControlName="shippingMethod">
-      <ion-item *ngFor="let shipping of contraceptive.shippingMethods">
+      <ion-item *ngFor="let shipping of contraceptive?.shippingMethods" [hidden]="(contraceptive?.allowFirstTimerToUsePickUp && isFirstTimeOrder && shipping?.shppingCode == 1001)">
         <ion-label>{{shipping?.name}}</ion-label>
         <ion-radio [value]="shipping._id"></ion-radio>
       </ion-item>
