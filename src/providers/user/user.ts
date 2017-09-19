@@ -30,4 +30,10 @@ export class UserProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
+  getUser(id) : Observable<any> {
+    return this.http.get(`${this.host}/user/${id}`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
 }

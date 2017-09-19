@@ -37,8 +37,8 @@ export class AssesmentProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  updateResponse(id: string, params) : Observable<any> {
-    return this.http.put(`${this.host}/update-assessment-responses/${id}`, params)
+  updateResponse(id: string, params, updatingShippingForm = false) : Observable<any> {
+    return this.http.put(`${this.host}/update-assessment-responses/${id}?updatingShippingForm=${updatingShippingForm}`, params)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
