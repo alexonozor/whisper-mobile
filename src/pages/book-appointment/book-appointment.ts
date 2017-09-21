@@ -44,8 +44,6 @@ export class BookAppointmentPage {
   bookAppointment() {
     console.log('appointment booked');
     this.submited = true;
-    console.log('form value ',this.appointmentFormGroup.value);
-    console.log('response id ', this.responseId);
     this._assesmentService.updateResponse(this.responseId, this.appointmentFormGroup.value)
     .subscribe((res) => {
       if (res.success) {

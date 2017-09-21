@@ -39,12 +39,20 @@ export class AssesmentResponsePage {
   }
 
   ionViewDidLoad() {
+    this.getMessages();
     this._assesmentService.getAssementResponsesMessage(this.conversationId)
     .subscribe((resp) => {
       if (resp.success) {
         this.conversation = resp.conversation;
         this.checkSender(resp.conversation.messages);
       }
+    })
+  }
+
+
+  getMessages() {
+     this._assesmentService.getMessages().subscribe(message => {
+      this.messageResponse.push(message);
     })
   }
 
@@ -58,14 +66,7 @@ export class AssesmentResponsePage {
 
   sendMessage() {
     this._assesmentService.sendResponsesMessage(this.form.value)
-    .subscribe((resp) => {
-      if (resp.success) { 
-      }
-    }, err => {
-      
-    })
-    this.form.value['isSender'] = true;
-    this.messageResponse.push(this.form.value);
+    
     this.form.reset(
       { 
         content: '', 
