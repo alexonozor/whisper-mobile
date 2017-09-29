@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
+import { UserProvider } from '../../providers/user/user';
 import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
@@ -22,12 +23,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class ContraceptiveQuantityPage {
-    public user = {};
+    public user;
     public contraceptiveId: number;
     public assesmentId: string;
-    public contraceptive = {};
+    public contraceptive;
     public quantityRange = [];
     public quantityForm: FormGroup
+    public userOrders = [];
+    public isFirstTimeOrder: boolean;
 
     constructor(
       private alertCtrl: AlertController,
@@ -40,6 +43,7 @@ export class ContraceptiveQuantityPage {
       private geolocation: Geolocation,
       public _assesmentService: AssesmentProvider,
       public _pharmacyService: PharmacyProvider,
+      public _userService: UserProvider,
       public http: Http,
       public fb: FormBuilder
   ) {
@@ -50,7 +54,7 @@ export class ContraceptiveQuantityPage {
   }
 
   ionViewDidLoad() {
-    this.getContraceptive(this.contraceptiveId)
+    this.getUserOrders(this.user._id);
   }
 
   createForm() {
@@ -60,27 +64,54 @@ export class ContraceptiveQuantityPage {
     })
   }
 
+
+  getUserOrders(id) {
+    this._userService.getUser(id)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.userOrders =  resp.user.orders;
+        this.getContraceptive(this.contraceptiveId);
+      }
+    }, err => {
+      // caught error
+    })
+  }
+
+
   getContraceptive(id) {
-    console.log('contraceptive id ', id);
     this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
-      console.log('response ', resp);
       if (resp.success) {
+        console.log(resp)
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
+        this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId)
       }
     }, err => {
       // caught errors
       console.log('An error occured, can\'t find contraceptive');
     })
+  };
+
+  
+
+
+  firstTimeOrder(orders: Array<any>, contraceptiveId: number ) :boolean {
+    orders.forEach(element => {
+      console.log(element == contraceptiveId);
+      if (element == contraceptiveId) { 
+        return false;
+      }
+    });
+    return true
   }
 
+
+
   updateResponse() {
-    this._assesmentService.updateResponse(this.assesmentId, this.quantityForm.value)
+    this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
-      console.log('response ', resp);
       if (resp.success) {
-        console.log('response ', resp.success);
         this.updateAssesmentResponseWithQuantity();
       } else {
           // Unable to update response
