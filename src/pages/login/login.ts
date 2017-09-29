@@ -17,7 +17,6 @@ export class LoginPage {
     'email': ['', Validators.required],
     'password': ['', Validators.required]
   });
-  rootPage:any;
 
   constructor(
     public navCtrl: NavController,
@@ -37,8 +36,12 @@ export class LoginPage {
       if (resp.success) {
         let prev_page= this.navParams.get('prev_page');
         console.log('user object ', resp);
-        this.rootPage = HomePage;
-        this.navCtrl.setRoot(HomePage);
+        if( prev_page != undefined || prev_page != ""){
+          this.navCtrl.push(prev_page);
+        }
+        else {
+          this.navCtrl.push(HomePage);
+        }
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
       } else {

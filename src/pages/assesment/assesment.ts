@@ -8,7 +8,7 @@ import { LoginPage } from '../login/login';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
-import { BookAppointmentPage  } from '../book-appointment/book-appointment';
+import { BookAppointmentPage, AppointmentLandingPage  } from '../book-appointment/book-appointment';
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
 /**
  * Generated class for the AssesmentPage page.
@@ -240,7 +240,7 @@ export class AssesmentPage {
         {
           text: 'No',
           handler: () => {
-            this.navCtrl.popToRoot()
+            this.navCtrl.push(AppointmentLandingPage, {message: 'You can always purchase at any time you want'})
           }
         },
         {
@@ -281,15 +281,16 @@ export class FoundPharmaciesPage {
     public toastCtrl: ToastController,
   ) {
     this.pharmacies = navParams.get('pharmacies');
+    console.log('pharmacies nav ')
     this.responseId = navParams.get('responseId');
   }
 
-  updataUserAssessmentResponse(pharmacyId) {
-     let loading = this.loadingCtrl.create({
+  updateUserAssessmentResponse(pharmacyId) {
+    let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: 'finding pharmacies...'
-   });
+      content: 'contacting pharmacy...'
+    });
     loading.present();
     this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
     .subscribe((resp) => {
@@ -302,7 +303,7 @@ export class FoundPharmaciesPage {
         })
 
         toast.present();
-        this.navCtrl.push(HomePage);
+        this.navCtrl.push(AppointmentLandingPage, {message: 'Order Success'});
       }
     }, err => {
 

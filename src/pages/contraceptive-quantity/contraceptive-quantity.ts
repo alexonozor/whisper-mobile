@@ -82,10 +82,13 @@ export class ContraceptiveQuantityPage {
     this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
       if (resp.success) {
-        console.log(resp)
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
         this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId)
+        resp.shippingMethods = ['Delivery', 'Pickup'];
+        // mocking min & max shipping quantity
+        resp.contraceptive.minimumShippingQuantity = 2;
+        resp.contraceptive.maximumShippingQuantity = 50;
       }
     }, err => {
       // caught errors
@@ -134,11 +137,14 @@ export class ContraceptiveQuantityPage {
   }
 
   range(lowEnd, highEnd) {
-    var arr = [],
-    c = highEnd - lowEnd + 1;
-    while ( c-- ) {
-      arr[c] = highEnd--
+    console.log('low end ', lowEnd);
+    console.log('high end ', highEnd);
+    let arr = [];
+
+    while(lowEnd <= highEnd){
+      arr.push(lowEnd++);
     }
+
     return arr;
   }
 
@@ -184,6 +190,30 @@ export class ContraceptiveQuantityPage {
     this._pharmacyService.getNearerPharmacies(longitude, latitude)
     .subscribe((resp) => {
       if (resp.success) {
+        // mock data
+        resp.pharmacies = [
+          {
+            name: 'Health plus',
+            description: "Lagos pharmacy",
+            contact: {
+              address:"lagos"
+            }
+          },
+          {
+            name: 'Alpha pharm',
+            description: "Lagos pharmacy",
+            contact: {
+              address:"lagos"
+            }
+          },
+          {
+            name: 'Medplus',
+            description: "Lagos pharmacy",
+            contact: {
+              address:"lagos"
+            }
+          }
+        ];
         this.navCtrl.push(FoundPharmaciesPage, { pharmacies: resp.pharmacies, responseId: this.assesmentId })
         loading.dismiss();
       } 

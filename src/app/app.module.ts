@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule, Http } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { BookAppointmentPage } from '../pages/book-appointment/book-appointment';
+import { BookAppointmentPage, AppointmentLandingPage } from '../pages/book-appointment/book-appointment';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
@@ -16,10 +16,8 @@ import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
 import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
-<<<<<<< 10761e7c46e2027703989fbfe9c90f97fafda263
 import { UserAssesmentsPage, ResponseInfoPage } from '../pages/user-assesments/user-assesments';
 import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
-import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
@@ -65,8 +63,9 @@ export function getAuthHttp(http) {
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
+    AppointmentLandingPage,
     AssesmentResponsePage,
-    ResponseInfoPage
+    ResponseInfoPage,
     UserNotificationsPage
   ],
   imports: [
@@ -95,8 +94,9 @@ export function getAuthHttp(http) {
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
+    AppointmentLandingPage,
     AssesmentResponsePage,
-    ResponseInfoPage
+    ResponseInfoPage,
     UserNotificationsPage
   ],
   providers: [
