@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AssesmentProvider } from '../../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-  
+
 
 @IonicPage()
 @Component({
@@ -52,6 +52,7 @@ export class AssesmentResponsePage {
     this.userId = this._authentication.currentUser()._id;
     messageResponse.forEach((el, i) => {
       el['isSender'] = ( el.user == this.userId )
+      console.log('sender ', el['isSender']);
     })
     this.messageResponse = messageResponse;
   }

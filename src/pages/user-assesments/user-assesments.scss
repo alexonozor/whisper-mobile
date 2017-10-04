@@ -1,4 +1,9 @@
 page-user-assesments {
+  h4.more_options {
+    font-size: 1.3rem;
+    padding: 10px;
+  }
+
   ion-card.card {
     box-shadow: none;
     webkit-box-shadow: none;
@@ -27,7 +32,7 @@ page-user-assesments {
     list-style-type: none;
     position: relative;
     width: 2px;
-    padding-top: 140px;
+    padding-top: 115px;
     background: #dd1d5e;
     margin-top: -20px;
   }

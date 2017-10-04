@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { BookAppointmentPage, AppointmentLandingPage } from '../pages/book-appointment/book-appointment';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
+import { AssesmentPage, FoundPharmaciesPage, NonEligiblePage } from '../pages/assesment/assesment';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
@@ -53,6 +53,7 @@ export function getAuthHttp(http) {
     LoginPage,
     AssesmentPage,
     FoundPharmaciesPage,
+    NonEligiblePage,
     ContraceptivePage,
     StartPage,
     SettingsPage,
@@ -90,6 +91,7 @@ export function getAuthHttp(http) {
     UserAssesmentsPage,
     AssesmentPage,
     FoundPharmaciesPage,
+    NonEligiblePage,
     ContraceptiveQuantityPage,
     BasicInformationPage,
     PersonalInformationPage,

@@ -141,10 +141,6 @@ export class ContraceptiveDescPage {
 })
 
 export class StartPage {
-  contraceptive_name : string;
-  contraceptive_description : string;
-  contraceptive_id: string;
-
 
   constructor(
     public navCtrl: NavController,
@@ -152,13 +148,12 @@ export class StartPage {
     public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    
-  }
+  ionViewDidLoad() {}
 
   startAssesment() {
     this.navCtrl.push(AssesmentPage, {
       id: this.navParams.get('id'),
+      name: this.navParams.get('name'),
       appointment: this.navParams.get('appointment')
     });
   }

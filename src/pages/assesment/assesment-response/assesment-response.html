@@ -1,51 +1,39 @@
 
 <ion-header no-border>
-  
+
     <ion-navbar>
       <ion-title>assesment response</ion-title>
     </ion-navbar>
-  
+
   </ion-header>
-  
-  
-  <ion-content padding>
-  
-    <ion-scroll scrollY="true" style="width: 100%; height: 100%;">
-      <ion-grid>
-        <ion-row *ngFor="let conversation of messageResponse">
-          <ion-col col-10>
-            <ion-card [ngClass]="conversation.isSender? 'receiver' : 'sender'">
-              <ion-card-content>
-                <h3>
-                  <span [ngClass]="userName">
-                    {{conversation?.userName}}
-                  </span>
-                     {{conversation?.content}} 
-                  <i class="timeline"> {{conversation?.createdAt | date:'shortTime'}}</i>
-                </h3>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col col-2></ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-scroll>
-  
+
+
+  <ion-content>
+    <div *ngFor="let conversation of messageResponse" class="message-wrapper" >
+      <!--  wave-->
+      <div [ngClass]="conversation.isSender? 'right slide-right' : 'left slide-left'" class="chat-bubble">
+
+        <div class="message" [innerHTML]="conversation?.content" autolinker>
+        </div>
+
+        <div class="message-detail">
+          <span class="bold">{{conversation?.userName}}</span>,
+          <!-- change to {{message.date | moment:"ago" | lowercase}} -->
+          <span> {{conversation?.createdAt | date:'shortTime'}}</span>
+        </div>
+      </div>
+
+      <div class="cf"></div>
+
+    </div>
   </ion-content>
-  
-  
+
   <ion-footer no-border>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-12>
-          <form [formGroup]="form" (ngSubmit)="sendMessage()" novalidate>
-            <ion-item>
-              <ion-textarea class="message" autocomplete="true" formControlName="content" placeholder="Write a message" type="text" rows="2" >
-              </ion-textarea>
-              <button class="input_button" ion-button color="info_button" [hidden]="!form.valid" clear item-right>Send</button>
-            </ion-item>
-          </form>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <form [formGroup]="form" (ngSubmit)="sendMessage()" novalidate>
+      <ion-item>
+        <ion-textarea class="message" autocomplete="true" formControlName="content" placeholder="Write a message" type="text" rows="2" >
+        </ion-textarea>
+        <button ion-button color="info_button" [hidden]="!form.valid" clear item-end><ion-icon class="footer-btn" name="send"></ion-icon></button>
+      </ion-item>
+    </form>
   </ion-footer>

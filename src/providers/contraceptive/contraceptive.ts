@@ -43,4 +43,10 @@ export class ContraceptiveProvider {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error || 'server error'));
   }
+
+  getAdminAssesment(id: string): Observable<any> {
+    return this.authHttp.get(`${this.host}/admin-assessment/${id}/answers`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error || 'server error'));
+  }
 }

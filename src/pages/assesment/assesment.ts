@@ -3,6 +3,7 @@ import { AlertController, IonicPage, NavController, NavParams, ToastController, 
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
+import { ContraceptivePage } from   '../contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -10,12 +11,7 @@ import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { BookAppointmentPage, AppointmentLandingPage  } from '../book-appointment/book-appointment';
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
-/**
- * Generated class for the AssesmentPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -62,6 +58,7 @@ export class AssesmentPage {
   responseId: number;
   lock_swipes: boolean = true;
   isAppointment: boolean;
+  nonEligibilityCount: number = 0;
 
   constructor(
     private alertCtrl: AlertController,
@@ -80,6 +77,7 @@ export class AssesmentPage {
   ionViewDidLoad(){
     this.loadAssesments(this.navParams.get('id'));
     this.contraceptive_id =  this.navParams.get('id');
+    this.contraceptive_name = this.navParams.get('name');
     this.isAppointment = this.navParams.get('appointment');
     this.getUser();
     this.slides.lockSwipes(true);
@@ -98,6 +96,7 @@ export class AssesmentPage {
     .subscribe((resp) => {
       if (resp.success && resp.status == 200) {
         this.assesment = resp.assesments
+        console.log('assesment ', this.assesment);
       }
     }, (err) => {
       if (err.status == 401) {
@@ -131,7 +130,14 @@ export class AssesmentPage {
     }
   }
 
-  nextSlide(question_id, question, answer, isEditedAnswer, label) {
+  nextSlide(question_id, question, answer, isEditedAnswer, label, eligible) {
+
+    if(!eligible) {
+      this.nonEligibilityCount += 1;
+      console.log('non-eligiblity count ', this.nonEligibilityCount);
+      console.log('contraceptive name ', this.contraceptive_name);
+      console.log('contraceptive id ', this.contraceptive_id);
+    }
     this.question_id = question_id;
     this.assesmentParams.user = this.userId;
     this.assesmentParams.contraceptive = this.contraceptive_id;
@@ -190,9 +196,9 @@ export class AssesmentPage {
     }
 
     this.answer_exists = this.findOrReplaceAnswer(
-      this.assesmentParams.questions, 
-      'question', 
-      this.question_id, 
+      this.assesmentParams.questions,
+      'question',
+      this.question_id,
       this.assesment_obj
     );
 
@@ -211,7 +217,13 @@ export class AssesmentPage {
         console.log('response ', resp);
         console.log('response id ', resp.responseId);
         this.responseId = resp.responseId;
-        this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
+        // checks eligibility count
+        if(this.nonEligibilityCount >= 1) {
+          console.log('contraceptive name ', this.contraceptive_name)
+          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name});
+        }else{
+          this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
+        }
       } else {
           // Unable to submit assesment
         let toast = this.toastCtrl.create({
@@ -310,3 +322,36 @@ export class FoundPharmaciesPage {
     })
   }
 };
+
+
+@Component({
+  selector: 'page-noneligble',
+  templateUrl: 'noneligible.html',
+})
+
+export class NonEligiblePage {
+  contraceptive: string;
+  message: string;
+
+  constructor(
+    public _assesmentService: AssesmentProvider,
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+  ) {
+  }
+
+  ionViewDidLoad() {
+    this.contraceptive = this.navParams.get('contraceptive_name');
+    this.message = `We are sorry, but you are not eligible to purchase a ${this.contraceptive}`;
+  }
+
+  goHome() {
+    this.navCtrl.setRoot(HomePage);
+  }
+
+  getContraceptive() {
+    this.navCtrl.setRoot(ContraceptivePage);
+  }
+}

@@ -1,0 +1,30 @@
+<ion-header no-border>
+
+  <ion-navbar color="navColor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Whisper</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10 class="welcome">
+        <h3 class="title">{{message}}</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-4>
+        <button color="rounded_buttons" ion-button outline round small (click)="goHome()">Home</button>
+      </ion-col>
+      
+      <ion-col col-7>
+        <button color="rounded_buttons" ion-button outline round small (click)="getContraceptive()">Get Contraceptive</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
