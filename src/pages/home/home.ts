@@ -24,10 +24,11 @@ export class HomePage {
   }
 
   getContraceptive() {
-    if (this._authService.loggedIn()) {
+    console.log('get current user ', this._authService.currentUser());
+    if (this._authService.currentUser() != null) {
       this.navCtrl.push(ContraceptivePage);
     }else{
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.push(LoginPage, {prev_page: this.navCtrl.getActive()});
     }
   }
 

@@ -5,13 +5,16 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
-
+import { SignupPage } from '../signup/signup';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
+  loading: boolean = false;
+  public backgroundImage = 'assets/img/background-5.jpg';
+
   // The account fields for the login form.
   private form = this.formBuilder.group({
     'email': ['', Validators.required],
@@ -26,18 +29,22 @@ export class LoginPage {
     public _userService: UserProvider,
     public _authService: AuthenticationProvider
     ) {
-    console.log("previous page: ", this.navParams.get('prev_page'));
   }
 
   // Attempt to login in through our User service
   doLogin() {
+    this.loading = true;
     this._authService.login(this.form.value)
     .subscribe((resp) => {
       if (resp.success) {
-        let prev_page= this.navParams.get('prev_page');
-        console.log('user object ', resp);
+        this.loading = false
+        let prev_page = this.navParams.get('prev_page');
         if( prev_page != undefined || prev_page != ""){
-          this.navCtrl.push(prev_page);
+          if(prev_page.name == "HomePage"){
+            this.navCtrl.setRoot(prev_page);
+          }else {
+            this.navCtrl.push(prev_page);
+          }
         }
         else {
           this.navCtrl.push(HomePage);
@@ -62,5 +69,9 @@ export class LoginPage {
       });
       toast.present();
     });
+  }
+
+  goToSignup() {
+    this.navCtrl.push(SignupPage);
   }
 }

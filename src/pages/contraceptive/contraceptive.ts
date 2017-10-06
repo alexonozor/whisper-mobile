@@ -5,12 +5,6 @@ import { ContraceptiveProvider } from '../../providers/contraceptive/contracepti
 import { LoginPage } from '../login/login';
 import { AssesmentPage } from '../assesment/assesment';
 
-/**
- * Generated class for the ContraceptivePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-contraceptive',
