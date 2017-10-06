@@ -16,10 +16,16 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
+      <ion-col col-3> <img src="assets/img/touch.png" *ngIf="loaded"/> </ion-col>
+      <ion-col col-9> 
+        <h4 class="more_options" *ngIf="loaded">Press and hold each assessment below to view more options</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col col-1>
         <div class="timeline">
           <ul *ngFor="let assesment of userAssesments">
-            <li *ngIf="assesment?.user"></li>
+            <li></li>
           </ul>
         </div>
       </ion-col>
@@ -37,7 +43,7 @@
                     {{assesment?.contraceptive?.name}}
                   </ion-card-title>
                   <p class="assesments_user_info">
-                    {{assesment?.user?.firstName}}, {{ assesment?.user?.gender}}
+                    {{user?.firstName}}, {{user?.gender}}
                   </p>
                 </ion-col>
                 <ion-col col-3>

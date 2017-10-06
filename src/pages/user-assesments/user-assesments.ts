@@ -15,6 +15,7 @@ export class UserAssesmentsPage {
   birthDate: Date;
   user: Array<any>;
   userId: string;
+  loaded: boolean = false;
 
   constructor(
     public modalCtrl: ModalController,
@@ -34,6 +35,7 @@ export class UserAssesmentsPage {
 
   getUser() {
     this.user = this._authService.currentUser();
+    console.log('user ', this.user);
     this.getUserDetails(this.user);
   }
 
@@ -56,6 +58,7 @@ export class UserAssesmentsPage {
     .subscribe((resp) => {
 
       if (resp.success && resp.status == 200) {
+        this.loaded = true;
         loading.dismiss();
         this.userAssesments = resp.responses;
       }

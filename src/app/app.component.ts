@@ -12,6 +12,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
 import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
+import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,8 +34,8 @@ export class MyApp {
       let token = _authService.getToken('introShown');
         if (token) {
             if (_authService.loggedIn()) {
-               this.rootPage =  HomePage;
-              //  this.rootPage = AssesmentResponsePage;
+              this.rootPage =  HomePage;
+              // this.rootPage = UserNotificationsPage;
             } else {
               this.nav.push(LoginPage);
             }
@@ -48,7 +49,8 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home', color: "home" },
       { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive"},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile"},
-      { title: 'Settings', component: SettingsPage, icon: 'settings', color: "settings"}
+      { title: 'Settings', component: SettingsPage, icon: 'settings', color: "settings"},
+      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"}
     ];
 
     statusBar.styleDefault();
