@@ -18,23 +18,23 @@
 </ion-header>
 
 
-<ion-content padding class="row">
+<ion-content  [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
 
 <ion-grid class="margin">
   <div text-center class="menu-buttons">
     <ion-row>
   	    <ion-col class="buttons">
-  	    	<button fab-center ion-button outline round default color="rounded_buttons" (click)="getContraceptive()">Get a Contraceptive</button>
+  	    	<button fab-center ion-button round default color="rounded_buttons" (click)="getContraceptive()">Get a Contraceptive</button>
   	    </ion-col>
     </ion-row>
     <ion-row>
         <ion-col class="buttons">
-          <button fab-center ion-button outline round default color="rounded_buttons" (click)="askHealthProvider()">Ask a health provider</button>
+          <button fab-center ion-button round default color="health_button" (click)="askHealthProvider()">Ask a health provider</button>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col class="buttons">
-          <button fab-center ion-button outline round default color="rounded_buttons" (click)="goToAssessmentId()">Find a doctor</button>
+          <button fab-center ion-button round default color="dr_button" (click)="goToAssessmentId()">Find a doctor</button>
         </ion-col>
     </ion-row>
   </div>

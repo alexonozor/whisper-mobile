@@ -13,7 +13,7 @@ import { SignupPage } from '../signup/signup';
 })
 export class LoginPage {
   loading: boolean = false;
-  public backgroundImage = 'assets/img/background-5.jpg';
+  public backgroundImage = 'assets/img/login-bg.jpg';
 
   // The account fields for the login form.
   private form = this.formBuilder.group({
@@ -33,12 +33,13 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
+    let prev_page = this.navParams.get('prev_page');
+
     this.loading = true;
     this._authService.login(this.form.value)
     .subscribe((resp) => {
       if (resp.success) {
         this.loading = false
-        let prev_page = this.navParams.get('prev_page');
         if( prev_page != undefined || prev_page != ""){
           if(prev_page.name == "HomePage"){
             this.navCtrl.setRoot(prev_page);

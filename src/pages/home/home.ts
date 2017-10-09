@@ -11,6 +11,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 export class HomePage {
   rootPage: any = HomePage;
+  public backgroundImage = 'assets/img/background.jpg';
+
   constructor(
     public navCtrl: NavController,
     public menuCtlr: MenuController,

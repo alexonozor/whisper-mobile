@@ -20,29 +20,22 @@ import { UserNotificationsPage } from '../pages/user-notifications/user-notifica
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any;
-  pages: Array<{title: string, component: any, icon: string, color: string}>
+  pages: Array<{title: string, component: any, icon: string, color: string}>;
+  loggedInUser: boolean = false;
+  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'profile'};
+  loginParams: any = { title: 'Login', component: '', icon: '', color: ''};
 
   constructor(
-    _authService: AuthenticationProvider,
+    public _authService: AuthenticationProvider,
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    public menu: MenuController) {
+    public menu: MenuController,
+    ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      let token = _authService.getToken('introShown');
-        if (token) {
-            if (_authService.loggedIn()) {
-              this.rootPage =  HomePage;
-              // this.rootPage = UserNotificationsPage;
-            } else {
-              this.nav.push(LoginPage);
-            }
-        } else {
-            _authService.saveToken('introShown', 'true');
-            this.rootPage = IntroPage;
-        }
+      this.rootPage = IntroPage;
     });
 
     this.pages = [
@@ -50,7 +43,7 @@ export class MyApp {
       { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive"},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile"},
       { title: 'Settings', component: SettingsPage, icon: 'settings', color: "settings"},
-      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"}
+      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"},
     ];
 
     statusBar.styleDefault();
@@ -61,9 +54,15 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    console.log('nav page ', page);
     this.menu.close();
-    this.nav.push(page.component);
+    if(page.title == "Logout") {
+      this._authService.logout();
+      this.nav.push(LoginPage);
+    }
+    else {
+      console.log('nav page ', page);
+      this.nav.push(page.component);
+    }
     // this.menu.enable(false, 'whisper-menu');
 
   }

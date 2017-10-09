@@ -108,15 +108,22 @@ export class ContraceptivePage {
 export class ContraceptiveDescPage {
   contraceptive_name : string;
   contraceptive_description : string;
+  public backgroundImage = 'assets/img/background.jpg';
 
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public _authService: AuthenticationProvider) {
   }
 
   ionViewDidLoad() {
     this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
+    this.getUser();
+  }
+
+  getUser() {
+    console.log('get current user ', this._authService.currentUser() );
   }
 
   contraceptiveInfo(name, description) {
@@ -135,6 +142,7 @@ export class ContraceptiveDescPage {
 })
 
 export class StartPage {
+  username: string;
 
   constructor(
     public navCtrl: NavController,

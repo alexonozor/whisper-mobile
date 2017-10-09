@@ -38,7 +38,7 @@
               <ion-col col-5>
               </ion-col>
               <ion-col col-6 class="button-container">
-                <button ion-button outline round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
+                <button ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -54,7 +54,7 @@
                   <ion-item>
                     <ion-textarea #value placeholder="Feel free to drop a message"></ion-textarea>
                   </ion-item>
-                  <button class="submit_assesment" ion-button outline round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
+                  <button class="submit_assesment" ion-button round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
                 </ion-list>
               </ion-col>
             </ion-row>
