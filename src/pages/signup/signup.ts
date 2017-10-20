@@ -3,6 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { Validators, FormBuilder } from '@angular/forms';
 import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @Component({
@@ -11,6 +12,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 
 export class SignupPage {
+  public backgroundImage = 'assets/img/background-5.jpg';
+  
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
@@ -18,7 +21,7 @@ export class SignupPage {
     'email': ['', Validators.required],
     'password': ['', Validators.required]
   });
-
+  loading: boolean = false;
 
   // Our translated text strings
   private signupErrorString: string;
@@ -33,9 +36,11 @@ export class SignupPage {
 
 
   doSignup() {
+    this.loading = true;
     // Attempt to login in through our User service
     this._userService.signup(this.form.value).subscribe((resp) => {
       if (resp.success) {
+        this.loading = false;
         this._authService.saveToken('token', resp.token)
           this.navCtrl.push(HomePage)
       } else {
@@ -50,5 +55,9 @@ export class SignupPage {
       });
       toast.present();
     });
+  }
+
+  goToLogin() {
+    this.navCtrl.push(LoginPage);
   }
 }

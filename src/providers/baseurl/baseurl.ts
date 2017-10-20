@@ -12,21 +12,20 @@ export class BaseurlProvider {
         environment = window.location.hostname;
         switch (environment) {
             case'https://whisper-admin.herokuapp.com':
-                data = {
-                    endPoint: 'https://whisper-admin.herokuapp.com'
-                };
-                break;
-             case 'localhost':
-                data = {
-                    endPoint: 'http://localhost:7777'
-
-                };
-                break;
+              data = {
+                endPoint: 'https://whisper-admin.herokuapp.com'
+              };
+              break;
+           case 'localhost':
+              data = {
+                endPoint: 'https://whisper-admin.herokuapp.com'
+              };
+              break;
 
             default:
-                data = {
-                    endPoint: 'http://192.168.8.101:7777'
-                };
+              data = {
+                endPoint: 'https://whisper-admin.herokuapp.com'
+              };
         }
         return data['endPoint'];
     }

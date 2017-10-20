@@ -1,24 +1,29 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
+import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
+import { SignupPage } from '../signup/signup';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
+  loading: boolean = false;
+  public backgroundImage = 'assets/img/background-5.jpg';
+
   // The account fields for the login form.
   private form = this.formBuilder.group({
     'email': ['', Validators.required],
     'password': ['', Validators.required]
   });
-  rootPage:any;
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     public toastCtrl: ToastController,
     public formBuilder: FormBuilder,
     public _userService: UserProvider,
@@ -28,12 +33,22 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
+    this.loading = true;
     this._authService.login(this.form.value)
     .subscribe((resp) => {
       if (resp.success) {
-        console.log('user object ', resp);
-        this.rootPage = HomePage;
-        this.navCtrl.setRoot(HomePage);
+        this.loading = false
+        let prev_page = this.navParams.get('prev_page');
+        if( prev_page != undefined || prev_page != ""){
+          if(prev_page.name == "HomePage"){
+            this.navCtrl.setRoot(prev_page);
+          }else {
+            this.navCtrl.push(prev_page);
+          }
+        }
+        else {
+          this.navCtrl.push(HomePage);
+        }
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
       } else {
@@ -54,5 +69,9 @@ export class LoginPage {
       });
       toast.present();
     });
+  }
+
+  goToSignup() {
+    this.navCtrl.push(SignupPage);
   }
 }

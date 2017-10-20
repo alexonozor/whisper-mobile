@@ -1,12 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../../pages/login/login';
-/**
- * Generated class for the IntroPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
+
 @IonicPage()
 @Component({
   selector: 'page-intro',
@@ -14,29 +11,51 @@ import { LoginPage } from '../../pages/login/login';
 })
 export class IntroPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
+  @ViewChild('slider') slider: Slides;
+  slideIndex = 0;
   slides = [
     {
-      title: "Welcome to the Docs!",
-      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
-      image: "assets/img/ica-slidebox-img-1.png",
+      title: 'Dream\'s Adventure',
+      imageUrl: 'assets/img/slides/wishlist-1.jpg',
+      description: 'Take a look at our amazing options',
     },
     {
-      title: "What is Ionic?",
-      description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
-      image: "assets/img/ica-slidebox-img-2.png",
+      title: 'For the Weekend',
+      imageUrl: 'assets/img/slides/wishlist-2.jpg',
+      description: 'Take a look at our amazing options',
     },
     {
-      title: "What is Ionic Cloud?",
-      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
-      image: "assets/img/ica-slidebox-img-3.png",
+      title: 'Family Time',
+      imageUrl: 'assets/img/slides/wishlist-3.jpg',
+      description: 'Take a look at our amazing options',
+    },
+    {
+      title: 'My Trip',
+      imageUrl: 'assets/img/slides/wishlist-4.jpg',
+      description: 'Take a look at our amazing options',
     }
   ];
 
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public _authService: AuthenticationProvider) {
+  }
+
+
   skipIntro() {
-    this.navCtrl.push(LoginPage);
+    console.log("is user logged in?", this._authService.loggedIn());
+    if(this._authService.loggedIn()) {
+      this.navCtrl.setRoot(HomePage);
+    }
+    else{
+      this.navCtrl.push(LoginPage)
+    }
+  }
+
+  onSlideChanged() {
+    this.slideIndex = this.slider.getActiveIndex();
+    console.log('Slide changed! Current index is', this.slideIndex);
   }
 
 }

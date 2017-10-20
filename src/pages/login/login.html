@@ -1,16 +1,15 @@
-<ion-header no-border>
-  <ion-navbar color="navColor">
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-</ion-header>
 
-
-<ion-content>
-  <ion-grid>
+<ion-content [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
+  <div padding>
+    <ion-row class="title login_box">
+      <ion-col>
+        <h5>Whisper</h5>
+      </ion-col>
+    </ion-row>
     <ion-row>
-      <ion-col col-10>
+      <ion-col>
         <form [formGroup]="form" (submit)="doLogin()">
-          <ion-list>
+          <ion-list inset class="no-border">
             <ion-item>
               <ion-input type="email" formControlName="email"  placeholder="Email" name="email"></ion-input>
             </ion-item>
@@ -18,11 +17,18 @@
               <ion-input type="password" formControlName="password" placeholder="Password" name="password"></ion-input>
             </ion-item>
           </ion-list>
-          <div text-right>
-            <button [disabled]="!form.valid" small ion-button outline round color="rounded_buttons" right>Login</button>
-          </div>
+          <button [disabled]="!form.valid || loading" ion-button outline round color="rounded_buttons" 
+          class="login-button">Login</button>
+
         </form>
       </ion-col>
     </ion-row>
-  </ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <span class="new">Have an account?</span>
+        <button ion-button color="profile" round (click)="goToSignup()">Create an account</button>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

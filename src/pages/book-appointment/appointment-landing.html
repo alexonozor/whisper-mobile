@@ -1,0 +1,36 @@
+<ion-header no-border>
+
+  <ion-navbar color="navColor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Whisper</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-grid>
+  <div text-center class="menu-buttons">
+    <ion-row>
+      <ion-col col-10 class="welcome">
+        <h3 class="title">{{message}}</h3>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div text-center class="menu-buttons">
+    <ion-row>
+      <ion-col col-3>
+        <button color="rounded_buttons" ion-button outline round small (click)="goHome()">Go Home</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-9>
+        <button color="rounded_buttons" ion-button outline round small (click)="goToContraceptive()">Get another contraceptive</button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-grid>

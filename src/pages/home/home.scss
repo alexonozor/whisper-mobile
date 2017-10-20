@@ -1,10 +1,14 @@
 page-home {
-    .menu-buttons {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        flex-wrap: nowrap;
-        height: 350px;
-    }
+  .menu-buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: 350px;
+  }
+  .scroll-content {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }

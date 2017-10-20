@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
+import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
+import { HomePage } from '../../pages/home/home';
 
 @IonicPage()
 @Component({
@@ -48,7 +50,7 @@ export class BookAppointmentPage {
     .subscribe((res) => {
       if (res.success) {
         // this.submited = false;
-        console.log('user profile updated');
+        this.navCtrl.push(AppointmentLandingPage, {message: "Thanks for booking an appointment, We would contact you shortly."});
         //add toast
         // push to a page that says go home /take another assesment
       } else {
@@ -59,3 +61,27 @@ export class BookAppointmentPage {
     })
   }
 }
+
+@Component({
+  selector: 'page-appointment-landing',
+  templateUrl: 'appointment-landing.html',
+})
+
+export class AppointmentLandingPage {
+  message : String;
+  constructor(
+    public _assesmentService: AssesmentProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+  ) {
+    this.message = navParams.get('message');
+  }
+
+
+  goHome() {
+    this.navCtrl.setRoot(HomePage);
+  }
+  goToContraceptive() {
+    this.navCtrl.push(ContraceptivePage);
+  }
+};

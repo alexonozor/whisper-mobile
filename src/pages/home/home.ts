@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { MenuController, NavController } from 'ionic-angular';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
+import { LoginPage } from '../../pages/login/login'
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+
 
 @Component({
   selector: 'page-home',
@@ -10,12 +13,23 @@ export class HomePage {
   rootPage: any = HomePage;
   constructor(
     public navCtrl: NavController,
-    public menuCtlr: MenuController) {
+    public menuCtlr: MenuController,
+    public _authService: AuthenticationProvider) {
 
   }
 
+  ionViewDidLoad() {
+    console.log('current page ', this.navCtrl.getActive().name);
+    console.log('is logged in? ', this._authService.loggedIn());
+  }
+
   getContraceptive() {
-    this.navCtrl.push(ContraceptivePage)
+    console.log('get current user ', this._authService.currentUser());
+    if (this._authService.currentUser() != null) {
+      this.navCtrl.push(ContraceptivePage);
+    }else{
+      this.navCtrl.push(LoginPage, {prev_page: this.navCtrl.getActive()});
+    }
   }
 
   askHealthProvider() {

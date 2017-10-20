@@ -6,10 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule, Http } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { BookAppointmentPage } from '../pages/book-appointment/book-appointment';
+import { BookAppointmentPage, AppointmentLandingPage } from '../pages/book-appointment/book-appointment';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { AssesmentPage, FoundPharmaciesPage } from '../pages/assesment/assesment';
+import { AssesmentPage, FoundPharmaciesPage, NonEligiblePage } from '../pages/assesment/assesment';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
@@ -17,6 +17,7 @@ import { ContraceptiveDescPage } from '../pages/contraceptive/contraceptive';
 import { StartPage } from '../pages/contraceptive/contraceptive';
 import { IntroPage } from '../pages/intro/intro';
 import { UserAssesmentsPage, ResponseInfoPage } from '../pages/user-assesments/user-assesments';
+import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { BasicInformationPage } from '../pages/user-profile/basic-information/basic-information';
@@ -55,6 +56,7 @@ export function getAuthHttp(http) {
     LoginPage,
     AssesmentPage,
     FoundPharmaciesPage,
+    NonEligiblePage,
     ContraceptivePage,
     StartPage,
     SettingsPage,
@@ -65,8 +67,10 @@ export function getAuthHttp(http) {
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
+    AppointmentLandingPage,
     AssesmentResponsePage,
-    ResponseInfoPage
+    ResponseInfoPage,
+    UserNotificationsPage
   ],
   imports: [
     BrowserModule,
@@ -91,12 +95,15 @@ export function getAuthHttp(http) {
     UserAssesmentsPage,
     AssesmentPage,
     FoundPharmaciesPage,
+    NonEligiblePage,
     ContraceptiveQuantityPage,
     BasicInformationPage,
     PersonalInformationPage,
     BookAppointmentPage,
+    AppointmentLandingPage,
     AssesmentResponsePage,
-    ResponseInfoPage
+    ResponseInfoPage,
+    UserNotificationsPage
   ],
   providers: [
     Geolocation,

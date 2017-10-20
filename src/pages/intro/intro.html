@@ -1,31 +1,30 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Slides</ion-title>
+<ion-header no-border>
+  <ion-navbar transparent>
+    <ion-buttons right>
+      <button ion-button color="light"
+              *ngIf="slideIndex < slides.length - 1"
+              class="skip-button"
+              (click)="skipIntro()">SKIP</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="page-intro">
+<ion-content class="page-intro no-padding-top" fullscreen="true">
 
-  <ion-slides pager>
-    <ion-slide *ngFor="let slide of slides">
-      <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button color="primary" (click)="skipIntro()">Skip</button>
-        </ion-buttons>
-      </ion-toolbar>
-      <img [src]="slide.image" class="slide-image"/>
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
-    </ion-slide>
-    <ion-slide>
-      <ion-toolbar>
-      </ion-toolbar>
-      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
-      <h2 class="slide-title">Ready to Play?</h2>
-      <button ion-button large clear icon-end color="primary">
-        Continue
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+  <ion-slides #slider pager="true" autoplay="3000" (ionSlideWillChange)="onSlideChanged()">
+    <ion-slide *ngFor="let slide of slides"
+               class="slide-background"
+               [ngStyle]="{'background-image': 'url(' + slide.imageUrl +')'}">
+      <div class="text-wrapper">
+        <div class="slide-text">
+          <h2 class="slide-title" [innerHTML]="slide.title"></h2><br>
+          <p [innerHTML]="slide.description"></p>
+        </div>
+      </div>
     </ion-slide>
   </ion-slides>
+  <div class="floating-buttons pop-in" *ngIf="slideIndex >= slides.length - 1">
+    <button ion-button clear large full (click)="skipIntro()">Let's go!</button>
+  </div>
 </ion-content>
+

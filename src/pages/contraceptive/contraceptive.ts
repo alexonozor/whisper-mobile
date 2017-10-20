@@ -5,12 +5,6 @@ import { ContraceptiveProvider } from '../../providers/contraceptive/contracepti
 import { LoginPage } from '../login/login';
 import { AssesmentPage } from '../assesment/assesment';
 
-/**
- * Generated class for the ContraceptivePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-contraceptive',
@@ -35,6 +29,9 @@ export class ContraceptivePage {
   }
 
   getAllContraceptive() {
+    let prev_page = this.navCtrl.getActive().name;
+    console.log('current page ', prev_page);
+
     this._authService.tokenSubscription()
       let loading = this.loadingCtrl.create({
       spinner: 'show',
@@ -61,9 +58,10 @@ export class ContraceptivePage {
         });
         toast.present();
 
-        this.navCtrl.setRoot(LoginPage).then(() => {
-            this.navCtrl.popToRoot();
-        });
+        // this.navCtrl.setRoot(LoginPage).then(() => {
+        //     this.navCtrl.popToRoot();
+        // });
+        this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
      }
    })
   }
@@ -137,10 +135,6 @@ export class ContraceptiveDescPage {
 })
 
 export class StartPage {
-  contraceptive_name : string;
-  contraceptive_description : string;
-  contraceptive_id: string;
-
 
   constructor(
     public navCtrl: NavController,
@@ -148,13 +142,12 @@ export class StartPage {
     public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    
-  }
+  ionViewDidLoad() {}
 
   startAssesment() {
     this.navCtrl.push(AssesmentPage, {
       id: this.navParams.get('id'),
+      name: this.navParams.get('name'),
       appointment: this.navParams.get('appointment')
     });
   }
