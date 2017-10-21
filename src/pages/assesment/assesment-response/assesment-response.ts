@@ -48,6 +48,10 @@ export class AssesmentResponsePage {
     })
   }
 
+  onFocus(event) {
+    console.log('textarea on focus ', event);
+  }
+
   checkSender(messageResponse) {
     this.userId = this._authentication.currentUser()._id;
     messageResponse.forEach((el, i) => {
@@ -60,16 +64,16 @@ export class AssesmentResponsePage {
   sendMessage() {
     this._assesmentService.sendResponsesMessage(this.form.value)
     .subscribe((resp) => {
-      if (resp.success) { 
+      if (resp.success) {
       }
     }, err => {
-      
+
     })
     this.form.value['isSender'] = true;
     this.messageResponse.push(this.form.value);
     this.form.reset(
-      { 
-        content: '', 
+      {
+        content: '',
         conversation: this.conversationId,
         user: this._authentication.currentUser()._id, createdAt: Date.now()
       }

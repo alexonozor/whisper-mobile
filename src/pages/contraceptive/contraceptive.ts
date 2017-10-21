@@ -30,13 +30,12 @@ export class ContraceptivePage {
 
   getAllContraceptive() {
     let prev_page = this.navCtrl.getActive().name;
-    console.log('current page ', prev_page);
 
     this._authService.tokenSubscription()
       let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: ''
+      content: '<ion-spinner name="crescent"></ion-spinner>'
     });
    loading.present();
 
@@ -57,10 +56,6 @@ export class ContraceptivePage {
           position: 'top'
         });
         toast.present();
-
-        // this.navCtrl.setRoot(LoginPage).then(() => {
-        //     this.navCtrl.popToRoot();
-        // });
         this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
      }
    })
@@ -108,7 +103,6 @@ export class ContraceptivePage {
 export class ContraceptiveDescPage {
   contraceptive_name : string;
   contraceptive_description : string;
-  public backgroundImage = 'assets/img/background.jpg';
 
   constructor(
     public navCtrl: NavController,
@@ -143,6 +137,7 @@ export class ContraceptiveDescPage {
 
 export class StartPage {
   username: string;
+  public backgroundImage = 'assets/img/background.png';
 
   constructor(
     public navCtrl: NavController,

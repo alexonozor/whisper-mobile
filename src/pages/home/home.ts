@@ -11,7 +11,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 export class HomePage {
   rootPage: any = HomePage;
-  public backgroundImage = 'assets/img/background.jpg';
+  public backgroundImage = 'assets/img/background.png';
 
   constructor(
     public navCtrl: NavController,
@@ -21,12 +21,9 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('current page ', this.navCtrl.getActive().name);
-    console.log('is logged in? ', this._authService.loggedIn());
   }
 
   getContraceptive() {
-    console.log('get current user ', this._authService.currentUser());
     if (this._authService.currentUser() != null) {
       this.navCtrl.push(ContraceptivePage);
     }else{

@@ -34,7 +34,7 @@
         <ion-card *ngFor="let assesment of userAssesments; let i = index" (press)="openOptions(assesment, i)">
           <ion-card-content *ngIf="assesment?.user">
             <div text-left>
-              <h3>{{birthDate | date:'longDate'}}</h3>
+              <h3>{{assesment.createdAt | date:'longDate'}}</h3>
             </div>
             <ion-grid>
               <ion-row>
