@@ -92,13 +92,22 @@ export class AssesmentPage {
   }
 
   loadAssesments(id) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: '<img src="assets/img/loader.gif" />',
+    });
+    loading.present();
+
     this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
       if (resp.success && resp.status == 200) {
+        loading.dismiss();
         this.assesment = resp.assesments
-        console.log('assesment ', this.assesment);
       }
     }, (err) => {
+      loading.dismiss();
+
       if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({

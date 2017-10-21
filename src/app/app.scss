@@ -69,4 +69,12 @@ h4.title {
   overflow-y: hidden;
 }
 
-
+.loading-md .loading-wrapper {
+  border-radius: 2px;
+  max-width: 280px;
+  max-height: 90%;
+  color: white;
+  background: none;
+  padding: 24px;
+  box-shadow: none;
+}
