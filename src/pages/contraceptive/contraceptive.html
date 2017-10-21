@@ -1,14 +1,3 @@
-<!--
-  Generated template for the ContraceptivePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!--
-  Generated template for the ContraceptivesPage page.
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header no-border>
 
   <ion-navbar color="navColor">
@@ -32,7 +21,7 @@
 
     <ion-row *ngFor="let contraceptive of contraceptives">
       <ion-col col-12 class="button-container">
-        <button color="rounded_buttons" ion-button outline round small (click)="goToAssesment(contraceptive._id, contraceptive.name, contraceptive.appointment)">{{contraceptive.name}}</button>
+        <button color="rounded_buttons" ion-button round small (click)="goToAssesment(contraceptive._id, contraceptive.name, contraceptive.appointment)">{{contraceptive.name}}</button>
         <button ion-button color="info_button" class="info" clear icon-only
           (click)="contraceptiveInfo(contraceptive.name, contraceptive.description)">
           <ion-icon name="information-circle"></ion-icon>

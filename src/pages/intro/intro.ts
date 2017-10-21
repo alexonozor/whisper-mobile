@@ -15,24 +15,19 @@ export class IntroPage {
   slideIndex = 0;
   slides = [
     {
-      title: 'Dream\'s Adventure',
-      imageUrl: 'assets/img/slides/wishlist-1.jpg',
-      description: 'Take a look at our amazing options',
+      title: '',
+      imageUrl: 'assets/img/slides/1.jpg',
+      description: '',
     },
     {
-      title: 'For the Weekend',
-      imageUrl: 'assets/img/slides/wishlist-2.jpg',
-      description: 'Take a look at our amazing options',
+      title: '',
+      imageUrl: 'assets/img/slides/2.jpg',
+      description: '',
     },
     {
-      title: 'Family Time',
-      imageUrl: 'assets/img/slides/wishlist-3.jpg',
-      description: 'Take a look at our amazing options',
-    },
-    {
-      title: 'My Trip',
-      imageUrl: 'assets/img/slides/wishlist-4.jpg',
-      description: 'Take a look at our amazing options',
+      title: '',
+      imageUrl: 'assets/img/slides/3.jpg',
+      description: '',
     }
   ];
 
