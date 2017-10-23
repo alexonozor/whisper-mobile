@@ -13,6 +13,7 @@ import { AssesmentPage } from '../assesment/assesment';
 export class ContraceptivePage {
   contraceptives: Array<{id: string, title: string, description: string}>
   assesment: Array<{id: string, question: string, answer: {} }> = [];
+  mocked_contraceptives: Array<{}> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -44,6 +45,9 @@ export class ContraceptivePage {
           if (resp.success && resp.status == 200) {
             loading.dismiss();
             this.contraceptives = resp.contraceptives;
+            this.mocked_contraceptives = this.contraceptives;
+            this.insertRelatedContraceptives(this.mocked_contraceptives);
+            console.log('Mocked Contraceptive ', this.mocked_contraceptives);
           } else {
           }
         }, (err) => {
@@ -60,6 +64,59 @@ export class ContraceptivePage {
         }
       })
   }
+
+  insertRelatedContraceptives(contraceptives){
+    contraceptives.forEach((el, i) => {
+      switch(el._id) {
+        case "5996d1b0d8cd190011805392":
+          el['related-contraceptives'] = [
+            {
+              'name': "IUV",
+              '_id': "276323_etrw"
+            },
+            {
+              'name': "Contraceptive Pills",
+              '_id': "276323_etrwewe"
+            }
+          ]
+          break;
+
+        case "5996d58cd8cd19001180539e":
+          el['related-contraceptives'] = [
+            {
+              'name': "IUV",
+              '_id': "276323_etrw"
+            },
+            {
+              'name': "Contraceptive Pills",
+              '_id': "276323_etrwewe"
+            }
+          ]
+          break;
+
+        case "5996d804d8cd1900118053a2":
+          break;
+
+        case "5996ddacd8cd1900118053b0":
+          break;
+
+        case "599507cc2a3cc400114aafb7":
+          break;
+
+        case "5996d3c8d8cd190011805399":
+          break;
+
+        default:
+          console.log(" i\'m the defaulter");
+        this.mocked_contraceptives = contraceptives;
+
+        console.log('mocked contraceptives ', this.mocked_contraceptives)
+      }
+      
+      
+    })
+  }
+
 
   goToAssesment(id,name,appointment) {
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment});
