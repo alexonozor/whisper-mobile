@@ -37,7 +37,6 @@ export class UserAssesmentsPage {
 
   getUser() {
     this.user = this._authService.currentUser();
-    console.log('user ', this.user);
     this.getUserDetails(this.user);
   }
 
@@ -51,8 +50,8 @@ export class UserAssesmentsPage {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: 'getting user assesment...'
-   });
+      content: '<img src="assets/img/loader.gif" />'
+    });
 
     loading.present();
 
@@ -65,6 +64,7 @@ export class UserAssesmentsPage {
         this.userAssesments = resp.responses;
       }
     }, (err) => {
+      loading.dismiss();
       if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({

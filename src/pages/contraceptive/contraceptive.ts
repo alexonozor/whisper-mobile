@@ -32,33 +32,33 @@ export class ContraceptivePage {
     let prev_page = this.navCtrl.getActive().name;
 
     this._authService.tokenSubscription()
-      let loading = this.loadingCtrl.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: '<ion-spinner name="crescent"></ion-spinner>'
+      content: '<img src="assets/img/loader.gif" />',
     });
-   loading.present();
+    loading.present();
 
-  this._contraceptiveService.getAll()
-   .subscribe((resp) => {
-     if (resp.success && resp.status == 200) {
+    this._contraceptiveService.getAll()
+      .subscribe((resp) => {
+          if (resp.success && resp.status == 200) {
+            loading.dismiss();
+            this.contraceptives = resp.contraceptives;
+          } else {
+          }
+        }, (err) => {
         loading.dismiss();
-        this.contraceptives = resp.contraceptives;
-     } else {
-     }
-   }, (err) => {
-     loading.dismiss();
-     if (err.status == 401) {
+        if (err.status == 401) {
           // Unable to log in
-        let toast = this.toastCtrl.create({
-          message: err.statusText,
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
-        this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
-     }
-   })
+          let toast = this.toastCtrl.create({
+            message: err.statusText,
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
+          this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
+        }
+      })
   }
 
   goToAssesment(id,name,appointment) {
@@ -137,7 +137,6 @@ export class ContraceptiveDescPage {
 
 export class StartPage {
   username: string;
-  public backgroundImage = 'assets/img/background.png';
 
   constructor(
     public navCtrl: NavController,
