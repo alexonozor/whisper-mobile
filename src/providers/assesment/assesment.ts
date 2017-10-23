@@ -6,7 +6,7 @@ import { AuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs/Rx';
 import { BaseurlProvider } from '../baseurl/baseurl';
 import { AuthenticationProvider } from '../authentication/authentication';
-
+import { Socket } from 'ng-socket-io';
 /*
   Generated class for the AssesmentProvider provider.
 
@@ -22,7 +22,8 @@ export class AssesmentProvider {
       public http: Http,
       public authHttp: AuthHttp,
       public _baseUrl: BaseurlProvider,
-      public _authService: AuthenticationProvider
+      public _authService: AuthenticationProvider,
+      private socket: Socket
   ) { }
 
   submitAssesment(assesmentParams: any) : Observable<any> {
@@ -68,9 +69,28 @@ export class AssesmentProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  sendResponsesMessage(params) : Observable<any> {
+  sendResponsesMessage(params) {
+    this.socket.emit("message", params);
     return this.authHttp.post(`${this.host}/messages`, params)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
+
+  connectToroom(id) {
+    this.socket.emit('room', id);
+  }
+
+  getMessages() {
+    let observable = new Observable<any>(observer => {
+      this.socket.on('message', (data) => {
+     
+        observer.next(data);    
+      });
+      return () => {
+        this.socket.disconnect();
+      };  
+    })     
+    return observable;
+  }  
+
 }

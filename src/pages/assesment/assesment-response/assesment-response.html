@@ -11,7 +11,7 @@
   <ion-content>
     <div *ngFor="let conversation of messageResponse" class="message-wrapper" >
       <!--  wave-->
-      <div [ngClass]="conversation.isSender? 'right slide-right' : 'left slide-left'" class="chat-bubble">
+      <div [ngClass]="conversation?.isSender? 'right slide-right' : 'left slide-left'" class="chat-bubble">
 
         <div class="message" [innerHTML]="conversation?.content" autolinker>
         </div>

@@ -32,8 +32,12 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { PharmacyProvider } from '../providers/pharmacy/pharmacy';
 import { SharedProvider } from '../providers/shared/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { NotificationProvider } from '../providers/notification/notification';
 
+const config: SocketIoConfig = { url: 'http://localhost:7777', options: {} };
 export function getAuthHttp(http) {
+  
   return new AuthHttp(new AuthConfig({
     noJwtError: true,
     tokenName: 'token',
@@ -74,6 +78,7 @@ export function getAuthHttp(http) {
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    SocketIoModule.forRoot(config),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -117,7 +122,8 @@ export function getAuthHttp(http) {
     },
     AssesmentProvider,
     PharmacyProvider,
-    SharedProvider
+    SharedProvider,
+    NotificationProvider
   ]
 })
 export class AppModule {}

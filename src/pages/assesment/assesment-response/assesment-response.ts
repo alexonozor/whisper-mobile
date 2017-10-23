@@ -33,44 +33,50 @@ export class AssesmentResponsePage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public _authentication: AuthenticationProvider,
-    public _assesmentService: AssesmentProvider) {
+    public _assesmentService: AssesmentProvider) 
+    {
       this.conversationId = this.navParams.get('conversationId');
-      this.form.patchValue({ conversation: this.conversationId })
-  }
+      this.form.patchValue({ conversation: this.conversationId });
+      
+     }
 
   ionViewDidLoad() {
+    
+    this._assesmentService.connectToroom(this.conversationId)
+    this.getMessages();
     this._assesmentService.getAssementResponsesMessage(this.conversationId)
     .subscribe((resp) => {
       if (resp.success) {
         this.conversation = resp.conversation;
         this.checkSender(resp.conversation.messages);
+        
       }
     })
   }
 
-  onFocus(event) {
-    console.log('textarea on focus ', event);
+
+  getMessages() {
+     this._assesmentService.getMessages().subscribe(message => {
+      message['isSender'] = ( message.user == this.userId )
+     this.messageResponse.push(message);
+    })
   }
 
   checkSender(messageResponse) {
     this.userId = this._authentication.currentUser()._id;
     messageResponse.forEach((el, i) => {
       el['isSender'] = ( el.user == this.userId )
-      console.log('sender ', el['isSender']);
     })
     this.messageResponse = messageResponse;
   }
 
   sendMessage() {
-    this._assesmentService.sendResponsesMessage(this.form.value)
-    .subscribe((resp) => {
-      if (resp.success) {
-      }
+    this._assesmentService.sendResponsesMessage(this.form.value).subscribe((res) => {
+      console.log(res)
     }, err => {
 
     })
-    this.form.value['isSender'] = true;
-    this.messageResponse.push(this.form.value);
+
     this.form.reset(
       {
         content: '',
