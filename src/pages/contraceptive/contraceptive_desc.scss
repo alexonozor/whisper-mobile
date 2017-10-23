@@ -1,0 +1,17 @@
+page-contraceptive-desc {
+  h2 { color: #E91E63;}
+  h5 { font-size: 1.5rem; }
+  .scroll-content {
+    background-image: radial-gradient(center center, ellipse cover, #ffeda3, #ffc800);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  ion-content {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-color: transparent;
+  }
+}

@@ -1,9 +1,9 @@
 
 <ion-content [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
   <div padding>
-    <ion-row class="title login_box">
+    <ion-row>
       <ion-col>
-        <h5>Whisper</h5>
+        <img class="logo" src="assets/img/logo.png" />
       </ion-col>
     </ion-row>
     <ion-row>
@@ -27,7 +27,7 @@
     <ion-row>
       <ion-col>
         <span class="new">Have an account?</span>
-        <button ion-button color="profile" round (click)="goToSignup()">Create an account</button>
+        <button ion-button color="signup_button" round (click)="goToSignup()">Create an account</button>
       </ion-col>
     </ion-row>
   </div>

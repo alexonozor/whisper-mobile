@@ -30,13 +30,12 @@ export class ContraceptivePage {
 
   getAllContraceptive() {
     let prev_page = this.navCtrl.getActive().name;
-    console.log('current page ', prev_page);
 
     this._authService.tokenSubscription()
       let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: ''
+      content: '<ion-spinner name="crescent"></ion-spinner>'
     });
    loading.present();
 
@@ -57,10 +56,6 @@ export class ContraceptivePage {
           position: 'top'
         });
         toast.present();
-
-        // this.navCtrl.setRoot(LoginPage).then(() => {
-        //     this.navCtrl.popToRoot();
-        // });
         this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
      }
    })
@@ -112,11 +107,17 @@ export class ContraceptiveDescPage {
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public _authService: AuthenticationProvider) {
   }
 
   ionViewDidLoad() {
     this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
+    this.getUser();
+  }
+
+  getUser() {
+    console.log('get current user ', this._authService.currentUser() );
   }
 
   contraceptiveInfo(name, description) {
@@ -135,6 +136,8 @@ export class ContraceptiveDescPage {
 })
 
 export class StartPage {
+  username: string;
+  public backgroundImage = 'assets/img/background.png';
 
   constructor(
     public navCtrl: NavController,

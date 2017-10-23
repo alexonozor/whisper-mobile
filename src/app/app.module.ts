@@ -33,6 +33,7 @@ import { PharmacyProvider } from '../providers/pharmacy/pharmacy';
 import { SharedProvider } from '../providers/shared/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { NotificationProvider } from '../providers/notification/notification';
 
 const config: SocketIoConfig = { url: 'http://localhost:7777', options: {} };
 export function getAuthHttp(http) {
@@ -121,7 +122,8 @@ export function getAuthHttp(http) {
     },
     AssesmentProvider,
     PharmacyProvider,
-    SharedProvider
+    SharedProvider,
+    NotificationProvider
   ]
 })
 export class AppModule {}

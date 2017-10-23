@@ -71,15 +71,20 @@ export class AssesmentProvider {
 
   sendResponsesMessage(params) {
     this.socket.emit("message", params);
-    // return this.authHttp.post(`${this.host}/messages`, params)
-    //   .map((res:Response) => res.json())
-    //   .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+    return this.authHttp.post(`${this.host}/messages`, params)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  connectToroom(id) {
+    this.socket.emit('room', id);
   }
 
   getMessages() {
-    let observable = new Observable(observer => {
+    let observable = new Observable<any>(observer => {
       this.socket.on('message', (data) => {
-        observer.next(data.message);    
+     
+        observer.next(data);    
       });
       return () => {
         this.socket.disconnect();

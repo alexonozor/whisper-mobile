@@ -33,18 +33,23 @@ export class AssesmentResponsePage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public _authentication: AuthenticationProvider,
-    public _assesmentService: AssesmentProvider) {
+    public _assesmentService: AssesmentProvider) 
+    {
       this.conversationId = this.navParams.get('conversationId');
-      this.form.patchValue({ conversation: this.conversationId })
-  }
+      this.form.patchValue({ conversation: this.conversationId });
+      
+     }
 
   ionViewDidLoad() {
+    
+    this._assesmentService.connectToroom(this.conversationId)
     this.getMessages();
     this._assesmentService.getAssementResponsesMessage(this.conversationId)
     .subscribe((resp) => {
       if (resp.success) {
         this.conversation = resp.conversation;
         this.checkSender(resp.conversation.messages);
+        
       }
     })
   }
@@ -52,7 +57,8 @@ export class AssesmentResponsePage {
 
   getMessages() {
      this._assesmentService.getMessages().subscribe(message => {
-      this.messageResponse.push(message);
+      message['isSender'] = ( message.user == this.userId )
+     this.messageResponse.push(message);
     })
   }
 
@@ -60,17 +66,20 @@ export class AssesmentResponsePage {
     this.userId = this._authentication.currentUser()._id;
     messageResponse.forEach((el, i) => {
       el['isSender'] = ( el.user == this.userId )
-      console.log('sender ', el['isSender']);
     })
     this.messageResponse = messageResponse;
   }
 
   sendMessage() {
-    this._assesmentService.sendResponsesMessage(this.form.value)
-    
+    this._assesmentService.sendResponsesMessage(this.form.value).subscribe((res) => {
+      console.log(res)
+    }, err => {
+
+    })
+
     this.form.reset(
-      { 
-        content: '', 
+      {
+        content: '',
         conversation: this.conversationId,
         user: this._authentication.currentUser()._id, createdAt: Date.now()
       }

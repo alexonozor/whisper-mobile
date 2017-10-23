@@ -12,8 +12,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 })
 
 export class SignupPage {
-  public backgroundImage = 'assets/img/background-5.jpg';
-  
+  public backgroundImage = 'assets/img/login-bg.jpg';
+
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type

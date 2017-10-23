@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, LoadingController, NavController, ActionSheetController,  NavParams, ToastController } from 'ionic-angular';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { NotificationProvider } from '../../providers/notification/notification';
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
 
@@ -25,7 +26,8 @@ export class UserAssesmentsPage {
     public _assesmentService: AssesmentProvider,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public _notification: NotificationProvider
     ) {
   }
 
@@ -93,7 +95,23 @@ export class UserAssesmentsPage {
     this._assesmentService.startAssessmentConversation(params)
     .subscribe((resp) => {
       if (resp.success) {
-        this.updateAssesmentResponse(response._id, { hasConversation: true, conversation: resp.responseId })
+        this.updateAssesmentResponse(response._id, { hasConversation: true, conversation: resp.responseId });
+        params.users.forEach((el, index) => {
+          this._notification.create(
+            { 
+              sender: params.startedBy, 
+              receiver: el, 
+              notification_type_id: params.assessmentResponse,
+              notification_type: 'openConversation' 
+            }
+          ).subscribe((res) => {
+            if (res.success) {
+              console.log(res);
+            } else {
+
+            }
+          })
+        })
       }
     }, err => {
       //toaster is fyn for err don't for get to dismiss loader
