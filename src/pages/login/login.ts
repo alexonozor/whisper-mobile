@@ -40,8 +40,8 @@ export class LoginPage {
     .subscribe((resp) => {
       if (resp.success) {
         this.loading = false
-        if( prev_page != undefined || prev_page != ""){
-          if(prev_page.name == "HomePage"){
+        if( prev_page != undefined || prev_page != "") {
+          if(prev_page.name == "HomePage") {
             this.navCtrl.setRoot(prev_page);
           }else {
             this.navCtrl.push(prev_page);
@@ -50,6 +50,7 @@ export class LoginPage {
         else {
           this.navCtrl.push(HomePage);
         }
+        this.navCtrl.push(HomePage);
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
       } else {

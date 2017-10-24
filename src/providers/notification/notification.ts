@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { BaseurlProvider } from '../baseurl/baseurl';
 import { AuthenticationProvider } from '../authentication/authentication'
 
+
 /*
   Generated class for the NotificationProvider provider.
 
@@ -31,6 +32,12 @@ export class NotificationProvider {
     return this.authHttp.post(`${this.host}/notifications`, params)
 			.map((res:Response) => res.json())
 			.catch((error:any) => Observable.throw(error || 'server error'));
+  }
+
+  getUserNotifications(userId): Observable<any> {
+    return this.authHttp.get(`${this.host}/getuser-notifications/${userId}`)
+    .map((res:Response) => res.json())
+    .catch((error:any) => Observable.throw(error || 'server error'));
   }
 
 

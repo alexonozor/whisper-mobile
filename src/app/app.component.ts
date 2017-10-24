@@ -42,8 +42,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home', color: "home" },
       { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive"},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile"},
-      // { title: 'Settings', component: SettingsPage, icon: 'settings', color: "settings"},
-      // { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"},
+      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"},
     ];
 
     statusBar.styleDefault();
