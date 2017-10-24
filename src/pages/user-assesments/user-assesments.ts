@@ -87,7 +87,8 @@ export class UserAssesmentsPage {
     let params = { 
       'startedBy': response.user, 
        'assessmentResponse': response._id,  
-       'users': [ response.user ], 
+       'users': [ response.user ],
+       'content': 'starts a conversation on an assesment', 
        'messages': [],
        'createdAt': Date.now() 
     };
@@ -101,7 +102,7 @@ export class UserAssesmentsPage {
             { 
               sender: params.startedBy, 
               receiver: el, 
-              notification_type_id: params.assessmentResponse,
+              notification_type_id: resp.responseId,
               notification_type: 'openConversation' 
             }
           ).subscribe((res) => {
