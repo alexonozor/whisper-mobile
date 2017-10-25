@@ -21,9 +21,11 @@
       <ion-col col-4>
         <button color="rounded_buttons" ion-button round small (click)="goHome()">Home</button>
       </ion-col>
-      
-      <ion-col col-7>
-        <button color="rounded_buttons" ion-button round small (click)="getContraceptive()">Get Contraceptive</button>
+    </ion-row>
+    <h3 class="title">You can also try out other contraceptives below</h3>
+    <ion-row *ngFor="let contraceptive of related">
+      <ion-col col-6>
+        <button color="rounded_buttons" ion-button round small (click)="goToRelatedContraceptive(contraceptive._id, contraceptive.name, contraceptive.appointment, contraceptive['related-contraceptives'])">{{contraceptive.name}}</button>
       </ion-col>
     </ion-row>
   </ion-grid>

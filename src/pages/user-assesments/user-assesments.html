@@ -9,6 +9,11 @@
 
 <ion-content padding>
   <ion-grid>
+    <div text-center *ngIf="none_found">
+      <img src="assets/img/error.png" *ngIf="none_found"/>
+      <h4 class="empty" *ngIf="none_found">No assesment found</h4>
+      <button color="rounded_buttons" ion-button round small (click)="getContraceptive()">Get a contraceptive</button>
+    </div>
     <ion-row>
       <ion-col col-3> <img src="assets/img/touch.png" *ngIf="loaded"/> </ion-col>
       <ion-col col-9> 

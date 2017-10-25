@@ -46,10 +46,14 @@ h4.title {
 .toolbar-title {
   font-weight: bold;
   text-transform: capitalize;
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
   position: relative;
   left: -10%;
+}
+
+.toolbar-md-navColor .toolbar-title-md {
+  color: #000;
 }
 
 .alert-button {

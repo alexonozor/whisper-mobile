@@ -10,6 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { BookAppointmentPage, AppointmentLandingPage  } from '../book-appointment/book-appointment';
+import { StartPage } from '../contraceptive/contraceptive'
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
 
 
@@ -44,6 +45,7 @@ export class AssesmentPage {
   @ViewChild('myInput') myInput: ElementRef;
 
   assesment: any;
+  related_contraceptives: Array<any> = [];
   contraceptive_id: string;
   contraceptive_name: string;
   editedInput: boolean = false;
@@ -59,6 +61,7 @@ export class AssesmentPage {
   lock_swipes: boolean = true;
   isAppointment: boolean;
   nonEligibilityCount: number = 0;
+
 
   constructor(
     private alertCtrl: AlertController,
@@ -79,6 +82,8 @@ export class AssesmentPage {
     this.contraceptive_id =  this.navParams.get('id');
     this.contraceptive_name = this.navParams.get('name');
     this.isAppointment = this.navParams.get('appointment');
+    this.related_contraceptives = this.navParams.get('related');
+    console.log('related contraceptives ', this.related_contraceptives);
     this.getUser();
     this.slides.lockSwipes(true);
   }
@@ -92,6 +97,7 @@ export class AssesmentPage {
   }
 
   loadAssesments(id) {
+    console.log('contraceptive id ', id);
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
@@ -104,6 +110,7 @@ export class AssesmentPage {
       if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.assesment = resp.assesments
+        console.log('assesments ', this.assesment);
       }
     }, (err) => {
       loading.dismiss();
@@ -229,7 +236,7 @@ export class AssesmentPage {
         // checks eligibility count
         if(this.nonEligibilityCount >= 1) {
           console.log('contraceptive name ', this.contraceptive_name)
-          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name});
+          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, related_contraceptives: this.related_contraceptives});
         }else{
           this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
         }
@@ -341,6 +348,7 @@ export class FoundPharmaciesPage {
 export class NonEligiblePage {
   contraceptive: string;
   message: string;
+  related: Array<any> = []
 
   constructor(
     public _assesmentService: AssesmentProvider,
@@ -353,7 +361,14 @@ export class NonEligiblePage {
 
   ionViewDidLoad() {
     this.contraceptive = this.navParams.get('contraceptive_name');
+    this.related = this.navParams.get('related_contraceptives');
+    console.log( 'non eligible ', this.related);
     this.message = `We are sorry, but you are not eligible to purchase a ${this.contraceptive}`;
+  }
+
+  goToRelatedContraceptive(id,name,appointment,contraceptive) {
+    console.log('id ', id, ' name ', name, ' appointment ', appointment, ' contraceptive ', contraceptive);
+    this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, contraceptive: contraceptive});
   }
 
   goHome() {
