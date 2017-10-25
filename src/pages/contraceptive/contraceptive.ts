@@ -4,6 +4,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { LoginPage } from '../login/login';
 import { AssesmentPage } from '../assesment/assesment';
+import { Subscription} from 'rxjs/Subscription'
 
 @IonicPage()
 @Component({
@@ -13,6 +14,8 @@ import { AssesmentPage } from '../assesment/assesment';
 export class ContraceptivePage {
   contraceptives: Array<{id: string, title: string, description: string}>
   assesment: Array<{id: string, question: string, answer: {} }> = [];
+  mocked_contraceptives: Array<{}> = [];
+  subscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -28,6 +31,10 @@ export class ContraceptivePage {
     this.getAllContraceptive();
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   getAllContraceptive() {
     let prev_page = this.navCtrl.getActive().name;
 
@@ -39,11 +46,12 @@ export class ContraceptivePage {
     });
     loading.present();
 
-    this._contraceptiveService.getAll()
+    this.subscription = this._contraceptiveService.getAll()
       .subscribe((resp) => {
           if (resp.success && resp.status == 200) {
             loading.dismiss();
             this.contraceptives = resp.contraceptives;
+            this.insertRelatedContraceptives(this.contraceptives);
           } else {
           }
         }, (err) => {
@@ -61,12 +69,416 @@ export class ContraceptivePage {
       })
   }
 
-  goToAssesment(id,name,appointment) {
-    this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment});
+  insertRelatedContraceptives(contraceptives){
+    contraceptives.forEach((el, i) => {
+      switch(el._id) {
+        case "5996d1b0d8cd190011805392":
+          el['related-contraceptives'] = [
+            {
+              'name': "Condom",
+              '_id': "599507cc2a3cc400114aafb7",
+              'appointment': false,
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Daily Contraceptive Pills",
+              '_id': "5996d58cd8cd19001180539e",
+              'appointment': false,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Contraceptive Injection",
+              '_id':"5996d804d8cd1900118053a2",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Contraceptive implants",
+              '_id': "5996ddacd8cd1900118053b0",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+               'name': "Emergency Pills",
+               '_id': "5996d3c8d8cd190011805399",
+               'appointment': false,
+
+               'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+          break;
+
+        case "5996d58cd8cd19001180539e":
+          el['related-contraceptives'] = [
+            {
+              'name': "Diaphragm and gel",
+              '_id': "5996d1b0d8cd190011805392",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+          break;
+
+        case "599507cc2a3cc400114aafb7":
+          el['related-contraceptives'] = [
+            {
+              'name': "Condom",
+              '_id': "599507cc2a3cc400114aafb7",
+              'appointment': false,
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Diaphragm and gel",
+              '_id': "5996d1b0d8cd190011805392",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Daily Contraceptive Pills",
+              '_id': "5996d58cd8cd19001180539e",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Contraceptive Injection",
+              '_id':"5996d804d8cd1900118053a2",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name': "Contraceptive implants",
+              '_id': "5996ddacd8cd1900118053b0",
+              'appointment': true,
+
+              'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+               'name': "Emergency Pills",
+               '_id': "5996d3c8d8cd190011805399",
+               'appointment': true,
+
+               'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+          break;
+
+        case "5996d3c8d8cd190011805399":
+          el['related-contraceptives'] = [
+            {
+               'name': "Emergency Pills",
+               '_id': "5996d3c8d8cd190011805399",
+               'appointment': true,
+
+               'related-contraceptives': [
+                {
+                  'name': "Daily Contraceptive Pills",
+                  '_id': "5996d58cd8cd19001180539e",
+                  'appointment': false,
+                  'related-contraceptives': [
+                    {
+                      'name': "Contraceptive Injection",
+                      '_id':"5996d804d8cd1900118053a2",
+                      'appointment': true,
+                      'related-contraceptives': [
+                        {
+                          'name': "Contraceptive Injection",
+                          '_id':"5996d804d8cd1900118053a2",
+                          'appointment': true,
+                          'related-contraceptives':[]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+          break;
+
+        case "5996d804d8cd1900118053a2":
+          el['related-contraceptives'] = []
+          break;
+
+        case "5996ddacd8cd1900118053b0":
+          el['related-contraceptives'] = []
+          break;
+
+        default:
+          console.log(" i\'m the defaulter");
+
+        console.log('mocked contraceptives ', this.contraceptives)
+      }
+    })
+    this.contraceptives = contraceptives;
+
+  }
+
+
+  goToAssesment(id,name,appointment,contraceptive) {
+    this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
   }
 
   loadAssesments(id, name) {
-    this._contraceptiveService.getAssesment(id)
+    let getAss = this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
      if (resp.success && resp.status == 200) {
        this.assesment = resp.assessments
@@ -86,7 +498,8 @@ export class ContraceptivePage {
             this.navCtrl.popToRoot();
         });
       }
-   })
+    })
+    this.subscription.add(getAss)
   }
 
   contraceptiveInfo(name, description){
@@ -150,7 +563,8 @@ export class StartPage {
     this.navCtrl.push(AssesmentPage, {
       id: this.navParams.get('id'),
       name: this.navParams.get('name'),
-      appointment: this.navParams.get('appointment')
+      appointment: this.navParams.get('appointment'),
+      related: this.navParams.get('related')
     });
   }
 

@@ -5,6 +5,8 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { NotificationProvider } from '../../providers/notification/notification';
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
+import { ContraceptivePage } from   '../contraceptive/contraceptive';
+
 
 @IonicPage()
 @Component({
@@ -17,6 +19,7 @@ export class UserAssesmentsPage {
   user: Array<any>;
   userId: string;
   loaded: boolean = false;
+  none_found: boolean = false;
 
   constructor(
     public modalCtrl: ModalController,
@@ -33,6 +36,10 @@ export class UserAssesmentsPage {
 
   ionViewDidLoad() {
     this.getUser();
+  }
+
+  getContraceptive() {
+    this.navCtrl.push(ContraceptivePage);
   }
 
   getUser() {
@@ -59,9 +66,15 @@ export class UserAssesmentsPage {
     .subscribe((resp) => {
 
       if (resp.success && resp.status == 200) {
-        this.loaded = true;
         loading.dismiss();
         this.userAssesments = resp.responses;
+        this.userAssesments = [];
+        if( this.userAssesments.length > 0){
+          this.loaded = true;
+        } else {
+          console.log('no assesment found');
+          this.none_found = true;
+        }
       }
     }, (err) => {
       loading.dismiss();
