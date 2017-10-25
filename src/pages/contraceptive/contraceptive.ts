@@ -51,9 +51,7 @@ export class ContraceptivePage {
           if (resp.success && resp.status == 200) {
             loading.dismiss();
             this.contraceptives = resp.contraceptives;
-            this.mocked_contraceptives = this.contraceptives;
-            this.insertRelatedContraceptives(this.mocked_contraceptives);
-            console.log('Mocked Contraceptive ', this.mocked_contraceptives);
+            this.insertRelatedContraceptives(this.contraceptives);
           } else {
           }
         }, (err) => {
@@ -476,7 +474,6 @@ export class ContraceptivePage {
 
 
   goToAssesment(id,name,appointment,contraceptive) {
-    console.log('Contraceptive ', contraceptive);
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
   }
 
