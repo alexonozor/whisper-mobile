@@ -68,11 +68,10 @@ export class UserAssesmentsPage {
       if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.userAssesments = resp.responses;
-        this.userAssesments = [];
         if( this.userAssesments.length > 0){
           this.loaded = true;
+          this.none_found = false;
         } else {
-          console.log('no assesment found');
           this.none_found = true;
         }
       }
