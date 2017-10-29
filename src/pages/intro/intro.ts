@@ -39,8 +39,7 @@ export class IntroPage {
 
 
   skipIntro() {
-    console.log("is user logged in?", this._authService.loggedIn());
-    if(this._authService.loggedIn()) {
+    if(this._authService.currentUser() != null) {
       this.navCtrl.setRoot(HomePage);
     }
     else{

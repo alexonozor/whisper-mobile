@@ -36,6 +36,9 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.rootPage = IntroPage;
+      if(_authService.currentUser != null) {
+        this.pages.push(this.logoutParams);
+      }
     });
 
     this.pages = [
@@ -65,5 +68,8 @@ export class MyApp {
     // this.menu.enable(false, 'whisper-menu');
 
   }
+
+
+
 }
 
