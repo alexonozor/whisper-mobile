@@ -22,7 +22,7 @@ export class MyApp {
   rootPage:any;
   pages: Array<{title: string, component: any, icon: string, color: string}>;
   loggedInUser: boolean = false;
-  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'profile'};
+  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'logout'};
   loginParams: any = { title: 'Login', component: '', icon: '', color: ''};
 
   constructor(
@@ -62,7 +62,6 @@ export class MyApp {
       this.nav.push(LoginPage);
     }
     else {
-      console.log('nav page ', page);
       this.nav.push(page.component);
     }
     // this.menu.enable(false, 'whisper-menu');
