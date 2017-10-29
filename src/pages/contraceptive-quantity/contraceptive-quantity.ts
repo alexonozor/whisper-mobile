@@ -83,7 +83,7 @@ export class ContraceptiveQuantityPage {
     .subscribe((resp) => {
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
-        this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maxmumShippingQuantity);
+        this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
         this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId)
         resp.shippingMethods = ['Delivery', 'Pickup'];
         // mocking min & max shipping quantity

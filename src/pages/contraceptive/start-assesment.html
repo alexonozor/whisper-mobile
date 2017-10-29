@@ -23,11 +23,8 @@
         <h3 class="title">Hello <i class="username">{{username}}</i>, are you ready to start your assessment</h3>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-4></ion-col>
-      <ion-col col-4>
-        <button ion-button round small color="rounded_buttons" (click)="startAssesment()">Start Assesment</button>
-      </ion-col>
-    </ion-row>
+    <div text-right>
+      <button ion-button round small color="rounded_buttons" (click)="startAssesment()">Start Assesment</button>
+    </div>
   </ion-grid>
 </ion-content>

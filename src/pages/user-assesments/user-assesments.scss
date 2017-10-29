@@ -7,6 +7,12 @@ page-user-assesments {
   h4.empty {
     font-size: 1.8rem;
   }
+
+  div.no-assesment {
+    position: relative;
+    top: 180px;
+  }
+
   ion-card.card {
     box-shadow: none;
     webkit-box-shadow: none;

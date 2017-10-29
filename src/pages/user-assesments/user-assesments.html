@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-grid>
-    <div text-center *ngIf="none_found">
+    <div text-center *ngIf="none_found" class="no-assesment">
       <img src="assets/img/error.png" *ngIf="none_found"/>
       <h4 class="empty" *ngIf="none_found">No assesment found</h4>
       <button color="rounded_buttons" ion-button round small (click)="getContraceptive()">Get a contraceptive</button>
