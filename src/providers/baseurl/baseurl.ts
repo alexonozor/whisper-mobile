@@ -8,7 +8,6 @@ export class BaseurlProvider {
   getEnvironmentVariable() {
         var environment:string;
         var data = {};
-        // environment = "iplandev.promasidor.com";
         environment = window.location.hostname;
         switch (environment) {
             case'https://whisper-admin.herokuapp.com':

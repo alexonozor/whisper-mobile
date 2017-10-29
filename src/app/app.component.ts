@@ -22,7 +22,7 @@ export class MyApp {
   rootPage:any;
   pages: Array<{title: string, component: any, icon: string, color: string}>;
   loggedInUser: boolean = false;
-  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'profile'};
+  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'logout'};
   loginParams: any = { title: 'Login', component: '', icon: '', color: ''};
 
   constructor(
@@ -36,6 +36,9 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.rootPage = IntroPage;
+      if(_authService.currentUser != null) {
+        this.pages.push(this.logoutParams);
+      }
     });
 
     this.pages = [
@@ -59,11 +62,13 @@ export class MyApp {
       this.nav.push(LoginPage);
     }
     else {
-      console.log('nav page ', page);
       this.nav.push(page.component);
     }
     // this.menu.enable(false, 'whisper-menu');
 
   }
+
+
+
 }
 

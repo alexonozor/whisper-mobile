@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { AuthenticationProvider } from '../../providers/authentication/authentication'
 import { AssesmentResponsePage } from '.././assesment/assesment-response/assesment-response';
@@ -18,12 +18,14 @@ import { AssesmentResponsePage } from '.././assesment/assesment-response/assesme
 export class UserNotificationsPage {
   currentUser: any;
   notifications: Array<any>;
+  no_notification: boolean = false;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public _notification: NotificationProvider,
-    public _auth: AuthenticationProvider
+    public _auth: AuthenticationProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.currentUser = this._auth.currentUser();
   }
@@ -33,10 +35,20 @@ export class UserNotificationsPage {
   }
 
   getNotification() {
-    console.log(this.currentUser)
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: '<img src="assets/img/loader.gif" />',
+    });
+    loading.present();
+
     this._notification.getUserNotifications(this.currentUser._id)
     .subscribe((res) => {
+      loading.dismiss();
       this.notifications = res.notifications;
+      if(this.notifications = []) {
+        this.no_notification = true;
+      }
     }, err => {
       
     })
