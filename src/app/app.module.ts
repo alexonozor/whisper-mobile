@@ -35,7 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { NotificationProvider } from '../providers/notification/notification';
 
-const config: SocketIoConfig = { url: 'http://localhost:7777', options: {} };
+const config: SocketIoConfig = { url: 'https://whisper-admin.herokuapp.com', options: {} };
 export function getAuthHttp(http) {
   
   return new AuthHttp(new AuthConfig({
