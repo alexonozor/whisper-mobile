@@ -222,6 +222,7 @@ export class AssesmentPage {
       this.assesmentParams.questions.push(this.assesment_obj);
       this.slideNext();
     }
+    this.editedInput = false;
   }
 
   submitAssesment(value) {
