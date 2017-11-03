@@ -223,6 +223,7 @@ export class AssesmentPage {
       this.slideNext();
     }
     this.editedInput = false;
+    this.showButton = false;
   }
 
   submitAssesment(value) {
