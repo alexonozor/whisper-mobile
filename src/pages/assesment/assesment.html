@@ -1,9 +1,3 @@
-<!--
-  Generated template for the AssesmentPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header no-border>
 
   <ion-navbar color="navColor">
@@ -30,17 +24,13 @@
                 <ion-item class="line-break" [hidden]="!editedInput">
                   <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keyup)="getFocus($event)" placeholder="{{editedInputLabel}}">
                   </ion-textarea>
-                  <button class="input_button" (click)="submitEditedAnswer()" ion-button color="info_button" [hidden]="!showButton" clear item-right>Send</button>
+                  <button class="input_button" (click)="submitEditedAnswer()" ion-button color="logout" [hidden]="!showButton" clear item-right>Send</button>
                 </ion-item>
               </ion-col>
             </ion-row>
-            <ion-row *ngFor="let answer of question._answers;">
-              <ion-col col-5>
-              </ion-col>
-              <ion-col col-6 class="button-container">
-                <button ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
-              </ion-col>
-            </ion-row>
+            <div text-right *ngFor="let answer of question._answers;" class="aligner">
+              <button ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
+            </div>
           </ion-grid>
         </ion-slide>
 

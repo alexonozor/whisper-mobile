@@ -39,7 +39,7 @@ export class IntroPage {
 
 
   skipIntro() {
-    if(this._authService.currentUser() != null) {
+    if(this._authService.getToken('user') != null) {
       this.navCtrl.setRoot(HomePage);
     }
     else{
