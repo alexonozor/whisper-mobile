@@ -35,7 +35,7 @@ export class AuthenticationProvider {
 
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   tokenSubscription() {

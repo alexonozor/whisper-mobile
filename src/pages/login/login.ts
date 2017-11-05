@@ -45,7 +45,7 @@ export class LoginPage {
     this.loading = true;
     this._authService.login(this.form.value)
     .subscribe((resp) => {
-      // loader.dismiss();
+      loader.dismiss();
       if (resp.success) {
         this.loading = false;
         // this takes you to previous page before login page was pushed
