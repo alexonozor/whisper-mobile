@@ -32,16 +32,6 @@ export class SignupPage {
     public _authService: AuthenticationProvider,
     public formBuilder: FormBuilder) {
     this.createForm();
-    this.showLoader();
-  }
-
-  showLoader() {
-    let loader = this.loadingCtrl.create({
-      spinner: 'show',
-      showBackdrop: false,
-      content: '<img src="assets/img/auth-loader.svg" />',
-    });
-    loader.present();
   }
 
   doSignup() {
@@ -54,7 +44,6 @@ export class SignupPage {
 
     this.loading = true;
     // Attempt to login in through our User service
-    console.log('signup value ', this.form);
     this._userService.signup(this.form.value).subscribe((resp) => {
       loader.dismiss();
       if (resp.success) {
@@ -66,7 +55,6 @@ export class SignupPage {
         // Unable to sign up
         this.loading = false;
         this.signupErrorString = resp.message.message;
-        console.log('signup error ', this.signupErrorString);
         let toast = this.toastCtrl.create({
           message: this.signupErrorString,
           duration: 3000,
