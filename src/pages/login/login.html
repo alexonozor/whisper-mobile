@@ -17,7 +17,7 @@
               <ion-input type="password" formControlName="password" placeholder="Password" name="password"></ion-input>
             </ion-item>
           </ion-list>
-          <button [disabled]="!form.valid || loading" ion-button outline round color="rounded_buttons" 
+          <button [disabled]="!form.valid || loading" ion-button round color="rounded_buttons" 
           class="login-button">Login</button>
 
         </form>
@@ -27,7 +27,7 @@
     <ion-row>
       <ion-col>
         <span class="new">Have an account?</span>
-        <button ion-button color="signup_button" round (click)="goToSignup()">Create an account</button>
+        <button ion-button round color="signup_button" (click)="goToSignup()" class="signup-button">Create an account</button>
       </ion-col>
     </ion-row>
   </div>
