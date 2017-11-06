@@ -42,7 +42,7 @@ export class ContraceptivePage {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: '<img src="assets/img/loader.gif" />',
+      content: '<img src="assets/img/loader.svg" />',
     });
     loading.present();
 

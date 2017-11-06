@@ -1,5 +1,8 @@
 page-signup {
-    // Fullscreen centered image background
+  .loading-wrapper {
+    margin-bottom: -50%;
+  }
+
   ion-content {
     background-size: cover;
     background-position: center;
@@ -10,15 +13,10 @@ page-signup {
     background-image: radial-gradient(center center, ellipse cover, #ffeda3, #ffc800);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
-  .logo {
-    width: 50%;
-    height: auto;
-    max-width: 12em;
-    margin: 0 auto;
-    padding-bottom: 50px;
-  }
+ 
   .no-border {
     border-bottom: 0 !important;
     box-shadow: none !important;
@@ -27,12 +25,7 @@ page-signup {
     align-items: center;
     text-align: center;
   }
-  @media only screen and (min-width: 768px) {
-    ion-col.col {
-      margin: 0 auto;
-      max-width: 40%;
-    }
-  }
+
   span {
     color: white;
   }
@@ -47,27 +40,22 @@ page-signup {
   ion-list {
     margin: 0;
   }
-  .login-button {
-    width: 90%;
-    // border-radius: 30px;
-    font-size: 0.9em;
-    // border: 1px solid #fff;
-    background-color: #dd1d5e;
-  }
 
-  .login_box { margin-top: 30%; }
 
-  span.new, span.signup {
-    font-size: 1.3rem;
+  form.signup , .have-account{
+    position: relative;
+    top: -65px;
   }
 
   span.new {
-    color: #fff;
     display: block;
     margin: 2% 0 3% 0;
+    background: #222;
+    width: 40%;
+    border-radius: 20px;
+    position: relative;
+    left: 30%;
+    font-weight: bold
   }
-
-  span.signup {
-    color: #29B6F6;
-  }
+  
 }

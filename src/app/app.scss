@@ -29,6 +29,12 @@ h4.title {
   font-size: 1.5rem;
 }
 
+.loading-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 .line-break {
   overflow: inherit ;
   text-overflow: inherit ;
@@ -81,4 +87,40 @@ h4.title {
   background: none;
   padding: 24px;
   box-shadow: none;
+}
+
+.logo {
+  width: 30%;
+  height: auto;
+  max-width: 12em;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+// login & signup
+.login-button {
+  width: 90%;
+  // border-radius: 30px;
+  font-size: 0.9em;
+  // border: 1px solid #fff;
+  background-color: #dd1d5e;
+}
+
+.login-button, .signup-button {
+  box-shadow: none;
+}
+
+.signup-button {
+  position: relative;
+  top: 0;
+}
+
+.login_box { margin-top: 30%; }
+
+span.new, span.signup {
+  font-size: 1.3rem;
+}
+
+span.signup {
+  color: #29B6F6;
 }

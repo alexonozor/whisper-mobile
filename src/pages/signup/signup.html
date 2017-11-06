@@ -8,26 +8,43 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <form [formGroup]="form" (submit)="doSignup()">
+        <form [formGroup]="form" (submit)="doSignup()" class="signup">
           <ion-list inset class="no-border">
             <ion-item>
-              <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
+              <ion-input type="text" formControlName="firstName" placeholder="First name"></ion-input>
             </ion-item>
-
+            <ion-item>
+              <ion-input type="text" formControlName="lastName" placeholder="Surname"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="text" formControlName="userName" placeholder="Username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Date Of Birth</ion-label>
+              <ion-datetime displayFormat="MMM DD YYYY" formControlName="dateOfBirth"></ion-datetime>
+            </ion-item>
+            <ion-item formGroupName="contact">
+                <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
+            </ion-item>
+            <ion-item formGroupName="contact">
+              <ion-input type="text" formControlName="address" placeholder="Address"></ion-input>
+            </ion-item>
             <ion-item>
               <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
             </ion-item>
           </ion-list>
           <button [disabled]="!form.valid || loading" ion-button outline round color="rounded_buttons" 
-            class="login-button">Create a free account
+            class="login-button">Create an account
           </button>
         </form>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <span class="new">Have an account?</span>
-        <button ion-button color="signup_button" round (click)="goToLogin()">Login</button>
+        <div class="have-account">
+          <span class="new">Have an account?</span>
+          <button ion-button color="signup_button" round (click)="goToLogin()">Login</button>
+        </div>
       </ion-col>
     </ion-row>
   </div>
