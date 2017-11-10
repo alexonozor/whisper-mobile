@@ -34,6 +34,7 @@ import { SharedProvider } from '../providers/shared/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { NotificationProvider } from '../providers/notification/notification';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 const config: SocketIoConfig = { url: 'https://whisper-admin.herokuapp.com', options: {} };
 export function getAuthHttp(http) {
@@ -107,6 +108,7 @@ export function getAuthHttp(http) {
     UserNotificationsPage
   ],
   providers: [
+    LocationAccuracy,
     Geolocation,
     StatusBar,
     SplashScreen,
