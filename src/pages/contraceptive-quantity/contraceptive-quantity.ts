@@ -9,7 +9,7 @@ import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FoundPharmaciesPage } from '../assesment/assesment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 /**
  * Generated class for the ContraceptiveQuantityPage page.
  *
@@ -45,7 +45,8 @@ export class ContraceptiveQuantityPage {
       public _pharmacyService: PharmacyProvider,
       public _userService: UserProvider,
       public http: Http,
-      public fb: FormBuilder
+      public fb: FormBuilder,
+      private locationAccuracy: LocationAccuracy
   ) {
       this.user = this.navParams.get('user');
       this.contraceptiveId = this.navParams.get('contraceptive');
@@ -154,6 +155,7 @@ export class ContraceptiveQuantityPage {
   }
 
   confirmUsersLocation(user) {
+    
     let confirm = this.alertCtrl.create({
       title: 'Select Location to search Pharmacy',
       message: `Your current location is ${user.contact.address}. Whisper wants to find a pharmacy close to you for your contraceptive?`,
@@ -168,8 +170,17 @@ export class ContraceptiveQuantityPage {
         {
           text: 'Use GPS',
           handler: () => {
-           // get users new location via gps
-           this.getLocation();
+            this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+              
+                if(canRequest) {
+                  // the accuracy option will be ignored by iOS
+                  this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+                    () => { this.getLocation(); },
+                    error => console.log('Error requesting location permissions', error)
+                  );
+                }
+              
+              });
           }
         }
       ]
@@ -226,7 +237,7 @@ export class ContraceptiveQuantityPage {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: 'finding location...'
+      content: 'Finding location...'
    });
 
     loading.present();

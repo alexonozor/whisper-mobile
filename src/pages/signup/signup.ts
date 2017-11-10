@@ -75,15 +75,11 @@ export class SignupPage {
 
   createForm() {
     this.form = this.formBuilder.group({
+      'accountType': ['Member', Validators.required],
       'firstName': ['', Validators.required],
       'lastName':['', Validators.required],
-      'userName': ['', Validators.required],
-      'dateOfBirth': ['', Validators.required],
       'password': ['', Validators.required],
-      'contact': this.formBuilder.group({
-        'email': ['', Validators.required],
-        'address': ['', Validators.required]
-      })
+      'email': ['', Validators.required],
     });
   }
 
