@@ -164,12 +164,6 @@ export class UserAssesmentsPage {
     }
   }
 
-  viewResponseInfo(assessmentResponse) {
-    let profileModal = this.modalCtrl.create(ResponseInfoPage, {response: assessmentResponse});
-
-    profileModal.present();
-  }
-
   openOptions(assessmentResponse, index?) {
     var startConvesationOrOpen = (assessmentResponse.hasConversation)? "Open Conversation" : "Start Conversation" 
     let actionSheet = this.actionSheetCtrl.create({
@@ -194,13 +188,6 @@ export class UserAssesmentsPage {
           }
         },
         {
-          text: 'Response info',
-          role: 'destructive',
-          handler: () => {
-            this.viewResponseInfo(assessmentResponse)
-          }
-        },
-        {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -214,16 +201,3 @@ export class UserAssesmentsPage {
   
 }
 
-
-@Component({
-  selector: 'page-response-info',
-  templateUrl: 'response-info.html',
-})
-
-export class ResponseInfoPage {
- public response = {};
- constructor(params: NavParams) {
-  this.response = params.get('response');
- }
-
-}

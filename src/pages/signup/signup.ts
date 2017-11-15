@@ -48,15 +48,15 @@ export class SignupPage {
       loader.dismiss();
       if (resp.success) {
         this.loading = false;
-        this._authService.saveToken('token', resp.token)
-          this.navCtrl.push(HomePage)
+        this._authService.saveToken('token', resp.token);
+        this.navCtrl.setRoot(HomePage);
       } else {
         // errors you can handle it later
         // Unable to sign up
         this.loading = false;
-        this.signupErrorString = resp.message.message;
+        // this.signupErrorString = resp.message.errmsg;
         let toast = this.toastCtrl.create({
-          message: this.signupErrorString,
+          message: 'Sorry, an error occurred',
           duration: 3000,
           position: 'top'
         });

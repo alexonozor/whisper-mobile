@@ -14,23 +14,13 @@
 
 <ion-grid>
   <div text-center class="menu-buttons">
-    <ion-row>
-      <ion-col col-10 class="welcome">
-        <h3 class="title">{{message}}</h3>
-      </ion-col>
-    </ion-row>
+    <h3 class="title">{{message}}</h3>
   </div>
 
-  <div text-center class="menu-buttons">
-    <ion-row>
-      <ion-col col-3>
-        <button color="rounded_buttons" ion-button round small (click)="goHome()">Go Home</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-9>
-        <button color="rounded_buttons" ion-button round small (click)="goToContraceptive()">Get another contraceptive</button>
-      </ion-col>
-    </ion-row>
+  <div text-right>
+    <button color="rounded_buttons" ion-button round small (click)="goHome()">Go Home</button>
+  </div>
+  <div text-right>
+    <button color="rounded_buttons" ion-button round small (click)="goToContraceptive()">Get another contraceptive</button>
   </div>
 </ion-grid>
