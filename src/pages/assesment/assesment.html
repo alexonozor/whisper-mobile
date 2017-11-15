@@ -29,7 +29,7 @@
               </ion-col>
             </ion-row>
             <div text-right *ngFor="let answer of question._answers;" class="aligner">
-              <button ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
+              <button ion-button round small color="rounded_buttons" [hidden]="editedInput" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
             </div>
           </ion-grid>
         </ion-slide>
@@ -44,7 +44,9 @@
                   <ion-item>
                     <ion-textarea #value placeholder="Feel free to drop a message"></ion-textarea>
                   </ion-item>
-                  <button class="submit_assesment" ion-button round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
+                  <div text-center>
+                    <button class="submit_assesment" ion-button round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
+                  </div>
                 </ion-list>
               </ion-col>
             </ion-row>

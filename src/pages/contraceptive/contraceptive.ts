@@ -474,6 +474,7 @@ export class ContraceptivePage {
 
 
   goToAssesment(id,name,appointment,contraceptive) {
+    console.log('contraceptives ', contraceptive);
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
   }
 

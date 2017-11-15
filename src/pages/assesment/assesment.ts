@@ -68,7 +68,7 @@ export class AssesmentPage {
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
-    public toastCtrl: ToastController,
+    public toastCtrl: ToastController, 
     public _contraceptiveService: ContraceptiveProvider,
     public _authService: AuthenticationProvider,
     private geolocation: Geolocation,
@@ -107,14 +107,12 @@ export class AssesmentPage {
 
     this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
+      loading.dismiss();
       if (resp.success && resp.status == 200) {
-        loading.dismiss();
         this.assesment = resp.assesments
         console.log('assesments ', this.assesment);
       }
     }, (err) => {
-      loading.dismiss();
-
       if (err.status == 401) {
           // Unable to log in
         let toast = this.toastCtrl.create({
@@ -265,7 +263,7 @@ export class AssesmentPage {
   confirmIfUserWantsToPurchase(user, assesmentId) {
     let confirm = this.alertCtrl.create({
       title: 'Purchase Contraceptive',
-      message: `Do you want to purchase this contraceptive?`,
+      message: `Congrats you are eligible for this method. Would you like to get it?`,
       buttons: [
         {
           text: 'No',

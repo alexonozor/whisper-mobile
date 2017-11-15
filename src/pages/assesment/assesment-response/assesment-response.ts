@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AssesmentProvider } from '../../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
@@ -31,35 +31,59 @@ export class AssesmentResponsePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
     public formBuilder: FormBuilder,
     public _authentication: AuthenticationProvider,
     public _assesmentService: AssesmentProvider) 
-    {
-      this.conversationId = this.navParams.get('conversationId');
-      this.form.patchValue({ conversation: this.conversationId });
-      
-     }
+  {
+    this.conversationId = this.navParams.get('conversationId');
+    this.form.patchValue({ conversation: this.conversationId });
+    
+  }
+
+  loading = this.loadingCtrl.create({
+    spinner: 'show',
+    showBackdrop: false,
+    content: '<img src="assets/img/loader.svg" />',
+  });
+
+  showLoader() {
+    this.loading.present();
+  }
+
+  dismissLoader() {
+    this.loading.dismiss();
+  }
+
 
   ionViewDidLoad() {
-    
+    this.showLoader();
     this._assesmentService.connectToroom(this.conversationId)
     this.getMessages();
     this._assesmentService.getAssementResponsesMessage(this.conversationId)
     .subscribe((resp) => {
+      this.dismissLoader();
       if (resp.success) {
         this.conversation = resp.conversation;
         this.checkSender(resp.conversation.messages);
-        
       }
+    }, (err) => {
+      let toast = this.toastCtrl.create({
+        message: err.statusText,
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
     })
   }
 
-
   getMessages() {
-     this._assesmentService.getMessages().subscribe(message => {
-      message['isSender'] = ( message.user == this.userId )
-     this.messageResponse.push(message);
-    })
+    this._assesmentService.getMessages().subscribe(message => {
+      message['isSender'] = ( message.user == this.userId );
+      console.log('getting messages ', message);
+      this.messageResponse.push(message);
+    });
   }
 
   checkSender(messageResponse) {
