@@ -83,7 +83,6 @@ export class AssesmentPage {
     this.contraceptive_name = this.navParams.get('name');
     this.isAppointment = this.navParams.get('appointment');
     this.related_contraceptives = this.navParams.get('related');
-    console.log('related contraceptives ', this.related_contraceptives);
     this.getUser();
     this.slides.lockSwipes(true);
   }
@@ -236,7 +235,8 @@ export class AssesmentPage {
         // checks eligibility count
         if(this.nonEligibilityCount >= 1) {
           console.log('contraceptive name ', this.contraceptive_name)
-          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, related_contraceptives: this.related_contraceptives});
+          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, 
+          related_contraceptives: this.related_contraceptives});
         }else{
           this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
         }
@@ -348,7 +348,8 @@ export class FoundPharmaciesPage {
 export class NonEligiblePage {
   contraceptive: string;
   message: string;
-  related: Array<any> = []
+  related: Array<any> = [];
+  no_related: boolean;
 
   constructor(
     public _assesmentService: AssesmentProvider,
@@ -362,13 +363,21 @@ export class NonEligiblePage {
   ionViewDidLoad() {
     this.contraceptive = this.navParams.get('contraceptive_name');
     this.related = this.navParams.get('related_contraceptives');
+    this.checkRelated(this.related);
     console.log( 'non eligible ', this.related);
     this.message = `We are sorry, but you are not eligible to purchase a ${this.contraceptive}, 
     We suggest you try out any of this contraceptives below`;
   }
 
+  checkRelated(related) {
+    if( related == []  ) {
+      this.no_related = true;
+    } else {
+      this.no_related = false; 
+    }
+  }
+
   goToRelatedContraceptive(id,name,appointment,contraceptive) {
-    console.log('id ', id, ' name ', name, ' appointment ', appointment, ' contraceptive ', contraceptive);
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, contraceptive: contraceptive});
   }
 
