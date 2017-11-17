@@ -81,8 +81,9 @@ export class AssesmentResponsePage {
   getMessages() {
     this._assesmentService.getMessages().subscribe(message => {
       message['isSender'] = ( message.user == this.userId );
-      console.log('getting messages ', message);
-      this.messageResponse.push(message);
+      if (!message.isSender) {
+        this.messageResponse.push(message);
+      }
     });
   }
 
@@ -95,10 +96,19 @@ export class AssesmentResponsePage {
   }
 
   sendMessage() {
+    let senderValue = (this.form.value.user == this.userId)
+     this.form.value.isSender = true
+   
+    this.messageResponse.push(this.form.value);
     this._assesmentService.sendResponsesMessage(this.form.value).subscribe((res) => {
-      console.log(res)
+      
     }, err => {
-
+      let toast = this.toastCtrl.create({
+        message: "Error sending or recieving messages",
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
     })
 
     this.form.reset(
