@@ -364,7 +364,6 @@ export class NonEligiblePage {
     this.contraceptive = this.navParams.get('contraceptive_name');
     this.related = this.navParams.get('related_contraceptives');
     this.checkRelated(this.related);
-    console.log( 'non eligible ', this.related);
     this.message = `We are sorry, but you are not eligible to purchase a ${this.contraceptive}, 
     We suggest you try out any of this contraceptives below`;
   }

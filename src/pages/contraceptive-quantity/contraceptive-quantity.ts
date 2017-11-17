@@ -65,7 +65,6 @@ export class ContraceptiveQuantityPage {
     })
   }
 
-
   getUserOrders(id) {
     this._userService.getUser(id)
     .subscribe((resp) => {
@@ -78,27 +77,21 @@ export class ContraceptiveQuantityPage {
     })
   }
 
-
   getContraceptive(id) {
     this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
-        this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId)
-        resp.shippingMethods = ['Delivery', 'Pickup'];
-        // mocking min & max shipping quantity
-        resp.contraceptive.minimumShippingQuantity = 2;
-        resp.contraceptive.maximumShippingQuantity = 50;
+        this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId);
+        console.log('quantity range ', this.quantityRange);
+        // mocking min & max shipping quantit
       }
     }, err => {
       // caught errors
       console.log('An error occured, can\'t find contraceptive');
     })
   };
-
-  
-
 
   firstTimeOrder(orders: Array<any>, contraceptiveId: number ) :boolean {
     orders.forEach(element => {
@@ -110,9 +103,8 @@ export class ContraceptiveQuantityPage {
     return true
   }
 
-
-
   updateResponse() {
+    console.log('quantity form ', this.quantityForm.value);
     this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
       if (resp.success) {
@@ -155,10 +147,9 @@ export class ContraceptiveQuantityPage {
   }
 
   confirmUsersLocation(user) {
-    
     let confirm = this.alertCtrl.create({
       title: 'Select Location to search Pharmacy',
-      message: `Your current location is ${user.contact.address}. Whisper wants to find a pharmacy close to you for your contraceptive?`,
+      message: `Whisper wants to find a pharmacy close to you for your contraceptive?`,
       buttons: [
         {
           text: 'Use location',
