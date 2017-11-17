@@ -21,7 +21,8 @@
 
     <ion-row *ngFor="let contraceptive of contraceptives">
       <ion-col col-12 class="button-container">
-        <button color="rounded_buttons" ion-button round small (click)="goToAssesment(contraceptive._id, contraceptive.name, contraceptive.appointment, contraceptive['related-contraceptives'])">{{contraceptive.name}}</button>
+        <button color="rounded_buttons" ion-button round small (click)="goToAssesment(contraceptive._id, contraceptive.name,
+         contraceptive.appointment, contraceptive['releatedContraceptives'])">{{contraceptive.name}}</button>
         <button ion-button outline color="info_button" class="info" clear icon-only
           (click)="contraceptiveInfo(contraceptive.name, contraceptive.description)">
           <ion-icon name="information-circle"></ion-icon>
