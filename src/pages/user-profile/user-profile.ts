@@ -39,7 +39,8 @@ export class UserProfilePage {
 
   getUser() {
     this.user = this._authService.currentUser();
-    this.calculateUserAge(this.user);
+    // use in future
+    // this.calculateUserAge(this.user);
   }
 
   calculateUserAge(user){
@@ -55,15 +56,13 @@ export class UserProfilePage {
       this.ageless = true;
     }
     this.ageInMonths = today.getMonth() - this.birthDate.getMonth();
-    console.log('age in months ', this.ageInMonths);
   }
 
   goToBasicInfo(){
-    console.log('date of birthDate passed ', this.userBirthDate);
     this.navCtrl.push(BasicInformationPage, {
       'firstName': this.firstName,
       'lastName': this.lastName,
-      'dateOfBirth': this.userBirthDate,
+      // 'dateOfBirth': this.userBirthDate,
       'userId': this.userId
     });
   }

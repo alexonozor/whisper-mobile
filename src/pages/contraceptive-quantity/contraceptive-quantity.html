@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ContraceptiveQuantityPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header no-border>
 
   <ion-navbar color="navColor">
@@ -17,27 +11,30 @@
 
 
 <ion-content padding>
-  <h3>{{contraceptive?.name}}</h3>
-  <p>{{contraceptive?.description}}</p>
+  <h3 class="contraceptive_type">{{contraceptive?.name}}</h3>
+  <p class="contraceptive_desc">{{contraceptive?.description}}</p>
 
   <form [formGroup]="quantityForm" (ngSubmit)="updateResponse()">
-    <ion-list>
+    <ion-list no-lines>
       <ion-item>
-      <ion-label>Select Quantity</ion-label>
-      <ion-select formControlName="grandTotal" interface="popover">
-        <ion-option *ngFor="let quantity of quantityRange">{{quantity}}</ion-option>
-      </ion-select>
-      </ion-item>
-      </ion-list>
-
-      <ion-list radio-group formControlName="shippingMethod">
-      <ion-item *ngFor="let shipping of contraceptive?.shippingMethods" [hidden]="(contraceptive?.allowFirstTimerToUsePickUp && isFirstTimeOrder && shipping?.shppingCode == 1001)">
-        <ion-label>{{shipping?.name}}</ion-label>
-        <ion-radio [value]="shipping._id"></ion-radio>
+        <ion-label>Quantity</ion-label>
+        <ion-input type="number" formControlName="grandTotal"></ion-input>
       </ion-item>
     </ion-list>
+
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label>Shipping Methods</ion-label>
+        <ion-select formControlName="shippingMethod">
+          <ion-option *ngFor="let shipping of contraceptive?.shippingMethods" 
+          [hidden]="(contraceptive?.allowFirstTimerToUsePickUp && isFirstTimeOrder && shipping?.shppingCode == 1001)" 
+          [value]="shipping._id">{{shipping?.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+        
     <div text-right>
-      <button small ion-button outline round color="rounded_buttons" right (click)="updateAssesmentResponseWithQuantity()">Submit</button>
+      <button small ion-button outline round color="rounded_buttons" [disabled]='!quantityForm.valid || submitted' right>Submit</button>
     </div>
   </form>
 </ion-content>

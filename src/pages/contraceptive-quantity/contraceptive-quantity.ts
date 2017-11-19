@@ -31,6 +31,7 @@ export class ContraceptiveQuantityPage {
     public quantityForm: FormGroup
     public userOrders = [];
     public isFirstTimeOrder: boolean;
+    public submitted: boolean;
 
     constructor(
       private alertCtrl: AlertController,
@@ -65,7 +66,6 @@ export class ContraceptiveQuantityPage {
     })
   }
 
-
   getUserOrders(id) {
     this._userService.getUser(id)
     .subscribe((resp) => {
@@ -78,27 +78,21 @@ export class ContraceptiveQuantityPage {
     })
   }
 
-
   getContraceptive(id) {
     this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
-        this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId)
-        resp.shippingMethods = ['Delivery', 'Pickup'];
-        // mocking min & max shipping quantity
-        resp.contraceptive.minimumShippingQuantity = 2;
-        resp.contraceptive.maximumShippingQuantity = 50;
+        this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId);
+        console.log('quantity range ', this.quantityRange);
+        // mocking min & max shipping quantit
       }
     }, err => {
       // caught errors
       console.log('An error occured, can\'t find contraceptive');
     })
   };
-
-  
-
 
   firstTimeOrder(orders: Array<any>, contraceptiveId: number ) :boolean {
     orders.forEach(element => {
@@ -110,11 +104,13 @@ export class ContraceptiveQuantityPage {
     return true
   }
 
-
-
   updateResponse() {
+    console.log('quantity form ', this.quantityForm.value);
+    this.submitted = true;
+    
     this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
+      this.submitted = false;
       if (resp.success) {
         this.updateAssesmentResponseWithQuantity();
       } else {
@@ -138,8 +134,6 @@ export class ContraceptiveQuantityPage {
   }
 
   range(lowEnd, highEnd) {
-    console.log('low end ', lowEnd);
-    console.log('high end ', highEnd);
     let arr = [];
 
     while(lowEnd <= highEnd){
@@ -155,18 +149,17 @@ export class ContraceptiveQuantityPage {
   }
 
   confirmUsersLocation(user) {
-    
     let confirm = this.alertCtrl.create({
       title: 'Select Location to search Pharmacy',
-      message: `Your current location is ${user.contact.address}. Whisper wants to find a pharmacy close to you for your contraceptive?`,
+      message: `Whisper wants to find a pharmacy close to you for your contraceptive?`,
       buttons: [
-        {
-          text: 'Use location',
-          handler: () => {
-            // find pharmacy with users loaction
-            this.findPharmacies(user.contact.lng, user.contact.lat);
-          }
-        },
+        // {
+        //   text: 'Use location',
+        //   handler: () => {
+        //     // find pharmacy with users loaction
+        //     this.findPharmacies(user.contact.lng, user.contact.lat);
+        //   }
+        // },
         {
           text: 'Use GPS',
           handler: () => {

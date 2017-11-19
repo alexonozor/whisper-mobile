@@ -29,7 +29,7 @@
               </ion-col>
             </ion-row>
             <div text-right *ngFor="let answer of question._answers;" class="aligner">
-              <button ion-button round small color="rounded_buttons" [hidden]="editedInput" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
+              <button [hidden]="editedInput" ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
             </div>
           </ion-grid>
         </ion-slide>

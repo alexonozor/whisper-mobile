@@ -16,11 +16,16 @@
         <h4 class="title">{{message}}</h4>
       </ion-col>
     </ion-row>
-    <div text-center *ngFor="let contraceptive of related">
-      <button color="rounded_buttons" ion-button round small (click)="goToRelatedContraceptive(contraceptive._id, contraceptive.name, contraceptive.appointment, contraceptive['related-contraceptives'])">{{contraceptive.name}}</button>
+    <div>
+      <div text-center *ngFor="let contraceptive of related">
+        <button color="rounded_buttons" ion-button round small (click)="goToRelatedContraceptive(contraceptive._id, contraceptive.name, contraceptive.appointment, contraceptive['related-contraceptives'])">{{contraceptive.name}}</button>
+      </div>
     </div>
     <div text-center>
-      <button color="ignore" ion-button round small (click)="goHome()">No, Take me Home</button>
+      <h5 [hidden]="related == [] || null" class="title no_related">No related contraceptive at the moment</h5>
+    </div>
+    <div text-center>
+      <button color="ignore" ion-button round small (click)="goHome()">Go Home</button>
     </div>
   </ion-grid>
 </ion-content>

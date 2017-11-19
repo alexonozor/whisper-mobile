@@ -1,3 +1,25 @@
 page-contraceptive-quantity {
+    h3.contraceptive_type {
+        font-size: 1.6rem;
+        font-weight: bold;
+        text-align: center;
+        color: #e91e63;
+        margin-top: 10px !important;
+    }
+    
+    p.contraceptive_desc {
+        text-align: justify;
+        font-size: 1.3rem;
+        color: black;
+    }
 
+    ion-label {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #5c6bc0 !important;
+    }
+
+    .select-text {
+        font-size: 1.3rem;
+    }
 }
