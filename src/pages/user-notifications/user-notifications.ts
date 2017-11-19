@@ -19,7 +19,7 @@ import { AssesmentResponsePage } from '.././assesment/assesment-response/assesme
 export class UserNotificationsPage {
   currentUser: any;
   notifications: Array<any>;
-  no_notification: boolean = false;
+  no_notification: boolean;
 
   constructor(
     public navCtrl: NavController, 
@@ -48,32 +48,43 @@ export class UserNotificationsPage {
     .subscribe((res) => {
       loading.dismiss();
       this.notifications = res.notifications;
-      console.log('notifications ', this.notifications);
-      this.findSender(this.notifications);
-      if(this.notifications == [] || null) {
-        this.no_notification = true;
-        console.log('no notifications ', this.no_notification);
+      if( this.notifications.length ) {
+        this.findSender(this.notifications);
+      } else {
+        this.checkIfNotifications(this.notifications);
       }
     }, err => {})
   }
 
+  checkIfNotifications(notification) {
+    if(notification.length) {
+      this.no_notification = false;
+    } else {
+      this.no_notification = true;
+    }
+  }
+
   findSender(notifications){
     let names: String;
-    this.notifications.forEach( notification => {
-      if(notification.sender['_id'] != null || '') {
-        this._userService.getUser(notification.sender['_id'])
-        .subscribe((res) => {
-          console.log('response ', res.user.firstName);
-          names = `${res.user.firstName} ${res.user.lastName}`;
-          notification['sender_names'] = names;
-        }, err => {});
-      };
-      // this adds a field to the response to signal if sender & receiver are the same, then filters notification
-      if( notification.sender['_id'] == notification.receiver['_id'] ) {
-        notification['hide_notification'] = true;
-        this.no_notification = true;
-      }
-    })
+    if(notifications.length) {
+      this.notifications.forEach( notification => {
+        if(notification.sender['_id'] != null || '') {
+          this._userService.getUser(notification.sender['_id'])
+          .subscribe((res) => {
+            names = `${res.user.firstName} ${res.user.lastName}`;
+            notification['sender_names'] = names;
+          }, err => {});
+        };
+        // this adds a field to the response to signal if sender & receiver are the same, then filters notification
+        if( notification.sender['_id'] == notification.receiver['_id'] ) {
+          notification['hide_notification'] = true;
+          this.no_notification = true;
+          console.log('no notifications ', this.no_notification);  
+        }
+      });
+    } else {
+      this.checkIfNotifications(notifications);
+    }
   }
 
   goToNotification(notification) {

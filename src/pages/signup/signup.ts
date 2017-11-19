@@ -49,6 +49,7 @@ export class SignupPage {
       if (resp.success) {
         this.loading = false;
         this._authService.saveToken('token', resp.token);
+        this._authService.saveUser(resp.user);
         this.navCtrl.setRoot(HomePage);
       } else {
         // errors you can handle it later
