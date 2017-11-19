@@ -9,14 +9,14 @@
 
 <ion-content padding>
   <ion-list  *ngFor="let notification of notifications" (click)="goToNotification(notification)">
-    <button ion-item clear padding>
+    <button ion-item clear>
       <ion-grid>
-        <ion-row>
+        <ion-row [hidden]="notification.hide_notification">
           <ion-col col-1>
             <ion-icon name="chatboxes" item-start color="rounded_buttons"></ion-icon>
           </ion-col>
           <ion-col col-11>
-            <h4 class="notifications">{{notification.sender.userName}} just replied to your assesment</h4>
+            <h4 class="notifications">{{notification.sender_names}} just replied to your assesment</h4>
             <h5 class="timeline">{{notification.createdAt | date }}</h5>
           </ion-col>
         </ion-row>
@@ -24,6 +24,6 @@
     </button>
   </ion-list>
   <div text-center>
-    <h4 *ngIf="no_notification" class="no-notification">No notification</h4>
+    <h4 [hidden]="!no_notification" class="no-notification">No notification</h4>
   </div>
 </ion-content>
