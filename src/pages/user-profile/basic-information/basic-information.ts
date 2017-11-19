@@ -27,7 +27,6 @@ export class BasicInformationPage {
 
     this.firstName = navParams.get('firstName');
     this.lastName = navParams.get('lastName');
-    this.dob = navParams.get('dateOfBirth');
     this.userId = navParams.get('userId')
     this.createForm();
   }
@@ -39,7 +38,6 @@ export class BasicInformationPage {
     this.basicInfoForm = this.fb.group({
       firstName: ['', Validators.required ],
       lastName: ['', Validators.required ],
-      dateOfBirth: ['', Validators.required]
     })
   }
 

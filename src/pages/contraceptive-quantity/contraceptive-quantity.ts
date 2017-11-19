@@ -31,6 +31,7 @@ export class ContraceptiveQuantityPage {
     public quantityForm: FormGroup
     public userOrders = [];
     public isFirstTimeOrder: boolean;
+    public submitted: boolean;
 
     constructor(
       private alertCtrl: AlertController,
@@ -105,8 +106,11 @@ export class ContraceptiveQuantityPage {
 
   updateResponse() {
     console.log('quantity form ', this.quantityForm.value);
+    this.submitted = true;
+    
     this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
+      this.submitted = false;
       if (resp.success) {
         this.updateAssesmentResponseWithQuantity();
       } else {
@@ -130,8 +134,6 @@ export class ContraceptiveQuantityPage {
   }
 
   range(lowEnd, highEnd) {
-    console.log('low end ', lowEnd);
-    console.log('high end ', highEnd);
     let arr = [];
 
     while(lowEnd <= highEnd){
@@ -151,13 +153,13 @@ export class ContraceptiveQuantityPage {
       title: 'Select Location to search Pharmacy',
       message: `Whisper wants to find a pharmacy close to you for your contraceptive?`,
       buttons: [
-        {
-          text: 'Use location',
-          handler: () => {
-            // find pharmacy with users loaction
-            this.findPharmacies(user.contact.lng, user.contact.lat);
-          }
-        },
+        // {
+        //   text: 'Use location',
+        //   handler: () => {
+        //     // find pharmacy with users loaction
+        //     this.findPharmacies(user.contact.lng, user.contact.lat);
+        //   }
+        // },
         {
           text: 'Use GPS',
           handler: () => {

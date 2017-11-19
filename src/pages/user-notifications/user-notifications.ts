@@ -79,7 +79,6 @@ export class UserNotificationsPage {
         if( notification.sender['_id'] == notification.receiver['_id'] ) {
           notification['hide_notification'] = true;
           this.no_notification = true;
-          console.log('no notifications ', this.no_notification);  
         }
       });
     } else {

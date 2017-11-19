@@ -16,9 +16,7 @@
         </ion-col>
         <ion-col col-7>
           <h3>Basic Information</h3>
-          <h4>{{user?.firstName}}</h4>
-          <h4 *ngIf="!ageless">{{userAge}} {{userAge | i18nPlural: ageMapping}}</h4>
-          <h4 *ngIf="ageless">{{ageInMonths}} {{ageInMonths | i18nPlural: monthMapping}}</h4>
+          <h4>{{user?.firstName}} {{user?.lastName}}</h4>
         </ion-col>
       </ion-row>
     </ion-grid>
