@@ -61,6 +61,7 @@ export class AssesmentPage {
   lock_swipes: boolean = true;
   isAppointment: boolean;
   nonEligibilityCount: number = 0;
+  hasPrev: boolean = false;
 
 
   constructor(
@@ -144,7 +145,7 @@ export class AssesmentPage {
   }
 
   nextSlide(question_id, question, answer, isEditedAnswer, label, eligible) {
-
+    this.hasPrev = true;
     if(!eligible) {
       this.nonEligibilityCount += 1;
       console.log('non-eligiblity count ', this.nonEligibilityCount);
