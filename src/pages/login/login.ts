@@ -6,6 +6,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
+import { Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-login',
@@ -13,7 +14,13 @@ import { SignupPage } from '../signup/signup';
 })
 export class LoginPage {
   loading: boolean = false;
+  subscription: Subscription;
   public backgroundImage = 'assets/img/background.png';
+  loader : any = this.loadingCtrl.create({
+    spinner: 'show',
+    showBackdrop: false,
+    content: '<img src="assets/img/auth-loader.svg" />',
+  });
 
   // The account fields for the login form.
   private form = this.formBuilder.group({
@@ -32,21 +39,36 @@ export class LoginPage {
     ) {
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
+  showLoader() {
+    this.loader.present();
+  }
+
+  dismissLoader() {
+    this.loader.dismiss();
+  }
+
+  toaster(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
   // Attempt to login in through our User service
   doLogin() {
-    let loader = this.loadingCtrl.create({
-      spinner: 'show',
-      showBackdrop: false,
-      content: '<img src="assets/img/auth-loader.svg" />',
-    });
-    loader.present();
-
     let prev_page = this.navParams.get('prev_page');
     this.loading = true;
-    this._authService.login(this.form.value)
+    this.subscription = this._authService.login(this.form.value)
     .subscribe((resp) => {
-      loader.dismiss();
+      this.showLoader();
       if (resp.success) {
+        this.dismissLoader();
         this.loading = false;
         this.navCtrl.setRoot(HomePage);
         this._authService.saveToken('token', resp.token);
@@ -54,23 +76,12 @@ export class LoginPage {
       } else {
         // Unable to log in
         this.loading = false;
-
-        let toast = this.toastCtrl.create({
-          message: resp.message,
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
+        this.toaster(resp.message);
         }
     }, (err) => {
       // Unable to log in
       this.loading = false;
-      let toast = this.toastCtrl.create({
-        message: 'internal server error',
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      this.toaster('An error occurred');
     });
     
   }

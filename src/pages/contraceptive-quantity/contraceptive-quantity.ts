@@ -10,12 +10,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { FoundPharmaciesPage } from '../assesment/assesment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-/**
- * Generated class for the ContraceptiveQuantityPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Subscription} from 'rxjs/Subscription';
+
 @IonicPage()
 @Component({
   selector: 'page-contraceptive-quantity',
@@ -32,6 +28,7 @@ export class ContraceptiveQuantityPage {
     public userOrders = [];
     public isFirstTimeOrder: boolean;
     public submitted: boolean;
+    subscription: Subscription;
 
     constructor(
       private alertCtrl: AlertController,
@@ -59,6 +56,10 @@ export class ContraceptiveQuantityPage {
     this.getUserOrders(this.user._id);
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   createForm() {
     this.quantityForm = this.fb.group({
       grandTotal: ['', Validators.required],
@@ -67,7 +68,7 @@ export class ContraceptiveQuantityPage {
   }
 
   getUserOrders(id) {
-    this._userService.getUser(id)
+    this.subscription = this._userService.getUser(id)
     .subscribe((resp) => {
       if (resp.success) {
         this.userOrders =  resp.user.orders;
@@ -79,24 +80,21 @@ export class ContraceptiveQuantityPage {
   }
 
   getContraceptive(id) {
-    this._contraceptiveService.getContraceptive(id)
+    let contraceptive = this._contraceptiveService.getContraceptive(id)
     .subscribe((resp) => {
       if (resp.success) {
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
         this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId);
-        console.log('quantity range ', this.quantityRange);
-        // mocking min & max shipping quantit
       }
     }, err => {
       // caught errors
-      console.log('An error occured, can\'t find contraceptive');
     })
+    this.subscription.add(contraceptive);
   };
 
   firstTimeOrder(orders: Array<any>, contraceptiveId: number ) :boolean {
     orders.forEach(element => {
-      console.log(element == contraceptiveId);
       if (element == contraceptiveId) { 
         return false;
       }
@@ -105,10 +103,9 @@ export class ContraceptiveQuantityPage {
   }
 
   updateResponse() {
-    console.log('quantity form ', this.quantityForm.value);
     this.submitted = true;
     
-    this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
+    let update = this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
       this.submitted = false;
       if (resp.success) {
@@ -131,6 +128,7 @@ export class ContraceptiveQuantityPage {
       });
       toast.present();
     });
+    this.subscription.add(update);
   }
 
   range(lowEnd, highEnd) {
@@ -191,7 +189,7 @@ export class ContraceptiveQuantityPage {
    });
 
     loading.present();
-    this._pharmacyService.getNearerPharmacies(longitude, latitude)
+    let nearPharmacy = this._pharmacyService.getNearerPharmacies(longitude, latitude)
     .subscribe((resp) => {
       if (resp.success) {
         // mock data
@@ -224,6 +222,7 @@ export class ContraceptiveQuantityPage {
     }, err => {
       // caugh error
     })
+    this.subscription.add(nearPharmacy);
   }
 
   getLocation() {
@@ -271,7 +270,4 @@ export class ContraceptiveQuantityPage {
       });
       alert.present();
   }
-
-
-
 }
