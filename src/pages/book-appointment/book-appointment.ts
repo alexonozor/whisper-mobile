@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , ToastController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../../pages/home/home';
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -18,9 +19,11 @@ export class BookAppointmentPage {
   public appointmentFormGroup: FormGroup;
   public submited: boolean = false;
   public responseId: string;
+  subscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
+    public toastCtrl: ToastController,
     public navParams: NavParams,
     public fb: FormBuilder,
     public _assesmentService: AssesmentProvider) {
@@ -29,7 +32,10 @@ export class BookAppointmentPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BookAppointmentPage');
+  }
+
+  ionViewWilLeave() {
+    this.subscription.unsubscribe();
   }
 
   appointmentForm() {
@@ -43,21 +49,27 @@ export class BookAppointmentPage {
     })
   }
 
+  toaster(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
   bookAppointment() {
-    console.log('appointment booked');
     this.submited = true;
-    this._assesmentService.updateResponse(this.responseId, this.appointmentFormGroup.value)
+    this.subscription = this._assesmentService.updateResponse(this.responseId, this.appointmentFormGroup.value)
     .subscribe((res) => {
       if (res.success) {
         // this.submited = false;
         this.navCtrl.push(AppointmentLandingPage, {message: "Thanks for booking an appointment, We would contact you shortly."});
-        //add toast
-        // push to a page that says go home /take another assesment
       } else {
+        this.toaster(res.message);
       }
     }, err => {
-      // caught error
-      console.log('an error occurred');
+      this.toaster('An error occurred');
     })
   }
 }

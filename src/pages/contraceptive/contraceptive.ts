@@ -35,6 +35,15 @@ export class ContraceptivePage {
     this.subscription.unsubscribe();
   }
 
+  toaster(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
   getAllContraceptive() {
     let prev_page = this.navCtrl.getActive().name;
 
@@ -57,13 +66,7 @@ export class ContraceptivePage {
         }, (err) => {
         loading.dismiss();
         if (err.status == 401) {
-          // Unable to log in
-          let toast = this.toastCtrl.create({
-            message: err.statusText,
-            duration: 3000,
-            position: 'top'
-          });
-          toast.present();
+          this.toaster(err.statusText);
           this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
         }
       })
@@ -83,14 +86,7 @@ export class ContraceptivePage {
      }
     }, (err) => {
       if (err.status == 401) {
-          // Unable to log in
-        let toast = this.toastCtrl.create({
-          message: err.statusText,
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
-
+        this.toaster(err.statusText);        
         this.navCtrl.setRoot(LoginPage).then(() => {
             this.navCtrl.popToRoot();
         });
@@ -135,10 +131,6 @@ export class ContraceptiveDescPage {
     this.contraceptive_description = description;
   }
 }
-
-
-
-
 
 @Component({
   selector: 'start-assesment',
