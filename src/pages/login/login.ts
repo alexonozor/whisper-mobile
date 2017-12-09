@@ -48,17 +48,6 @@ export class LoginPage {
       loader.dismiss();
       if (resp.success) {
         this.loading = false;
-        // this takes you to previous page before login page was pushed
-        // if( prev_page != undefined || prev_page != "") {
-        //   if(prev_page.name == "HomePage") {
-        //     this.navCtrl.setRoot(prev_page);
-        //   }else {
-        //     this.navCtrl.push(prev_page);
-        //   }
-        // }
-        // else {
-        //   this.navCtrl.push(HomePage);
-        // }
         this.navCtrl.setRoot(HomePage);
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
@@ -83,6 +72,7 @@ export class LoginPage {
       });
       toast.present();
     });
+    
   }
 
   goToSignup() {

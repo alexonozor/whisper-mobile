@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Validators, FormBuilder } from '@angular/forms';
 import { AssesmentProvider } from '../../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -20,6 +20,7 @@ export class AssesmentResponsePage {
   isSender: boolean = false;
   userId: object;
   conversationId: string;
+  subscription: Subscription;  
 
   private form = this.formBuilder.group({
     content: ['', Validators.required],
@@ -38,8 +39,7 @@ export class AssesmentResponsePage {
     public _assesmentService: AssesmentProvider) 
   {
     this.conversationId = this.navParams.get('conversationId');
-    this.form.patchValue({ conversation: this.conversationId });
-    
+    this.form.patchValue({ conversation: this.conversationId });   
   }
 
   loading = this.loadingCtrl.create({
@@ -56,10 +56,9 @@ export class AssesmentResponsePage {
     this.loading.dismiss();
   }
 
-
   ionViewDidLoad() {
     this.showLoader();
-    this._assesmentService.connectToroom(this.conversationId)
+    this.connectToRoom();
     this.getMessages();
     this._assesmentService.getAssementResponsesMessage(this.conversationId)
     .subscribe((resp) => {
@@ -78,13 +77,21 @@ export class AssesmentResponsePage {
     })
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
+  connectToRoom() {
+    this._assesmentService.connectToroom(this.conversationId);
+  }
+
   getMessages() {
-    this._assesmentService.getMessages().subscribe(message => {
-      message['isSender'] = ( message.user == this.userId );
-      if (!message.isSender) {
-        this.messageResponse.push(message);
-      }
-    });
+    this.subscription = this._assesmentService.getMessages().subscribe(message => {
+        message['isSender'] = ( message.user == this.userId );
+        if (!message.isSender) {
+          this.messageResponse.push(message);
+        }
+      });
   }
 
   checkSender(messageResponse) {
@@ -100,26 +107,23 @@ export class AssesmentResponsePage {
      this.form.value.isSender = true
    
     this.messageResponse.push(this.form.value);
-    this._assesmentService.sendResponsesMessage(this.form.value).subscribe((res) => {
-      
-    }, err => {
-      let toast = this.toastCtrl.create({
-        message: "Error sending or recieving messages",
-        duration: 3000,
-        position: 'bottom'
-      });
-      toast.present();
-    })
+    let sendMessage = this._assesmentService.sendResponsesMessage(this.form.value).subscribe((res) => {  
+      }, err => {
+        let toast = this.toastCtrl.create({
+          message: "Error sending or recieving messages",
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+      })
 
-    this.form.reset(
-      {
-        content: '',
-        conversation: this.conversationId,
-        user: this._authentication.currentUser()._id, createdAt: Date.now()
-      }
-    );
+      this.form.reset(
+        {
+          content: '',
+          conversation: this.conversationId,
+          user: this._authentication.currentUser()._id, createdAt: Date.now()
+        }
+      );
+    this.subscription.add(sendMessage);
   }
-
-
-
 }

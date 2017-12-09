@@ -64,6 +64,9 @@ export class MyApp {
     else {
       this.nav.push(page.component);
     }
+    if(page.title == "Home") {
+      this.nav.setRoot(HomePage);
+    }
     // this.menu.enable(false, 'whisper-menu');
 
   }

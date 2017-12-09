@@ -11,8 +11,7 @@
 
 
 <ion-content padding>
-  <h3 class="contraceptive_type">{{contraceptive?.name}}</h3>
-  <p class="contraceptive_desc">{{contraceptive?.description}}</p>
+  <h3 class="contraceptive_type"> Contraceptive: {{contraceptive?.name}}</h3>
 
   <form [formGroup]="quantityForm" (ngSubmit)="updateResponse()">
     <ion-list no-lines>

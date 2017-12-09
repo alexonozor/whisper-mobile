@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { LoginPage } from '../login/login';
 import { AssesmentPage } from '../assesment/assesment';
-import { Subscription} from 'rxjs/Subscription'
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({

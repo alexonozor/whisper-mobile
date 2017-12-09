@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-slides #slides>
-      <ion-slide *ngFor="let question of assesment;">
+      <ion-slide class="assesment_slides" *ngFor="let question of assesment;">
         <ion-grid>
           <ion-row>
             <ion-col col-10 class="welcome">
@@ -30,6 +30,14 @@
           <div text-right *ngFor="let answer of question._answers;" class="aligner">
             <button [hidden]="editedInput" ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
           </div>
+        </ion-grid>
+        <ion-grid class="bott">
+          <ion-row *ngIf="hasPrev">
+            <ion-col col-3> <img src="assets/img/swipe-left.png"/> </ion-col>
+            <ion-col col-9> 
+              <h4 class="slideLeft">Swipe back to go to previous question</h4>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </ion-slide>
 
@@ -53,13 +61,3 @@
       </ion-slide>
   </ion-slides>
 </ion-content>
-<ion-footer align="center" no-border>
-  <ion-grid>
-    <ion-row *ngIf="hasPrev">
-      <ion-col col-3> <img src="assets/img/swipe-left.png"/> </ion-col>
-      <ion-col col-9> 
-        <h4 class="slideLeft">Slide left to go back to previous question</h4>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-footer>

@@ -12,7 +12,7 @@ import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { BookAppointmentPage, AppointmentLandingPage  } from '../book-appointment/book-appointment';
 import { StartPage } from '../contraceptive/contraceptive'
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
-
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -62,7 +62,7 @@ export class AssesmentPage {
   isAppointment: boolean;
   nonEligibilityCount: number = 0;
   hasPrev: boolean = false;
-
+  subscription: Subscription;
 
   constructor(
     private alertCtrl: AlertController,
@@ -88,6 +88,10 @@ export class AssesmentPage {
     this.slides.lockSwipes(true);
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   getUser() {
     let userParams:any = this._authService.currentUser();
     if(userParams) {
@@ -105,7 +109,7 @@ export class AssesmentPage {
     });
     loading.present();
 
-    this._contraceptiveService.getAssesment(id)
+    this.subscription = this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
       loading.dismiss();
       if (resp.success && resp.status == 200) {
@@ -227,7 +231,7 @@ export class AssesmentPage {
   submitAssesment(value) {
     this.assesmentParams.note = value.value;
     this.assesmentParams.questions.shift();
-    this._assesmentService.submitAssesment(this.assesmentParams)
+    let assessmentSubmit = this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
         console.log('response ', resp);
@@ -259,6 +263,7 @@ export class AssesmentPage {
       });
       toast.present();
     });
+    this.subscription.add(assessmentSubmit);
   }
 
   confirmIfUserWantsToPurchase(user, assesmentId) {
@@ -301,6 +306,7 @@ export class AssesmentPage {
 export class FoundPharmaciesPage {
   public pharmacies = [];
   public responseId: number;
+  subscription: Subscription;
 
   constructor(
     public _assesmentService: AssesmentProvider,
@@ -314,6 +320,10 @@ export class FoundPharmaciesPage {
     this.responseId = navParams.get('responseId');
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   updateUserAssessmentResponse(pharmacyId) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
@@ -321,7 +331,7 @@ export class FoundPharmaciesPage {
       content: 'contacting pharmacy...'
     });
     loading.present();
-    this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
+    this.subscription = this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
     .subscribe((resp) => {
       if (resp.success) {
         loading.dismiss();
