@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-signup',
@@ -13,12 +14,9 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 
 export class SignupPage {
   public backgroundImage = 'assets/img/background.png';
-
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  
+  subscription: Subscription;
   loading: boolean = false;
+  loadingIcon: any;
 
   // Our translated text strings
   private signupErrorString: string;
@@ -34,43 +32,51 @@ export class SignupPage {
     this.createForm();
   }
 
-  doSignup() {
-    let loader = this.loadingCtrl.create({
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
+  toaster(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  loader() {
+    this.loadingIcon = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: '<img src="assets/img/auth-loader.svg" />',
+      content: '<img src="assets/img/loader.svg" />',
     });
-    loader.present();
+    this.loadingIcon.present();
+  }
 
+  dismissLoader() {
+    this.loadingIcon.dismiss();
+  }
+
+  doSignup() {
+    this.loader()
     this.loading = true;
     // Attempt to login in through our User service
-    this._userService.signup(this.form.value).subscribe((resp) => {
-      loader.dismiss();
+    this.subscription = this._userService.signup(this.form.value).subscribe((resp) => {
+      this.dismissLoader();
       if (resp.success) {
         this.loading = false;
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
         this.navCtrl.setRoot(HomePage);
       } else {
-        // errors you can handle it later
         // Unable to sign up
         this.loading = false;
-        // this.signupErrorString = resp.message.errmsg;
-        let toast = this.toastCtrl.create({
-          message: 'Sorry, an error occurred',
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
+        this.toaster('Sorry, an error occurred');
       }
     }, (err) => {
       this.loading = false;
-      let toast = this.toastCtrl.create({
-        message: 'internal server error',
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      this.toaster('Sorry, an error occurred');      
     });
   }
 

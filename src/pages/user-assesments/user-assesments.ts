@@ -6,7 +6,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
 import { ContraceptivePage } from   '../contraceptive/contraceptive';
-
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -20,6 +20,7 @@ export class UserAssesmentsPage {
   userId: string;
   loaded: boolean = false;
   none_found: boolean = false;
+  subscription: Subscription;
 
   constructor(
     public modalCtrl: ModalController,
@@ -38,12 +39,16 @@ export class UserAssesmentsPage {
     this.getUser();
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   getContraceptive() {
     this.navCtrl.push(ContraceptivePage);
   }
 
   getUser() {
-    this.user = this._authService.currentUser();
+    this.subscription = this.user = this._authService.currentUser();
     this.getUserDetails(this.user);
   }
 
@@ -62,7 +67,7 @@ export class UserAssesmentsPage {
 
     loading.present();
 
-    this._assesmentService.getAssementResponses(user_id)
+    let response = this._assesmentService.getAssementResponses(user_id)
     .subscribe((resp) => {
 
       if (resp.success && resp.status == 200) {
@@ -90,7 +95,8 @@ export class UserAssesmentsPage {
             this.navCtrl.popToRoot();
         });
       }
-    })
+    });
+    this.subscription.add(response);
   }
 
 
@@ -105,7 +111,7 @@ export class UserAssesmentsPage {
        'createdAt': Date.now() 
     };
 
-    this._assesmentService.startAssessmentConversation(params)
+    let start = this._assesmentService.startAssessmentConversation(params)
     .subscribe((resp) => {
       if (resp.success) {
         this.updateAssesmentResponse(response._id, { hasConversation: true, conversation: resp.responseId });
@@ -128,30 +134,31 @@ export class UserAssesmentsPage {
       }
     }, err => {
       //toaster is fyn for err don't for get to dismiss loader
-    })
-
+    });
+    this.subscription.add(start);
   }
 
   updateAssesmentResponse(id, params) {
-    this._assesmentService.updateResponse(id, params)
+    let update = this._assesmentService.updateResponse(id, params)
     .subscribe((resp) => {
       if (resp.success) {
         this.navCtrl.push(AssesmentResponsePage, { conversationId: params.conversation });        
       }
     }, err => {
       // caught errors
-    })
+    });
+    this.subscription.add(update);
   }
 
   openConversation(conversationId) {
-     this.navCtrl.push(AssesmentResponsePage, { conversationId: conversationId });    
+    this.navCtrl.push(AssesmentResponsePage, { conversationId: conversationId });    
   }
 
   deleteAssessmentResponse(index, id) {
     let confirmDelete = confirm('Are you sure you want to delete?');
     if (confirmDelete) {
       this.userAssesments.splice(index, 1)
-      this._assesmentService.deleteAssementResponse(id)
+      let remove = this._assesmentService.deleteAssementResponse(id)
       .subscribe((resp) => {
         if (resp.success) {
           // toast
@@ -160,7 +167,8 @@ export class UserAssesmentsPage {
         }
       }, err => {
         // handle errors
-      })
+      });
+      this.subscription.add(remove);
     }
   }
 

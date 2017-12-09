@@ -50,7 +50,6 @@ export class UserProfilePage {
     this.userId = user._id;
     let today = new Date();
     this.birthDate = new Date(user.dateOfBirth);
-    console.log('birth date ', this.birthDate);
     this.userAge = today.getFullYear() - this.birthDate.getFullYear();
     if(this.userAge < 1) {
       this.ageless = true;

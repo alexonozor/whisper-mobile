@@ -16,6 +16,7 @@ export class ContraceptivePage {
   assesment: Array<{id: string, question: string, answer: {} }> = [];
   mocked_contraceptives: Array<{}> = [];
   subscription: Subscription;
+  loading: any;
 
   constructor(
     public navCtrl: NavController,
@@ -44,27 +45,32 @@ export class ContraceptivePage {
     toast.present();
   }
 
-  getAllContraceptive() {
-    let prev_page = this.navCtrl.getActive().name;
-
-    this._authService.tokenSubscription()
-    let loading = this.loadingCtrl.create({
+  loader() {
+    this.loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
       content: '<img src="assets/img/loader.svg" />',
     });
-    loading.present();
+    this.loading.present();
+  }
 
+  dismissLoader() {
+    this.loading.dismiss();
+  }
+
+  getAllContraceptive() {
+    let prev_page = this.navCtrl.getActive().name;
+    this._authService.tokenSubscription()
+    this.loader();
     this.subscription = this._contraceptiveService.getAll()
       .subscribe((resp) => {
           if (resp.success && resp.status == 200) {
-            loading.dismiss();
+            this.dismissLoader();
             this.contraceptives = resp.contraceptives;
-            console.log('contraceptives ', this.contraceptives);
           } else {
           }
         }, (err) => {
-        loading.dismiss();
+        this.dismissLoader();
         if (err.status == 401) {
           this.toaster(err.statusText);
           this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
@@ -73,7 +79,6 @@ export class ContraceptivePage {
   }
 
   goToAssesment(id,name,appointment,contraceptive) {
-    console.log('contraceptives ', contraceptive);
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
   }
 
@@ -119,11 +124,6 @@ export class ContraceptiveDescPage {
 
   ionViewDidLoad() {
     this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
-    this.getUser();
-  }
-
-  getUser() {
-    console.log('get current user ', this._authService.currentUser() );
   }
 
   contraceptiveInfo(name, description) {

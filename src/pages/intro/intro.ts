@@ -49,7 +49,6 @@ export class IntroPage {
 
   onSlideChanged() {
     this.slideIndex = this.slider.getActiveIndex();
-    console.log('Slide changed! Current index is', this.slideIndex);
   }
 
 }

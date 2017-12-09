@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserProvider } from '../../../providers/user/user';
+import { Subscription} from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -16,13 +17,15 @@ export class BasicInformationPage {
   public dob: Date;
   public submited: boolean = false;
   public userId: string;
+  subscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public _authService: AuthenticationProvider,
     public fb: FormBuilder,
-    public _userService: UserProvider
+    public _userService: UserProvider,
+    public toastCtrl: ToastController
     ) {
 
     this.firstName = navParams.get('firstName');
@@ -34,6 +37,10 @@ export class BasicInformationPage {
   ionViewDidLoad() {
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   createForm() {
     this.basicInfoForm = this.fb.group({
       firstName: ['', Validators.required ],
@@ -41,19 +48,26 @@ export class BasicInformationPage {
     })
   }
 
-  updateUser() {
-    this.submited = true;
-    this._userService.update(this.basicInfoForm.value, this.userId)
-    .subscribe((res) => {
-      if (res.success) {
-        // this.submited = false;
-        console.log('user profile updated');
-      } else {
-      }
-    }, err => {
-      // caught error
-      console.log('an error occurred');
-    })
+  toaster(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
+  updateUser() {
+    this.submited = true;
+    this.subscription = this._userService.update(this.basicInfoForm.value, this.userId)
+    .subscribe((res) => {
+      if (res.success) {
+        this.submited = true;
+      } else {
+        this.toaster('An error occurred');
+      }
+    }, err => {
+      this.toaster('An error occurred');
+    })
+  }
 }

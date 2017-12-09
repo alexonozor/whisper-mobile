@@ -4,13 +4,8 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
 import { AssesmentResponsePage } from '.././assesment/assesment-response/assesment-response';
+import { Subscription} from 'rxjs/Subscription';
 
-/**
- * Generated class for the UserNotificationsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-user-notifications',
@@ -20,6 +15,7 @@ export class UserNotificationsPage {
   currentUser: any;
   notifications: Array<any>;
   no_notification: boolean;
+  subscription: Subscription;
 
   constructor(
     public navCtrl: NavController, 
@@ -36,6 +32,10 @@ export class UserNotificationsPage {
     this.getNotification()
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   getNotification() {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
@@ -44,7 +44,7 @@ export class UserNotificationsPage {
     });
     loading.present();
 
-    this._notification.getUserNotifications(this.currentUser._id)
+    this.subscription = this._notification.getUserNotifications(this.currentUser._id)
     .subscribe((res) => {
       loading.dismiss();
       this.notifications = res.notifications;
