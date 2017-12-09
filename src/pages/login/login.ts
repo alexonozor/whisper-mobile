@@ -6,7 +6,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @Component({
   selector: 'page-login',
@@ -39,10 +39,6 @@ export class LoginPage {
     ) {
   }
 
-  ionViewWillLeave() {
-    this.subscription.unsubscribe();
-  }
-
   showLoader() {
     this.loader.present();
   }
@@ -64,7 +60,7 @@ export class LoginPage {
   doLogin() {
     let prev_page = this.navParams.get('prev_page');
     this.loading = true;
-    this.subscription = this._authService.login(this.form.value)
+    this._authService.login(this.form.value)
     .subscribe((resp) => {
       this.showLoader();
       if (resp.success) {

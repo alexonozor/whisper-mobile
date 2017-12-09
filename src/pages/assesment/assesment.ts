@@ -12,7 +12,7 @@ import { PharmacyProvider } from '../../providers/pharmacy/pharmacy';
 import { BookAppointmentPage, AppointmentLandingPage  } from '../book-appointment/book-appointment';
 import { StartPage } from '../contraceptive/contraceptive'
 import { ContraceptiveQuantityPage } from '../contraceptive-quantity/contraceptive-quantity';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @IonicPage()
 @Component({
@@ -226,15 +226,12 @@ export class AssesmentPage {
   submitAssesment(value) {
     this.assesmentParams.note = value.value;
     this.assesmentParams.questions.shift();
-    let assessmentSubmit = this._assesmentService.submitAssesment(this.assesmentParams)
+    this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
       if (resp.success) {
-        console.log('response ', resp);
-        console.log('response id ', resp.responseId);
         this.responseId = resp.responseId;
         // checks eligibility count
         if(this.nonEligibilityCount >= 1) {
-          console.log('contraceptive name ', this.contraceptive_name)
           this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, 
           related_contraceptives: this.related_contraceptives});
         }else{
@@ -258,7 +255,6 @@ export class AssesmentPage {
       });
       toast.present();
     });
-    this.subscription.add(assessmentSubmit);
   }
 
   confirmIfUserWantsToPurchase(user, assesmentId) {

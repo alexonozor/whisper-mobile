@@ -6,7 +6,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
 import { ContraceptivePage } from   '../contraceptive/contraceptive';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @IonicPage()
 @Component({
@@ -48,7 +48,7 @@ export class UserAssesmentsPage {
   }
 
   getUser() {
-    this.subscription = this.user = this._authService.currentUser();
+    this.user = this._authService.currentUser();
     this.getUserDetails(this.user);
   }
 
@@ -67,9 +67,8 @@ export class UserAssesmentsPage {
 
     loading.present();
 
-    let response = this._assesmentService.getAssementResponses(user_id)
+    this.subscription = this._assesmentService.getAssementResponses(user_id)
     .subscribe((resp) => {
-
       if (resp.success && resp.status == 200) {
         loading.dismiss();
         this.userAssesments = resp.responses;
@@ -95,8 +94,7 @@ export class UserAssesmentsPage {
             this.navCtrl.popToRoot();
         });
       }
-    });
-    this.subscription.add(response);
+    })
   }
 
 

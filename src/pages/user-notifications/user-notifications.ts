@@ -4,7 +4,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
 import { AssesmentResponsePage } from '.././assesment/assesment-response/assesment-response';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @IonicPage()
 @Component({

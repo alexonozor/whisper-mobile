@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Validators, FormBuilder } from '@angular/forms';
 import { AssesmentProvider } from '../../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @IonicPage()
 @Component({

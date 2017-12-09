@@ -5,7 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @Component({
   selector: 'page-signup',
@@ -32,10 +32,6 @@ export class SignupPage {
     this.createForm();
   }
 
-  ionViewWillLeave() {
-    this.subscription.unsubscribe();
-  }
-
   toaster(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -49,7 +45,7 @@ export class SignupPage {
     this.loadingIcon = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
-      content: '<img src="assets/img/loader.svg" />',
+      content: '<img src="assets/img/auth-loader.svg" />',
     });
     this.loadingIcon.present();
   }
@@ -62,7 +58,7 @@ export class SignupPage {
     this.loader()
     this.loading = true;
     // Attempt to login in through our User service
-    this.subscription = this._userService.signup(this.form.value).subscribe((resp) => {
+    this._userService.signup(this.form.value).subscribe((resp) => {
       this.dismissLoader();
       if (resp.success) {
         this.loading = false;

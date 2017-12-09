@@ -10,7 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { FoundPharmaciesPage } from '../assesment/assesment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-import { Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';;
 
 @IonicPage()
 @Component({

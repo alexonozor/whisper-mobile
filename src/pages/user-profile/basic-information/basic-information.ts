@@ -59,7 +59,7 @@ export class BasicInformationPage {
 
   updateUser() {
     this.submited = true;
-    this.subscription = this._userService.update(this.basicInfoForm.value, this.userId)
+    this._userService.update(this.basicInfoForm.value, this.userId)
     .subscribe((res) => {
       if (res.success) {
         this.submited = true;
