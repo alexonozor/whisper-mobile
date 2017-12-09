@@ -11,12 +11,12 @@
     <ion-list>
       <ion-item>
         <ion-label stacked>First name</ion-label>
-        <ion-input type="text" [value]="firstName" formControlName="firstName"></ion-input>
+        <ion-input type="text" [ngModel]="firstName" formControlName="firstName"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Last name</ion-label>
-        <ion-input type="text" [value]="lastName" formControlName="lastName"></ion-input>
+        <ion-input type="text" [ngModel]="lastName" formControlName="lastName"></ion-input>
       </ion-item>
     </ion-list>
     <div text-right>

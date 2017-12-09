@@ -27,7 +27,6 @@ export class BasicInformationPage {
     public _userService: UserProvider,
     public toastCtrl: ToastController
     ) {
-
     this.firstName = navParams.get('firstName');
     this.lastName = navParams.get('lastName');
     this.userId = navParams.get('userId')
@@ -35,10 +34,6 @@ export class BasicInformationPage {
   }
 
   ionViewDidLoad() {
-  }
-
-  ionViewWillLeave() {
-    this.subscription.unsubscribe();
   }
 
   createForm() {
