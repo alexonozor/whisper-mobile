@@ -36,4 +36,20 @@ export class UserProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
+  getAdminUsers() : Observable<any> {
+    return this.http.get(`${this.host}/users?accountType=admin`)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  saveAdminUsers(users: Array<any>) {
+    let allusers = JSON.stringify(users)
+    localStorage.setItem('admin', allusers);
+  }
+
+  allAdmin(): Array<any> {
+    let allAdmins = JSON.parse(localStorage.getItem('admin'))
+    return allAdmins;
+  }
+
 }

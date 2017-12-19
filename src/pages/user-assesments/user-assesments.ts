@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, LoadingController, NavController, ActionSheetController,  NavParams, ToastController } from 'ionic-angular';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { UserProvider } from '../../providers/user/user';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
@@ -30,7 +31,8 @@ export class UserAssesmentsPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController,
-    public _notification: NotificationProvider
+    public _notification: NotificationProvider,
+    public _userService: UserProvider
     ) {
   }
 
@@ -99,23 +101,25 @@ export class UserAssesmentsPage {
     let params = { 
       'startedBy': response.user, 
        'assessmentResponse': response._id,  
-       'users': [ response.user ],
-       'content': 'starts a conversation on an assesment', 
+       'users': [ response.user ], 
        'messages': [],
        'createdAt': Date.now() 
     };
+
 
     this._assesmentService.startAssessmentConversation(params)
     .subscribe((resp) => {
       if (resp.success) {
         this.updateAssesmentResponse(response._id, { hasConversation: true, conversation: resp.responseId });
-        params.users.forEach((el, index) => {
+        this._userService.allAdmin().forEach((el, index) => {
+          console.log(el._id)
           this._notification.create(
             { 
               sender: params.startedBy, 
-              receiver: el, 
+              receiver: el._id, 
               notification_type_id: resp.responseId,
-              notification_type: 'openConversation' 
+              notification_type: 'openConversation',
+              content: 'starts a conversation on an assesment'
             }
           ).subscribe((res) => {
             if (res.success) {

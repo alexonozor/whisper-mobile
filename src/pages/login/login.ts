@@ -75,6 +75,7 @@ export class LoginPage {
         }
     }, (err) => {
       // Unable to log in
+      loader.dismiss();
       this.loading = false;
       let toast = this.toastCtrl.create({
         message: 'internal server error',

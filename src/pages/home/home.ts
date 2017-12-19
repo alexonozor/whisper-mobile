@@ -3,7 +3,7 @@ import { MenuController, NavController } from 'ionic-angular';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { LoginPage } from '../../pages/login/login'
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-home',
@@ -16,11 +16,21 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public menuCtlr: MenuController,
+    public _userService: UserProvider,
     public _authService: AuthenticationProvider) {
 
   }
 
   ionViewDidLoad() {
+    this._userService.getAdminUsers().subscribe((res) => {
+      if (res.success) {
+        this._userService.saveAdminUsers(res.users)
+      } else {
+
+      }
+    }, err => {
+      
+    })
   }
 
   getContraceptive() {

@@ -105,9 +105,7 @@ export class ContraceptiveQuantityPage {
   }
 
   updateResponse() {
-    console.log('quantity form ', this.quantityForm.value);
     this.submitted = true;
-    
     this._assesmentService.updateResponse(this.assesmentId,  this.quantityForm.value, true )
     .subscribe((resp) => {
       this.submitted = false;
@@ -163,26 +161,33 @@ export class ContraceptiveQuantityPage {
         {
           text: 'Use GPS',
           handler: () => {
-            this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-              
-                if(canRequest) {
-                  // the accuracy option will be ignored by iOS
-                  this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-                    () => { this.getLocation(); },
-                    error => console.log('Error requesting location permissions', error)
-                  );
-                }
-              
-              });
+            this.locationPermission();
           }
         }
       ]
     });
     confirm.present();
   }
+   
+
+
+
+  locationPermission() {
+  this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if(canRequest) {
+        // the accuracy option will be ignored by iOS
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+          () => { this.getLocation(); },
+          error => console.log('Error requesting location permissions', error)
+        );
+      } else {
+        this.getLocation();
+      }
+    
+  });
+  }
 
   
-
   findPharmacies(longitude, latitude) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
@@ -190,34 +195,12 @@ export class ContraceptiveQuantityPage {
       content: 'finding pharmacies...'
    });
 
+
+
     loading.present();
     this._pharmacyService.getNearerPharmacies(longitude, latitude)
     .subscribe((resp) => {
-      if (resp.success) {
-        // mock data
-        resp.pharmacies = [
-          {
-            name: 'Health plus',
-            description: "Lagos pharmacy",
-            contact: {
-              address:"lagos"
-            }
-          },
-          {
-            name: 'Alpha pharm',
-            description: "Lagos pharmacy",
-            contact: {
-              address:"lagos"
-            }
-          },
-          {
-            name: 'Medplus',
-            description: "Lagos pharmacy",
-            contact: {
-              address:"lagos"
-            }
-          }
-        ];
+      if (resp.success) {   
         this.navCtrl.push(FoundPharmaciesPage, { pharmacies: resp.pharmacies, responseId: this.assesmentId })
         loading.dismiss();
       } 

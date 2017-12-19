@@ -148,9 +148,6 @@ export class AssesmentPage {
     this.hasPrev = true;
     if(!eligible) {
       this.nonEligibilityCount += 1;
-      console.log('non-eligiblity count ', this.nonEligibilityCount);
-      console.log('contraceptive name ', this.contraceptive_name);
-      console.log('contraceptive id ', this.contraceptive_id);
     }
     this.question_id = question_id;
     this.assesmentParams.user = this.userId;
@@ -310,7 +307,6 @@ export class FoundPharmaciesPage {
     public toastCtrl: ToastController,
   ) {
     this.pharmacies = navParams.get('pharmacies');
-    console.log('pharmacies nav ')
     this.responseId = navParams.get('responseId');
   }
 
