@@ -6,22 +6,52 @@
 
 
 <ion-content padding>
-
+ 
   <form [formGroup]="basicInfoForm" (submit)="updateUser()">
     <ion-list>
       <ion-item>
         <ion-label stacked>First name</ion-label>
-        <ion-input type="text" [value]="firstName" formControlName="firstName"></ion-input>
+        <ion-input type="text" [value]="currentUser?.firstName"  formControlName="firstName"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Last name</ion-label>
-        <ion-input type="text" [value]="lastName" formControlName="lastName"></ion-input>
+        <ion-input type="text" [value]="currentUser?.lastName"  formControlName="lastName"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label stacked>User name</ion-label>
+        <ion-input type="text" [value]="currentUser?.userName"  formControlName="userName"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="email" [value]="currentUser?.email"  formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select formControlName="gender">
+
+          <ion-option *ngFor="let gender of ['Male', 'Female']" [value]="gender">{{gender}}</ion-option>
+         
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Date of Birth</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" type="text" [(ngModel)]="currentUser.dateOfBirth"  formControlName="dateOfBirth"></ion-datetime>
+      </ion-item>
+
+  
+      <ion-item>
+        <ion-label stacked>Account Type</ion-label>
+        <ion-input type="text" [value]="currentUser?.accountType"  formControlName="accountType"></ion-input>
+      </ion-item>
+     
     </ion-list>
     <div text-right>
       <button [disabled]="!basicInfoForm.valid && !submited" small ion-button outline round color="rounded_buttons" right>Save</button>
     </div>
   </form>
-
 </ion-content>

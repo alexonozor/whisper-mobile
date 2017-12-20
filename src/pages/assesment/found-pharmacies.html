@@ -12,24 +12,29 @@
   <ion-toolbar no-border>
     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
   </ion-toolbar>
-  <ion-card *ngFor="let pharmacy of pharmacies" padding>
-    <img src="img/nin-live.png"/>
-    <ion-card-content>
-      <ion-card-title><b>Pharmacy: </b> {{pharmacy.name}}</ion-card-title>
-      <p><b>Description: </b> {{pharmacy.description}} </p>
-      <p><b>Address: </b>{{pharmacy.contact.address}} </p>
-    </ion-card-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-10>
-          <button ion-button outline round small color="rounded_buttons" (click)="updateUserAssessmentResponse(pharmacy._id)" small icon-start>
-            Use pharmacy
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    
-</ion-card>
+  <span *ngIf="pharmacies.length > 0">
+    <ion-card *ngFor="let pharmacy of pharmacies" padding>
+      <img src="img/nin-live.png"/>
+      <ion-card-content>
+        <ion-card-title><b>Pharmacy: </b> {{pharmacy.name}}</ion-card-title>
+        <p><b>Description: </b> {{pharmacy.description}} </p>
+        <p><b>Address: </b>{{pharmacy.contact.address}} </p>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-10>
+            <button ion-button outline round small color="rounded_buttons" (click)="updateUserAssessmentResponse(pharmacy._id)" small icon-start>
+              Use pharmacy
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-card>
+</span>
+
+<span *ngIf="pharmacies.length == 0">
+  <h3 class="center">No Pharmacy found for your location, you can still search any pharmacies. Meanwhile, your request has been sent.</h3>
+</span>
 </ion-content>
 
 
