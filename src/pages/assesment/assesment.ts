@@ -44,6 +44,7 @@ export class AssesmentPage {
   // resizes textarea on keydown
   @ViewChild('myInput') myInput: ElementRef;
 
+  loading : any;
   assesment: any;
   related_contraceptives: Array<any> = [];
   contraceptive_id: string;
@@ -96,21 +97,26 @@ export class AssesmentPage {
     }
   }
 
-  loadAssesments(id) {
-    console.log('contraceptive id ', id);
-    let loading = this.loadingCtrl.create({
+  loader() {
+    this.loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
       content: '<img src="assets/img/loader.svg" />',
     });
-    loading.present();
+    this.loading.present();
+  }
 
+  dismissLoader() { 
+    this.loading.dismiss();
+  } 
+
+  loadAssesments(id) {
+    this.loader();
     this._contraceptiveService.getAssesment(id)
     .subscribe((resp) => {
-      loading.dismiss();
+      this.dismissLoader();
       if (resp.success && resp.status == 200) {
         this.assesment = resp.assesments
-        console.log('assesments ', this.assesment);
       }
     }, (err) => {
       if (err.status == 401) {
@@ -140,6 +146,7 @@ export class AssesmentPage {
     this.slides.lockSwipeToPrev(false);
     this.isEnd = this.slides.isEnd();
     if(this.isEnd) {
+      this.hasPrev = false;    
       this.slides.lockSwipeToPrev(true);
     }
   }
@@ -222,17 +229,16 @@ export class AssesmentPage {
   }
 
   submitAssesment(value) {
+    this.loader();    
     this.assesmentParams.note = value.value;
     this.assesmentParams.questions.shift();
     this._assesmentService.submitAssesment(this.assesmentParams)
     .subscribe((resp) => {
+      this.dismissLoader();
       if (resp.success) {
-        console.log('response ', resp);
-        console.log('response id ', resp.responseId);
         this.responseId = resp.responseId;
         // checks eligibility count
         if(this.nonEligibilityCount >= 1) {
-          console.log('contraceptive name ', this.contraceptive_name)
           this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, 
           related_contraceptives: this.related_contraceptives});
         }else{
@@ -360,17 +366,8 @@ export class NonEligiblePage {
   ionViewDidLoad() {
     this.contraceptive = this.navParams.get('contraceptive_name');
     this.related = this.navParams.get('related_contraceptives');
-    this.checkRelated(this.related);
     this.message = `We are sorry, but you are not eligible to purchase a ${this.contraceptive}, 
     We suggest you try out any of this contraceptives below`;
-  }
-
-  checkRelated(related) {
-    if( related == []  ) {
-      this.no_related = true;
-    } else {
-      this.no_related = false; 
-    }
   }
 
   goToRelatedContraceptive(id,name,appointment,contraceptive) {
