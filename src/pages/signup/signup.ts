@@ -37,8 +37,9 @@ export class SignupPage {
   doSignup() {
     let loader = this.loadingCtrl.create({
       spinner: 'show',
-      showBackdrop: false,
-      content: '<img src="assets/img/auth-loader.svg" />',
+      dismissOnPageChange: true,
+      showBackdrop: true,
+      content: '<img src="assets/img/loader.svg" />',
     });
     loader.present();
 
