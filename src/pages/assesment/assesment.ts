@@ -119,19 +119,13 @@ export class AssesmentPage {
         this.assesment = resp.assesments
       }
     }, (err) => {
-      if (err.status == 401) {
-          // Unable to log in
         let toast = this.toastCtrl.create({
-          message: err.statusText,
+          message: "Please check your internet connection",
           duration: 3000,
           position: 'top'
         });
         toast.present();
-
-        this.navCtrl.setRoot(LoginPage).then(() => {
-            this.navCtrl.popToRoot();
-        });
-      }
+        this.navCtrl.pop()
     })
   }
 

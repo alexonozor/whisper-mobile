@@ -51,7 +51,6 @@ export class ContraceptivePage {
           if (resp.success && resp.status == 200) {
             loading.dismiss();
             this.contraceptives = resp.contraceptives;
-            console.log('contraceptives ', this.contraceptives);
           } else {
           }
         }, (err) => {
@@ -65,12 +64,18 @@ export class ContraceptivePage {
           });
           toast.present();
           this.navCtrl.setRoot(LoginPage,{prev_page: prev_page});
+        } else  if(err.status == "0"){
+          let toast = this.toastCtrl.create({
+            message: "Please check your internet connection",
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
         }
       })
   }
 
   goToAssesment(id,name,appointment,contraceptive) {
-    console.log('contraceptives ', contraceptive);
     this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
   }
 
@@ -99,7 +104,7 @@ export class ContraceptivePage {
     this.subscription.add(getAss)
   }
 
-  contraceptiveInfo(name, description){
+  contraceptiveInfo(name, description) {
     this.navCtrl.push(ContraceptiveDescPage, { name: name, description: description });
   }
 
@@ -123,12 +128,8 @@ export class ContraceptiveDescPage {
 
   ionViewDidLoad() {
     this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
-    this.getUser();
   }
 
-  getUser() {
-    console.log('get current user ', this._authService.currentUser() );
-  }
 
   contraceptiveInfo(name, description) {
     this.contraceptive_name = name;

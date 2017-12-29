@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
@@ -27,7 +27,8 @@ export class UserNotificationsPage {
     public _notification: NotificationProvider,
     public _auth: AuthenticationProvider,
     public _userService: UserProvider,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController
   ) {
     this.currentUser = this._auth.currentUser();
   }
@@ -49,7 +50,14 @@ export class UserNotificationsPage {
       loading.dismiss();
       this.notifications = res.notifications;
     }, err => {
-      loading.dismissAll();          
+      let toast = this.toastCtrl.create({
+        message: "Please check your internet connection",
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+      loading.dismissAll(); 
+      this.navCtrl.pop()         
     })
   }
 
