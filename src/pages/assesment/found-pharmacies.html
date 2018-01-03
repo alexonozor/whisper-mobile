@@ -10,11 +10,10 @@
 
 <ion-content>
   <ion-toolbar no-border>
-    <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+    <ion-searchbar (input)="searchPharmacies($event)"></ion-searchbar>
   </ion-toolbar>
   <span *ngIf="pharmacies.length > 0">
     <ion-card *ngFor="let pharmacy of pharmacies" padding>
-      <img src="img/nin-live.png"/>
       <ion-card-content>
         <ion-card-title><b>Pharmacy: </b> {{pharmacy.name}}</ion-card-title>
         <p><b>Description: </b> {{pharmacy.description}} </p>
@@ -31,10 +30,5 @@
       </ion-grid>
   </ion-card>
 </span>
-
-<span *ngIf="pharmacies.length == 0">
-  <h3 class="center">No Pharmacy found for your location, you can still search any pharmacies. Meanwhile, your request has been sent.</h3>
-</span>
+    <p *ngIf="pharmacies.length == 0" padding-left padding-right>No Pharmacy found for your location, you can still search any pharmacies. Meanwhile, your request has been sent.</p>
 </ion-content>
-
-

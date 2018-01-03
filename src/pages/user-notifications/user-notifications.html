@@ -7,9 +7,9 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-list  *ngFor="let notification of notifications" (click)="goToNotification(notification)">
-    <button ion-item clear>
+<ion-content>
+  <ion-list  *ngFor="let notification of notifications"  (click)="goToNotification(notification)">
+    <button ion-item clear [ngClass]="notification.seen? 'seen': 'not-seen'">
       <ion-grid>
         <ion-row *ngIf="notification && notifications.length > 0">
           <ion-col col-1>
@@ -17,13 +17,13 @@
           </ion-col>
           <ion-col col-11>
             <h4 class="notifications">{{notification.sender.firstName}} {{notification.content}}</h4>
-            <h5 class="timeline">{{notification.createdAt | date }}</h5>
+            <h5 class="timeline">{{notification.createdAt | date: 'dd/MM/yyyy hh:mm:ss' }}</h5>
           </ion-col>
         </ion-row>
       </ion-grid>
     </button>
   </ion-list>
-  <div text-center>
+  <div text-center padding>
     <h4 class="no-notification" *ngIf="notifications && notifications.length == 0">No notification</h4>
   </div>
 </ion-content>
