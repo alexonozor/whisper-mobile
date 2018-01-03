@@ -16,7 +16,7 @@
             <ion-icon name="chatboxes" item-start color="rounded_buttons"></ion-icon>
           </ion-col>
           <ion-col col-11>
-            <h4 class="notifications">{{notification.sender.firstName}} {{notification.content}}</h4>
+            <h4 class="notifications">{{notification?.sender?.firstName}} {{notification?.content}}</h4>
             <h5 class="timeline">{{notification.createdAt | date: 'dd/MM/yyyy hh:mm:ss' }}</h5>
           </ion-col>
         </ion-row>
