@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, MenuController } from 'ionic-angular';
+import { Platform, Nav, MenuController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserAssesmentsPage } from '../pages/user-assesments/user-assesments';
@@ -20,17 +20,18 @@ import { UserNotificationsPage } from '../pages/user-notifications/user-notifica
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage:any;
-  pages: Array<{title: string, component: any, icon: string, color: string}>;
+  pages: Array<{title: string, component: any, icon: string, color: string, enableNotification: boolean}>;
   loggedInUser: boolean = false;
   logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'logout'};
   loginParams: any = { title: 'Login', component: '', icon: '', color: ''};
-
+  notificationCount: number = 0;
   constructor(
     public _authService: AuthenticationProvider,
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public menu: MenuController,
+    public events: Events
     ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -42,15 +43,19 @@ export class MyApp {
     });
 
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home', color: "home" },
-      { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive"},
-      { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile"},
-      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings"},
+      { title: 'Home', component: HomePage, icon: 'home', color: "home", enableNotification: false },
+      { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive", enableNotification: false},
+      { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile", enableNotification: false},
+      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings", enableNotification: true},
     ];
 
     statusBar.styleDefault();
     splashScreen.hide();
     // this.menu.enable(true, 'whisper-menu');
+    events.subscribe('notification:count', (count) => {
+      this.notificationCount = count;
+    })
+    
   }
 
   openPage(page) {

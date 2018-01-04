@@ -40,6 +40,17 @@ export class NotificationProvider {
     .catch((error:any) => Observable.throw(error || 'server error'));
   }
 
+  getUserNotificationsCount(userId): Observable<any> {
+    return this.authHttp.get(`${this.host}/notification-count/${userId}`)
+    .map((res:Response) => res.json())
+    .catch((error:any) => Observable.throw(error || 'server error'));
+  }
 
+  updateNotifications(notificationId, params): Observable<any> {
+    return this.authHttp.put(`${this.host}/notification/${notificationId}`, params)
+    .map((res:Response) => res.json())
+    .catch((error:any) => Observable.throw(error || 'server error'));
+  }
 
+  
 }

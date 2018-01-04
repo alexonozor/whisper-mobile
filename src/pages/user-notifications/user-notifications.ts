@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController, Events } from 'ionic-angular';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
@@ -28,7 +28,8 @@ export class UserNotificationsPage {
     public _auth: AuthenticationProvider,
     public _userService: UserProvider,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public events: Events
   ) {
     this.currentUser = this._auth.currentUser();
   }
@@ -63,9 +64,25 @@ export class UserNotificationsPage {
 
   
   goToNotification(notification) {
+    notification.seen = true
+    this.updateNotificationStatus(notification)
     if (notification.notification_type == "openConversation") {
       this.navCtrl.push(AssesmentResponsePage, {conversationId: notification.notification_type_id})
     }
+  }
+
+  updateNotificationStatus(notification) {
+    this._notification.updateNotifications(notification._id, {seen: true})
+    .subscribe((resp) => {
+      this._notification.getUserNotificationsCount(this.currentUser._id)
+      .subscribe((resp) => {
+        this.events.publish('notification:count', +resp.count);
+      }, err => {
+
+      })
+    }, err => {
+      console.log('Err');
+    })
   }
 
 }

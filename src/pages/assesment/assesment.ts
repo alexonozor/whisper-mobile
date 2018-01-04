@@ -119,6 +119,7 @@ export class AssesmentPage {
         this.assesment = resp.assesments
       }
     }, (err) => {
+      this.dismissLoader();
         let toast = this.toastCtrl.create({
           message: "Please check your internet connection",
           duration: 3000,
