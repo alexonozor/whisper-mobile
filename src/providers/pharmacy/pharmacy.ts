@@ -31,4 +31,10 @@ export class PharmacyProvider {
 			.map((res:Response) => res.json())
 			.catch((error:any) => Observable.throw(error || 'server error'));
   }
+
+  searchParamcies(val: string): Observable<any> {
+    return this.authHttp.get(`${this.host}/search-pharmacies?search=${val}`)
+    .map((res:Response) => res.json())
+    .catch((error:any) => Observable.throw(error || 'server error'));
+  }
 }

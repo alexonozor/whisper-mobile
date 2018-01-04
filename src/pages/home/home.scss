@@ -22,4 +22,13 @@ page-home {
   }
 
   .home_buttons { margin: 10px; box-shadow: none;}
+  .notification-indicator {
+    background: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
 }

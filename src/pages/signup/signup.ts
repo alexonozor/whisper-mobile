@@ -56,6 +56,7 @@ export class SignupPage {
         // errors you can handle it later
         // Unable to sign up
         this.loading = false;
+        loader.dismiss();
         // this.signupErrorString = resp.message.errmsg;
         let toast = this.toastCtrl.create({
           message: 'Sorry, an error occurred',
@@ -66,8 +67,9 @@ export class SignupPage {
       }
     }, (err) => {
       this.loading = false;
+      loader.dismiss();
       let toast = this.toastCtrl.create({
-        message: 'internal server error',
+        message: 'internet or server error',
         duration: 3000,
         position: 'top'
       });

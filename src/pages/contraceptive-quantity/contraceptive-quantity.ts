@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams, ToastController, LoadingController, Platform } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ContraceptiveProvider } from '../../providers/contraceptive/contraceptive';
 import { UserProvider } from '../../providers/user/user';
@@ -47,7 +47,8 @@ export class ContraceptiveQuantityPage {
       public _userService: UserProvider,
       public http: Http,
       public fb: FormBuilder,
-      private locationAccuracy: LocationAccuracy
+      private locationAccuracy: LocationAccuracy,
+      private platform: Platform
   ) {
       this.user = this.navParams.get('user');
       this.contraceptiveId = this.navParams.get('contraceptive');
@@ -85,7 +86,6 @@ export class ContraceptiveQuantityPage {
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
         this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId);
-        console.log('quantity range ', this.quantityRange);
         // mocking min & max shipping quantit
       }
     }, err => {
@@ -161,7 +161,11 @@ export class ContraceptiveQuantityPage {
         {
           text: 'Use GPS',
           handler: () => {
-            this.locationPermission();
+            if (this.platform.is('mobileweb')) {
+              this.getLocation();
+            } else {
+              this.locationPermission();
+            }
           }
         }
       ]

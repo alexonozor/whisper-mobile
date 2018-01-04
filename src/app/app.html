@@ -10,6 +10,7 @@
     <ion-list no-lines>
       <button menuClose="whisper-menu" ion-item *ngFor="let p of pages" (click)="openPage(p)" class="menu-button">
         <ion-icon name="{{p.icon}}" color="{{p.color}}"></ion-icon>  {{p.title}}
+        <span class="notification-light" *ngIf="p.enableNotification && notificationCount > 0" item-end></span>
       </button>
       
     </ion-list>

@@ -119,19 +119,14 @@ export class AssesmentPage {
         this.assesment = resp.assesments
       }
     }, (err) => {
-      if (err.status == 401) {
-          // Unable to log in
+      this.dismissLoader();
         let toast = this.toastCtrl.create({
-          message: err.statusText,
+          message: "Please check your internet connection",
           duration: 3000,
           position: 'top'
         });
         toast.present();
-
-        this.navCtrl.setRoot(LoginPage).then(() => {
-            this.navCtrl.popToRoot();
-        });
-      }
+        this.navCtrl.pop()
     })
   }
 
@@ -311,6 +306,7 @@ export class FoundPharmaciesPage {
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
+    public _pharmacyService: PharmacyProvider
   ) {
     this.pharmacies = navParams.get('pharmacies');
     this.responseId = navParams.get('responseId');
@@ -328,7 +324,7 @@ export class FoundPharmaciesPage {
       if (resp.success) {
         loading.dismiss();
         let toast = this.toastCtrl.create({
-           message: 'You pickup order has been placed an administartor will contact you shortly',
+           message: 'Your pickup order has been placed an administartor will contact you shortly',
             duration: 3000,
             position: 'top'
         })
@@ -339,6 +335,24 @@ export class FoundPharmaciesPage {
     }, err => {
 
     })
+  }
+
+  searchPharmacies($event: any) {
+    let val = $event.target.value;
+    if (val && val.trim() !== '') {
+      this._pharmacyService.searchParamcies(val)
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.pharmacies = resp.results
+        }
+      }, err => {
+        let toast = this.toastCtrl.create({
+          message: 'Error while seaching, please check your network',
+           duration: 3000,
+           position: 'top'
+       })
+      })
+    }
   }
 };
 

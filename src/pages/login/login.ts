@@ -79,7 +79,7 @@ export class LoginPage {
       loader.dismiss();
       this.loading = false;
       let toast = this.toastCtrl.create({
-        message: 'internal server error',
+        message: 'internet error',
         duration: 3000,
         position: 'top'
       });
