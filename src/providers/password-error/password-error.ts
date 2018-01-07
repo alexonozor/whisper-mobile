@@ -7,24 +7,24 @@ import 'rxjs/add/operator/map';
 export class PasswordErrorProvider {
   public message;
   constructor(public http: Http) {
-    console.log('Hello PasswordErrorProvider Provider');
   }
 
   errorMessenger(value) {
-    if(value.length <= 5) {
+    if(value.length < 6) {
+      console.log('length less than 6 ', value.length);
 			return this.message =  "too short";
 		}
-		else if (value.length == 6) {
+    
+    if (value.length == 6) {
+      console.log('equal to 6 ', value.length);
 			return this.message = "fairly strong";
-		}
+    }
+    
+    if (value.length > 6) {
+      console.log('greater than 6 ', value.length);
+			return this.message = "strong enoough";
+    }
 
-		else if (value.length > 8) {
-			return this.message = "strong password";
-		}
-		
-		else if (value.length > 10) {
-			return this.message = "strong password";
-		}
   }
 
 }

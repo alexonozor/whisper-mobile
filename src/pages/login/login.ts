@@ -17,7 +17,7 @@ export class LoginPage {
   public backgroundImage = 'assets/img/background.png';
   submitAttempt: boolean = false;    
   EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-  password_error: String;
+  password_checker: String;
 
 
   // The account fields for the login form.
@@ -85,7 +85,7 @@ export class LoginPage {
 
   passMessage(message) {
     console.log('password message ', this._passwordError.errorMessenger(message));
-    this.password_error = this._passwordError.errorMessenger(message);;
+    this.password_checker = this._passwordError.errorMessenger(message);
   }
 
   goToSignup() {
