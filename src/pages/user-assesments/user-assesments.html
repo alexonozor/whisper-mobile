@@ -35,6 +35,9 @@
             <div text-left>
               <h3>{{assesment.createdAt | date:'longDate'}}</h3>
             </div>
+            <div text-right>
+              <h3>{{ assesment.createdAt | date:'shortTime' }}</h3>
+            </div>
             <ion-grid>
               <ion-row>
                 <ion-col col-9>

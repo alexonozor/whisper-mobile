@@ -5,12 +5,6 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { UserProvider } from '../../providers/user/user';
 import { AssesmentResponsePage } from '.././assesment/assesment-response/assesment-response';
 
-/**
- * Generated class for the UserNotificationsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-user-notifications',

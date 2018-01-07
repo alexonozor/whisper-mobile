@@ -13,8 +13,14 @@
             <ion-item>
               <ion-input type="email" formControlName="email"  placeholder="Email" name="email"></ion-input>
             </ion-item>
+            <ion-item *ngIf="!form.controls.email.valid && (form.controls.email.dirty || submitAttempt)">
+              <p class="error-message">Please enter a valid email.</p>
+            </ion-item>
             <ion-item>
-              <ion-input type="password" formControlName="password" placeholder="Password" name="password"></ion-input>
+              <ion-input type="password" formControlName="password" placeholder="Password" name="password" (keypress)="passMessage(form.controls.password.message)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="form.controls.password.dirty">
+              <p class="error-message">{{password_error}}</p>
             </ion-item>
           </ion-list>
           <button [disabled]="!form.valid || loading" ion-button round color="rounded_buttons" 

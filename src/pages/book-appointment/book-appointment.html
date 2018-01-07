@@ -10,27 +10,20 @@
 <ion-content padding>
 
   <form [formGroup]="appointmentFormGroup" (submit)="bookAppointment()">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-10 class="welcome">
-          <h4 class="title">Please select a date and time</h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
     <ion-list formGroupName="appointment">
       <ion-item>
          <ion-textarea #value formControlName="appointmentNote" placeholder="Feel free to drop a message"></ion-textarea>
       </ion-item>
 
       <ion-item>
-        <ion-label>Start Date</ion-label>
-        <ion-datetime formControlName="appointmentDate" displayFormat="MMM DD YYYY" [(ngModel)]="booking.month"></ion-datetime>
+        <ion-label>Appointment Date</ion-label>
+        <ion-datetime formControlName="appointmentDate" displayFormat="DD MMM, YYYY" [min]="minDate" [max]="2018" [(ngModel)]="date"></ion-datetime>
       </ion-item>
 
 
       <ion-item>
-        <ion-label>Start Time</ion-label>
-        <ion-datetime formControlName="appointmentTime" displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="booking.timeStarts"></ion-datetime>
+        <ion-label>Appointment Time</ion-label>
+        <ion-datetime formControlName="appointmentTime" displayFormat="h:mm A" [(ngModel)]="date"></ion-datetime>
       </ion-item>
     </ion-list>
     <div text-right>

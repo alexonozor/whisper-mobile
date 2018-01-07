@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PasswordValidator } from  '../../validators/password';
 
 @Component({
   selector: 'page-signup',
@@ -13,12 +14,10 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 
 export class SignupPage {
   public backgroundImage = 'assets/img/background.png';
-
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  
+  submitAttempt: boolean = false;  
   loading: boolean = false;
+  EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+
 
   // Our translated text strings
   private signupErrorString: string;
@@ -35,6 +34,7 @@ export class SignupPage {
   }
 
   doSignup() {
+    this.submitAttempt = true;
     let loader = this.loadingCtrl.create({
       spinner: 'show',
       dismissOnPageChange: true,
@@ -80,10 +80,10 @@ export class SignupPage {
   createForm() {
     this.form = this.formBuilder.group({
       'accountType': ['Member', Validators.required],
-      'firstName': ['', Validators.required],
-      'lastName':['', Validators.required],
-      'password': ['', Validators.required],
-      'email': ['', Validators.required],
+      'firstName': ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      'lastName': ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      'password' : ['', PasswordValidator.isValid],
+      'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
     });
   }
 

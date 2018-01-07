@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserProvider } from '../../../providers/user/user';
@@ -20,9 +20,13 @@ export class BasicInformationPage {
     public navParams: NavParams,
     public _authService: AuthenticationProvider,
     public fb: FormBuilder,
-    public _userService: UserProvider
+    public _userService: UserProvider,
+    public toastConroller: ToastController,
+    public loadingCtrl: LoadingController
+
     ) {
     this.currentUser = this._authService.currentUser();
+    console.log('current user ', this.currentUser);
     this.createForm();
   }
 
@@ -30,6 +34,29 @@ export class BasicInformationPage {
 
   }
   
+  getNotification() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: '<img src="assets/img/loader.svg" />',
+    });
+    loading.present();
+
+    // this._notification.getUserNotifications(this.currentUser._id)
+    // .subscribe((res) => {
+    //   loading.dismiss();
+    //   this.notifications = res.notifications;
+    // }, err => {
+    //   let toast = this.toastCtrl.create({
+    //     message: "Please check your internet connection",
+    //     duration: 3000,
+    //     position: 'top'
+    //   });
+    //   toast.present();
+    //   loading.dismissAll(); 
+    //   this.navCtrl.pop()         
+    // })
+  }
 
   createForm() {
     this.basicInfoForm = this.fb.group({

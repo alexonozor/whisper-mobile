@@ -21,6 +21,11 @@
     font-style: normal;
 }
 
+.button-round-md {
+  border-radius: 64px;
+  padding: 0 2rem !important;
+}
+
 h3.title {
   font-size: 1.8rem;
 }
@@ -138,4 +143,8 @@ ion-backdrop {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+
+p.error-message {
+  color: red;
 }
