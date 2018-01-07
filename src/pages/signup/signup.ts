@@ -4,8 +4,8 @@ import { UserProvider } from '../../providers/user/user';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
+import { PasswordErrorProvider } from '../../providers/password-error/password-error';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { PasswordValidator } from  '../../validators/password';
 
 @Component({
   selector: 'page-signup',
@@ -82,7 +82,7 @@ export class SignupPage {
       'accountType': ['Member', Validators.required],
       'firstName': ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       'lastName': ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      'password' : ['', PasswordValidator.isValid],
+      'password' : ['', Validators.compose([Validators.required,Validators.minLength(6)])],
       'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
     });
   }

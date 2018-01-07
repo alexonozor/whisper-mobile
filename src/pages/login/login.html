@@ -17,9 +17,9 @@
               <p class="error-message">Please enter a valid email.</p>
             </ion-item>
             <ion-item>
-              <ion-input type="password" formControlName="password" placeholder="Password" name="password" (keypress)="passMessage(form.controls.password.message)"></ion-input>
+              <ion-input type="password" formControlName="password" placeholder="Password" name="password" (keypress)="passMessage(form.controls.password.value)"></ion-input>
             </ion-item>
-            <ion-item *ngIf="form.controls.password.dirty">
+            <ion-item *ngIf="!form.controls.password.valid && form.controls.password.dirty ">
               <p class="error-message">{{password_error}}</p>
             </ion-item>
           </ion-list>

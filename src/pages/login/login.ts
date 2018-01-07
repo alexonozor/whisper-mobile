@@ -6,7 +6,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
-import { PasswordValidator } from  '../../validators/password';
+import { PasswordErrorProvider } from '../../providers/password-error/password-error';
 
 @Component({
   selector: 'page-login',
@@ -23,7 +23,7 @@ export class LoginPage {
   // The account fields for the login form.
   private form = this.formBuilder.group({
     'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
-    'password': ['', PasswordValidator.isValid]
+    'password': ['', Validators.compose([Validators.required,Validators.minLength(6)]) ]
   });
 
   constructor(
@@ -33,7 +33,8 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public formBuilder: FormBuilder,
     public _userService: UserProvider,
-    public _authService: AuthenticationProvider
+    public _authService: AuthenticationProvider,
+    public _passwordError: PasswordErrorProvider
     ) {
   }
 
@@ -83,8 +84,8 @@ export class LoginPage {
   }
 
   passMessage(message) {
-    console.log('password message ', message);
-    this.password_error = message;
+    console.log('password message ', this._passwordError.errorMessenger(message));
+    this.password_error = this._passwordError.errorMessenger(message);;
   }
 
   goToSignup() {

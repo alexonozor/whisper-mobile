@@ -35,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { NotificationProvider } from '../providers/notification/notification';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { PasswordErrorProvider } from '../providers/password-error/password-error';
 
 const config: SocketIoConfig = { url: 'https://whisper-admin.herokuapp.com', options: {} };
 export function getAuthHttp(http) {
@@ -123,7 +124,8 @@ export function getAuthHttp(http) {
     AssesmentProvider,
     PharmacyProvider,
     SharedProvider,
-    NotificationProvider
+    NotificationProvider,
+    PasswordErrorProvider
   ]
 })
 export class AppModule {}
