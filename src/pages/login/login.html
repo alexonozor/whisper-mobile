@@ -20,7 +20,7 @@
               <ion-input type="password" formControlName="password" placeholder="Password" name="password" (keydown)="passMessage(form.controls.password.value)"></ion-input>
             </ion-item>
             <ion-item *ngIf="form.controls.password.dirty ">
-              <p class="error-message">{{password_checker}}</p>
+              <p class="error-message" [ngClass]="password_checker.error ? 'text-red' : 'text-green' ">{{password_checker.message}}</p>
             </ion-item>
           </ion-list>
           <button [disabled]="!form.valid || loading" ion-button round color="rounded_buttons" 

@@ -14,13 +14,13 @@
               <ion-input type="text" formControlName="firstName" placeholder="First name"></ion-input>
             </ion-item>
             <ion-item *ngIf="!form.controls.firstName.valid && (form.controls.firstName.dirty || submitAttempt)">
-              <p class="error-message">Please enter a valid name.</p>
+              <p class="error-message">Please enter a valid first name.</p>
             </ion-item>
             <ion-item>
               <ion-input type="text" formControlName="lastName" placeholder="Last Name"></ion-input>
             </ion-item>
             <ion-item *ngIf="!form.controls.lastName.valid && (form.controls.lastName.dirty || submitAttempt)">
-              <p class="error-message">Please enter a valid name.</p>
+              <p class="error-message">Please enter a valid last name.</p>
             </ion-item>
             <ion-item>
               <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
@@ -29,10 +29,10 @@
               <p class="error-message">Please enter a valid email.</p>
             </ion-item>
             <ion-item>
-              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+              <ion-input type="password" formControlName="password" placeholder="Password" (keydown)="passMessage(form.controls.password.value)"></ion-input>
             </ion-item>
-            <ion-item *ngIf="!form.controls.password.valid && (form.controls.email.dirty || submitAttempt)">
-              <p class="error-message">Password length must be greater than 6</p>
+            <ion-item *ngIf="form.controls.password.dirty ">
+              <p class="error-message" [ngClass]="password_checker.error ? 'text-red' : 'text-green' ">{{password_checker.message}}</p>
             </ion-item>
           </ion-list>
           <button [disabled]="!form.valid || loading" ion-button outline round color="rounded_buttons" 

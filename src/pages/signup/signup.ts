@@ -4,8 +4,9 @@ import { UserProvider } from '../../providers/user/user';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
-import { PasswordErrorProvider } from '../../providers/password-error/password-error';
+import { PasswordCheckerProvider } from '../../providers/password-checker/password-checker';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+
 
 @Component({
   selector: 'page-signup',
@@ -22,6 +23,7 @@ export class SignupPage {
   // Our translated text strings
   private signupErrorString: string;
   form : FormGroup;
+  password_checker: Object;
 
   constructor(
     public navCtrl: NavController,
@@ -29,7 +31,8 @@ export class SignupPage {
     public loadingCtrl: LoadingController,
     public _userService: UserProvider,
     public _authService: AuthenticationProvider,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public _passwordChecker: PasswordCheckerProvider) {
     this.createForm();
   }
 
@@ -90,4 +93,10 @@ export class SignupPage {
   goToLogin() {
     this.navCtrl.push(LoginPage);
   }
+
+  passMessage(message) {
+    this.password_checker = this._passwordChecker.checker(message);
+  }
+
+  // confirm password
 }

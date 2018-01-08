@@ -6,7 +6,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
-import { PasswordErrorProvider } from '../../providers/password-error/password-error';
+import { PasswordCheckerProvider } from '../../providers/password-checker/password-checker';
 
 @Component({
   selector: 'page-login',
@@ -17,7 +17,7 @@ export class LoginPage {
   public backgroundImage = 'assets/img/background.png';
   submitAttempt: boolean = false;    
   EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-  password_checker: String;
+  password_checker: Object;
 
 
   // The account fields for the login form.
@@ -34,7 +34,7 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public _userService: UserProvider,
     public _authService: AuthenticationProvider,
-    public _passwordError: PasswordErrorProvider
+    public _passwordChecker: PasswordCheckerProvider
     ) {
   }
 
@@ -84,8 +84,7 @@ export class LoginPage {
   }
 
   passMessage(message) {
-    console.log('password message ', this._passwordError.errorMessenger(message));
-    this.password_checker = this._passwordError.errorMessenger(message);
+    this.password_checker = this._passwordChecker.checker(message);
   }
 
   goToSignup() {
