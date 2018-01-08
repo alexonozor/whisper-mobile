@@ -6,6 +6,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
+import { PasswordCheckerProvider } from '../../providers/password-checker/password-checker';
 
 @Component({
   selector: 'page-login',
@@ -14,11 +15,15 @@ import { SignupPage } from '../signup/signup';
 export class LoginPage {
   loading: boolean = false;
   public backgroundImage = 'assets/img/background.png';
+  submitAttempt: boolean = false;    
+  EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+  password_checker: Object;
+
 
   // The account fields for the login form.
   private form = this.formBuilder.group({
-    'email': ['', Validators.required],
-    'password': ['', Validators.required]
+    'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
+    'password': ['', Validators.compose([Validators.required,Validators.minLength(6)]) ]
   });
 
   constructor(
@@ -28,12 +33,14 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public formBuilder: FormBuilder,
     public _userService: UserProvider,
-    public _authService: AuthenticationProvider
+    public _authService: AuthenticationProvider,
+    public _passwordChecker: PasswordCheckerProvider
     ) {
   }
 
   // Attempt to login in through our User service
   doLogin() {
+    this.submitAttempt = true;
     let loader = this.loadingCtrl.create({
       spinner: 'show',
       dismissOnPageChange: true,
@@ -49,17 +56,6 @@ export class LoginPage {
       loader.dismiss();
       if (resp.success) {
         this.loading = false;
-        // this takes you to previous page before login page was pushed
-        // if( prev_page != undefined || prev_page != "") {
-        //   if(prev_page.name == "HomePage") {
-        //     this.navCtrl.setRoot(prev_page);
-        //   }else {
-        //     this.navCtrl.push(prev_page);
-        //   }
-        // }
-        // else {
-        //   this.navCtrl.push(HomePage);
-        // }
         this.navCtrl.setRoot(HomePage);
         this._authService.saveToken('token', resp.token);
         this._authService.saveUser(resp.user);
@@ -85,6 +81,10 @@ export class LoginPage {
       });
       toast.present();
     });
+  }
+
+  passMessage(message) {
+    this.password_checker = this._passwordChecker.checker(message);
   }
 
   goToSignup() {

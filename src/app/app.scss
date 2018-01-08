@@ -15,10 +15,15 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @font-face {
-    font-family: 'OpenSans-Regular';
-    src: url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'OpenSans-Regular';
+  src: url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.button-round-md {
+  border-radius: 64px;
+  padding: 0 2rem !important;
 }
 
 h3.title {
@@ -139,3 +144,13 @@ ion-backdrop {
   height: 8px;
   border-radius: 50%;
 }
+
+p.error-message {
+  color: red;
+}
+
+.text-green, .text-red {
+  text-transform: capitalize;
+  font-size: 1.3rem;
+}
+

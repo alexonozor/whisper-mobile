@@ -46,7 +46,7 @@
   
       <ion-item>
         <ion-label stacked>Account Type</ion-label>
-        <ion-input type="text" [value]="currentUser?.accountType"  formControlName="accountType"></ion-input>
+        <ion-input type="text" [(ngModel)]="currentUser.accountType"  formControlName="accountType"></ion-input>
       </ion-item>
      
     </ion-list>

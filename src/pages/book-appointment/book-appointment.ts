@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssesmentProvider } from '../../providers/assesment/assesment';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
 import { HomePage } from '../../pages/home/home';
+import { DateTime } from 'ionic-angular/components/datetime/datetime';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -11,10 +13,13 @@ import { HomePage } from '../../pages/home/home';
   templateUrl: 'book-appointment.html',
 })
 export class BookAppointmentPage {
-  public booking = {
-    month: '2017-01-01',
-    timeStarts: '07:43'
-  }
+  public currentDate: String = new Date().toISOString();
+
+  public time;
+  public date = moment().format();
+  public minDate = moment().add(1, 'days').calendar();
+  
+    
   public appointmentFormGroup: FormGroup;
   public submited: boolean = false;
   public responseId: string;
@@ -25,7 +30,9 @@ export class BookAppointmentPage {
     public fb: FormBuilder,
     public _assesmentService: AssesmentProvider) {
     this.appointmentForm();
-    this.responseId = navParams.get('responseId')
+    this.responseId = navParams.get('responseId');
+    this.minDate = moment().format();
+
   }
 
   ionViewDidLoad() {

@@ -13,6 +13,7 @@ import { BasicInformationPage } from '../pages/user-profile/basic-information/ba
 import { PersonalInformationPage } from '../pages/user-profile/personal-information/personal-information';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
+import { BookAppointmentPage } from '../pages/book-appointment/book-appointment';
 
 @Component({
   templateUrl: 'app.html'
@@ -37,6 +38,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.rootPage = IntroPage;
+      // this.rootPage = BookAppointmentPage;
       if(_authService.currentUser != null) {
         this.pages.push(this.logoutParams);
       }
@@ -65,6 +67,9 @@ export class MyApp {
     if(page.title == "Logout") {
       this._authService.logout();
       this.nav.push(LoginPage);
+    }
+    else if (page.title == "Home") {
+      this.nav.root(HomePage);
     }
     else {
       this.nav.push(page.component);
