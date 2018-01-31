@@ -17,7 +17,7 @@ export class BaseurlProvider {
               break;
            case 'localhost':
               data = {
-                endPoint: 'https://whisper-admin.herokuapp.com'
+                endPoint: 'http://localhost:7777'
               };
               break;
 
