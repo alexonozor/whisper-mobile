@@ -82,6 +82,6 @@ export class AppointmentLandingPage {
     this.navCtrl.setRoot(HomePage);
   }
   goToContraceptive() {
-    this.navCtrl.push(ContraceptivePage);
+    this.navCtrl.setRoot(ContraceptivePage);
   }
 };

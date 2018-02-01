@@ -7,4 +7,31 @@ page-user-profile {
     font-size: 3.0em;
     color: #5c6bc0;
   }
+
+  .bg {
+    height: 155px;
+    background-size: cover;
+    filter: blur(0px);
+    background-position: center center;
+    background-color: #f53d3d;
+}
+.dp {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    z-index: 10;
+    margin-top: 70px;
+    position: relative;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 6px 15px 81px 3px rgba(0, 0, 0, 0.75);
+}
+ion-item,
+.bg-light-grey {
+    background-color: #FAF9F8 !important;
+}
+.main-cnt {
+    margin: 0;
+}
 }

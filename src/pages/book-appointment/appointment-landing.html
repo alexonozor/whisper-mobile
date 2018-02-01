@@ -11,16 +11,18 @@
 
 
 <ion-content padding>
-
-<ion-grid>
   <div text-center class="menu-buttons">
     <h3 class="title">{{message}}</h3>
   </div>
-
-  <div text-right>
-    <button color="rounded_buttons" ion-button round small (click)="goHome()">Go Home</button>
-  </div>
-  <div text-right>
-    <button color="rounded_buttons" ion-button round small (click)="goToContraceptive()">Get another contraceptive</button>
-  </div>
-</ion-grid>
+      
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+      <button  ion-button block  outline icon-end (click)="goHome()">Go Home</button>
+      </ion-col>
+      <ion-col col-6>
+        <button  ion-button block  outline icon-end (click)="goToContraceptive()">Get another contraceptive</button>
+        </ion-col>   
+    </ion-row>
+  </ion-grid>
+</ion-content>

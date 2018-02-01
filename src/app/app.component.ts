@@ -27,49 +27,56 @@ export class MyApp {
   notificationCount: number = 0;
   constructor(
     public _authService: AuthenticationProvider,
-    platform: Platform,
+    public platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public menu: MenuController,
     public events: Events
     ) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.rootPage = IntroPage;
-      if(_authService.currentUser != null) {
-        this.pages.push(this.logoutParams);
-      }
-    });
-
+    this.initializeApp();
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home', color: "home", enableNotification: false },
       { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive", enableNotification: false},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile", enableNotification: false},
       { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings", enableNotification: true},
+      { title: 'Contact us', component: UserProfilePage, icon: 'ios-call', color: "black", enableNotification: false},
+      { title: 'About us', component: UserProfilePage, icon: 'information-circle', color: "profile", enableNotification: false},
     ];
+    
+
+    
 
     statusBar.styleDefault();
     splashScreen.hide();
-    // this.menu.enable(true, 'whisper-menu');
     events.subscribe('notification:count', (count) => {
       this.notificationCount = count;
     })
     
   }
 
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.rootPage = IntroPage;
+      if(this._authService.currentUser != null) {
+        this.pages.push(this.logoutParams);
+      }
+    });
+  }
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.menu.close();
-    if(page.title == "Logout") {
-      this._authService.logout();
-      this.nav.push(LoginPage);
+     this.menu.close();
+     this.menu.enable(true, 'whisper-menu');
+     if (page.title == "Logout") {
+       this._authService.logout();
+       this.nav.push(LoginPage);
+     } else {
+      this.nav.setRoot(page.component);
     }
-    else {
-      this.nav.push(page.component);
-    }
-    // this.menu.enable(false, 'whisper-menu');
+    
 
   }
 
