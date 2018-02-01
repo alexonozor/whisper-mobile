@@ -4,7 +4,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>whisper</ion-title>
+    <ion-title>{{contraceptive?.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -13,10 +13,17 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-      <ion-col col-10 class="welcome">
-        <h2>{{contraceptive_name}}</h2>
-        <h5>{{contraceptive_description}}</h5>
+      <ion-col col-12 class="welcome">
+        <h5>{{contraceptive?.description}}</h5>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <button color="rounded_buttons" ion-button block outline  (click)="startAssesment()">Start Assesment</button>
+    </ion-toolbar>
+  </ion-footer>

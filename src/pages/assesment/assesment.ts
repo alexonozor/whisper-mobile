@@ -63,6 +63,7 @@ export class AssesmentPage {
   isAppointment: boolean;
   nonEligibilityCount: number = 0;
   hasPrev: boolean = false;
+  contraceptive: any;
 
 
   constructor(
@@ -76,15 +77,15 @@ export class AssesmentPage {
     private geolocation: Geolocation,
     public _assesmentService: AssesmentProvider,
     public _pharmacyService: PharmacyProvider,
-    public http: Http) {
-  }
+    public http: Http) {}
 
-  ionViewDidLoad(){
-    this.loadAssesments(this.navParams.get('id'));
-    this.contraceptive_id =  this.navParams.get('id');
-    this.contraceptive_name = this.navParams.get('name');
-    this.isAppointment = this.navParams.get('appointment');
-    this.related_contraceptives = this.navParams.get('related');
+  ionViewDidLoad() {
+    this.contraceptive = this.navParams.get('contraceptive');
+    this.loadAssesments(this.contraceptive._id);
+    this.contraceptive_id =  this.contraceptive._id;
+    this.contraceptive_name = this.contraceptive.name;
+    this.isAppointment = this.contraceptive.appointment;
+    this.related_contraceptives = this.contraceptive.related;
     this.getUser();
     this.slides.lockSwipes(true);
   }
@@ -145,6 +146,7 @@ export class AssesmentPage {
       this.slides.lockSwipeToPrev(true);
     }
   }
+
 
   nextSlide(question_id, question, answer, isEditedAnswer, label, eligible) {
     this.hasPrev = true;
@@ -282,6 +284,28 @@ export class AssesmentPage {
                 { contraceptive: this.contraceptive_id, user: user, assesmentId: assesmentId }
               );
             }
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  goBackToContracpetive() {
+    let confirm = this.alertCtrl.create({
+      title: 'Cancel',
+      message: `Are you sure you want to cancel this assessment?`,
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+           
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.navCtrl.setRoot(ContraceptivePage);
           }
         }
       ]

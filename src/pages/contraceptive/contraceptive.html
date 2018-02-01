@@ -3,30 +3,31 @@
 	  <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Whisper</ion-title>
+    <ion-title>Select Contraceptive</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
   <ion-grid>
     <ion-row>
-      <ion-col col-10 class="welcome">
+      <ion-col  class="welcome">
       	<h3 class="title">Hello, Please select the contraceptive you want</h3>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngFor="let contraceptive of contraceptives">
-      <ion-col col-12 class="button-container">
-        <button color="rounded_buttons" ion-button round small (click)="goToAssesment(contraceptive._id, contraceptive.name,
-         contraceptive.appointment, contraceptive['releatedContraceptives'])">{{contraceptive.name}}</button>
-        <button ion-button outline color="info_button" class="info" clear icon-only
-          (click)="contraceptiveInfo(contraceptive.name, contraceptive.description)">
-          <ion-icon name="information-circle"></ion-icon>
-        </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+
+  <ion-grid>
+      <ion-row>
+       <ion-col col-6 *ngFor="let contraceptive of contraceptives; let i = index;">
+        <button [color]="i > 0 ? 'rounded_buttons' : 'primary'" ion-button block  outline icon-end  (click)="goToAssesment(contraceptive)">{{contraceptive?.name}}
+          <ion-icon name="info"></ion-icon>
+        </button>
+       </ion-col>   
+      </ion-row>
+  </ion-grid>
+
+   
+ 
 </ion-content>

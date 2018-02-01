@@ -1,24 +1,62 @@
-<ion-header no-border>
-
+<ion-header no-border>  
   <ion-navbar color="navColor">
-    <ion-title>Your profile</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Your Profile</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-<ion-content padding>
-
-  <button class="profile_button" (click)="goToBasicInfo()" clear ion-item padding>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3>
-          <img src="assets/img/gravatar.jpg">
-        </ion-col>
-        <ion-col col-7>
-          <h3>Basic Information</h3>
-          <h4>{{user?.firstName}} {{user?.lastName}}</h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </button>
+<ion-content class="bg-light-grey">
+    <div class="bg">
+        <img class="dp" id="dp" src="assets/img/gravatar.jpg" alt="" (click)="presentActionSheet()">
+        <div class="hero-subtitle">{{currentUser?.firstName}} {{currentUser?.lastName}}</div>
+    </div>
+    <form [formGroup]="basicInfoForm" (submit)="updateUser()">
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>First name</ion-label>
+            <ion-input type="text"   formControlName="firstName"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label stacked>Last name</ion-label>
+            <ion-input type="text"   formControlName="lastName"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label stacked>User name</ion-label>
+            <ion-input type="text"   formControlName="userName"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label stacked>Email</ion-label>
+            <ion-input type="email"   formControlName="email"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-select formControlName="gender">
+    
+              <ion-option *ngFor="let gender of ['Male', 'Female']" [value]="gender">{{gender}}</ion-option>
+             
+            </ion-select>
+          </ion-item>
+    
+          <ion-item *ngIf="currentUser?.dateOfBirth">
+            <ion-label>Date of Birth</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" type="text"   formControlName="dateOfBirth"></ion-datetime>
+          </ion-item>
+    
+      
+          <ion-item>
+            <ion-label stacked>Account Type</ion-label>
+            <ion-input type="text" [value]="currentUser?.accountType"  formControlName="accountType"></ion-input>
+          </ion-item>
+         
+        </ion-list>
+        <div text-right>
+          <button [disabled]="!basicInfoForm.valid && !submited" small ion-button outline round color="rounded_buttons" right>Save</button>
+        </div>
+      </form>
 </ion-content>

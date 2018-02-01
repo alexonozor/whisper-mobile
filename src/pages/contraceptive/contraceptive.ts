@@ -75,8 +75,9 @@ export class ContraceptivePage {
       })
   }
 
-  goToAssesment(id,name,appointment,contraceptive) {
-    this.navCtrl.push(StartPage, {id: id, name: name, appointment: appointment, related: contraceptive});
+
+  goToAssesment(contraceptive) { 
+    this.navCtrl.push(StartPage, {'contraceptive': contraceptive} );
   }
 
   loadAssesments(id, name) {
@@ -103,11 +104,6 @@ export class ContraceptivePage {
     })
     this.subscription.add(getAss)
   }
-
-  contraceptiveInfo(name, description) {
-    this.navCtrl.push(ContraceptiveDescPage, { name: name, description: description });
-  }
-
 }
 
 @Component({
@@ -116,26 +112,24 @@ export class ContraceptivePage {
 })
 
 export class ContraceptiveDescPage {
-  contraceptive_name : string;
-  contraceptive_description : string;
+  contraceptive: any;
 
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public navParams: NavParams,
-    public _authService: AuthenticationProvider) {
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    this.contraceptiveInfo(this.navParams.get('name'), this.navParams.get('description'));
+    this.contraceptive = this.navParams.get('contraceptive');
   }
 
-
-  contraceptiveInfo(name, description) {
-    this.contraceptive_name = name;
-    this.contraceptive_description = description;
+  startAssesment() {
+    this.navCtrl.push(AssesmentPage, { contraceptive: this.contraceptive });  
   }
+
 }
+
 
 
 
@@ -148,23 +142,25 @@ export class ContraceptiveDescPage {
 
 export class StartPage {
   username: string;
-
+  contraceptive: any;
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public _authService: AuthenticationProvider
+  ) {
+    this.username = this._authService.currentUser().firstName;
+    this.contraceptive = this.navParams.get('contraceptive');
   }
 
   ionViewDidLoad() {}
 
   startAssesment() {
-    this.navCtrl.push(AssesmentPage, {
-      id: this.navParams.get('id'),
-      name: this.navParams.get('name'),
-      appointment: this.navParams.get('appointment'),
-      related: this.navParams.get('related')
-    });
-    
+    this.navCtrl.push(AssesmentPage, { contraceptive: this.contraceptive });  
+  }
+
+  contraceptiveInfo(name, description) {
+    this.navCtrl.push(ContraceptiveDescPage, { contraceptive: this.contraceptive });
   }
 
 }

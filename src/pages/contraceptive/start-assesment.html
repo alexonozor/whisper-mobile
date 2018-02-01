@@ -10,21 +10,30 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Whisper</ion-title>
+    <ion-title>Start Assesment</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}" padding>
-
   <ion-grid>
     <ion-row>
-      <ion-col col-10 class="welcome">
+      <ion-col col-12 class="welcome">
         <h3 class="title">Hello <i class="username">{{username}}</i>, are you ready to start your assessment</h3>
       </ion-col>
     </ion-row>
-    <div text-right>
-      <button ion-button round small color="rounded_buttons" (click)="startAssesment()">Start Assesment</button>
-    </div>
+  </ion-grid>
+
+  <ion-grid>
+      <ion-row>
+       <ion-col col-6>
+        <button color="primary" ion-button block outline (click)="contraceptiveInfo()">Contraceptive Info
+          <ion-icon name="info"></ion-icon>
+        </button>
+       </ion-col>  
+        <ion-col col-6>
+         <button color="rounded_buttons" ion-button block outline (click)="startAssesment()">Start Assesment</button>
+        </ion-col>   
+      </ion-row>
   </ion-grid>
 </ion-content>
