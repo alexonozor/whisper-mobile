@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { DatePipe, I18nPluralPipe } from '@angular/common';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasicInformationPage } from '../user-profile/basic-information/basic-information';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -20,6 +21,10 @@ export class UserProfilePage {
   public userAge: Number;
   public ageless: boolean =  false;
   public ageInMonths: Number;
+  public basicInfoForm: FormGroup;
+  public currentUser: any;
+  public submited: boolean = false;
+  loading : any;
   public ageMapping:
       {[k: string]: string} = {'=0': '', '=1': 'year', 'other': '# years'};
   public monthMapping:
@@ -29,42 +34,97 @@ export class UserProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public _authService: AuthenticationProvider
-    ) {
+    public _authService: AuthenticationProvider,
+    public fb: FormBuilder,
+    public _userService: UserProvider,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController
+  ) {
+    this.currentUser = this._authService.currentUser();
+    this.createForm()
   }
 
   ionViewDidLoad() {
-    this.getUser();
+    
   }
 
-  getUser() {
-    this.user = this._authService.currentUser();
-    // use in future
-    // this.calculateUserAge(this.user);
+  loader() {
+    this.loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: '<img src="assets/img/loader.svg" />',
+    });
+    this.loading.present();
   }
 
-  calculateUserAge(user){
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-    this.userBirthDate = user.dateOfBirth;
-    this.userId = user._id;
-    let today = new Date();
-    this.birthDate = new Date(user.dateOfBirth);
-    console.log('birth date ', this.birthDate);
-    this.userAge = today.getFullYear() - this.birthDate.getFullYear();
-    if(this.userAge < 1) {
-      this.ageless = true;
-    }
-    this.ageInMonths = today.getMonth() - this.birthDate.getMonth();
+  dismissLoader() { 
+    this.loading.dismiss();
+  } 
+
+  createForm() {
+    this.basicInfoForm = this.fb.group({
+      firstName: [this.currentUser.firstName, Validators.required ],
+      userName: [this.currentUser.userName, Validators.required],
+      lastName: [this.currentUser.lastName, Validators.required ],
+      email: [this.currentUser.email, Validators.required ],
+      gender: [this.currentUser.gender, Validators.required ],
+      dateOfBirth: [this.currentUser.dateOfBirth, Validators.required ],
+      accountType: [{value: '', disabled: true} ],
+    })
   }
 
-  goToBasicInfo(){
+
+  // calculateUserAge(user){
+  //   this.firstName = user.firstName;
+  //   this.lastName = user.lastName;
+  //   this.userBirthDate = user.dateOfBirth;
+  //   this.userId = user._id;
+  //   let today = new Date();
+  //   this.birthDate = new Date(user.dateOfBirth);
+  //   this.userAge = today.getFullYear() - this.birthDate.getFullYear();
+  //   if(this.userAge < 1) {
+  //     this.ageless = true;
+  //   }
+  //   this.ageInMonths = today.getMonth() - this.birthDate.getMonth();
+  // }
+
+  goToBasicInfo() {
     this.navCtrl.push(BasicInformationPage, {
       'firstName': this.firstName,
       'lastName': this.lastName,
       // 'dateOfBirth': this.userBirthDate,
       'userId': this.userId
     });
+  }
+
+
+  updateUser() {
+    this.loader()
+    this._userService.update(this.basicInfoForm.value, this.currentUser._id)
+    .subscribe((res) => {
+      if (res.success) {
+        this.dismissLoader()
+        this._authService.saveUser(res.user);
+        let toast = this.toastCtrl.create({
+          message: 'Updated!',
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+       
+      } else {
+      }
+    }, err => {
+      this.dismissLoader()
+      // caught error
+      let toast = this.toastCtrl.create({
+        message: 'an error occurred',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+     
+    })
   }
 
 }

@@ -4,61 +4,67 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Whisper</ion-title>
+    <ion-title>{{contraceptive?.name}} Assesment</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content>
-  <ion-slides #slides>
-      <ion-slide *ngFor="let question of assesment;">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-10 class="welcome">
-              <h4 class="title">{{question.question}}</h4>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-11 class="edited">
-              <ion-item class="line-break" [hidden]="!editedInput">
-                <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keyup)="getFocus($event)" placeholder="{{editedInputLabel}}">
-                </ion-textarea>
-                <button class="input_button" (click)="submitEditedAnswer()" ion-button color="logout" [hidden]="!showButton" clear item-right>Send</button>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <div text-right *ngFor="let answer of question._answers;" class="aligner">
-            <button [hidden]="editedInput" ion-button round small color="rounded_buttons" (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)"> {{answer.name}}</button>
-          </div>
-        </ion-grid>
-      </ion-slide>
 
-      <ion-slide class="end-slide" [hidden]="!isEnd">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-10 class="welcome">
-              <h4 class="title compliments">Thanks for completing the assesment</h4>
-              <ion-list>
-                <ion-item>
-                  <ion-textarea #value placeholder="Feel free to drop a message"></ion-textarea>
-                </ion-item>
-                <div text-center>
-                  <button class="submit_assesment" ion-button round small color="rounded_buttons" (click)="submitAssesment(value)">Submit assesment</button>
-                </div>
-              </ion-list>
+<ion-content padding>
+  <ion-slides #slides>
+    <ion-slide *ngFor="let question of assesment;">
+
+      <h5 class="title">{{question.question}}</h5>
+
+      <ion-grid  class="edited">
+        <ion-row class="line-break" [hidden]="!editedInput">
+          <ion-col col-10 class="set-border">
+            <ion-textarea type="text" rows="1" maxLength="500" #myInput (ionBlur)="getText($event)" (keyup)="getFocus($event)" placeholder="{{editedInputLabel}}">
+            </ion-textarea>
+          </ion-col>
+          <ion-col col-2>
+           <button class="input_button" (click)="submitEditedAnswer()" ion-button color="logout" [hidden]="!showButton" clear item-right>Send</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6 *ngFor="let answer of question._answers; let i = index;">
+            <button [hidden]="editedInput" ion-button block outline icon-end (click)="nextSlide(question._id, question.question, answer.name, answer.isEditedAnswer, answer.editedAnswerLabel, answer.eligible)">{{answer?.name}}</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide class="end-slide" [hidden]="!isEnd">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 class="welcome">
+            <h4 class="title compliments">Thanks for completing the assesment</h4>
+            <ion-textarea class="set-border" #value placeholder="Feel free to drop a message"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12 class="welcome">
+              <button ion-button block outline icon-end (click)="submitAssesment(value)">Submit assesment</button>                
             </ion-col>
           </ion-row>
-        </ion-grid>
-      </ion-slide>
+      </ion-grid>
+    </ion-slide>
   </ion-slides>
+
+                
+  
 </ion-content>
+
 <ion-footer align="center" no-border>
   <ion-grid>
     <ion-row *ngIf="hasPrev">
-      <ion-col col-3> <img src="assets/img/swipe-left.png"/> </ion-col>
-      <ion-col col-9> 
+      <ion-col col-3> <img src="assets/img/swipe-left.png" /> </ion-col>
+      <ion-col col-9>
         <h4 class="slideLeft">Slide left to go back to previous question</h4>
       </ion-col>
     </ion-row>
+    <button ion-button outline (click)="goBackToContracpetive()"  color="danger" block>Cancel</button> 
   </ion-grid>
 </ion-footer>
