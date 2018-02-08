@@ -1,6 +1,6 @@
-<ion-header no-border>
+<ion-header>
 
-  <ion-navbar color="navColor">
+  <ion-navbar color="danger">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -23,7 +23,7 @@
             </ion-textarea>
           </ion-col>
           <ion-col col-2>
-           <button class="input_button" (click)="submitEditedAnswer()" ion-button color="logout" [hidden]="!showButton" clear item-right>Send</button>
+           <button class="input_button" (click)="submitEditedAnswer()" ion-button color="logout" [disabled]="!showButton" clear item-right>Send</button>
           </ion-col>
         </ion-row>
       </ion-grid>

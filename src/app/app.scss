@@ -26,6 +26,12 @@
   padding: 0 2rem !important;
 }
 
+.username  {
+  margin: 0px 19px;
+  line-height: 0px;
+  color: rgb(255, 255, 255);
+}
+
 h3.title {
   font-size: 1.8rem;
 }
@@ -51,7 +57,23 @@ h4.title {
   border: none;
 }
 
-.menu-bg, .menu-button { background-color: #fafafa; }
+.settings-icon {
+  padding-right: 25px;
+}
+
+.menu-bg {
+  background: #FF512F;
+  background: -webkit-gradient(linear, left top, left bottom, from(#DD2476), to(#FF512F));
+  background: linear-gradient(to bottom, #FF512F, #1a060f)
+}
+
+.menu-button {
+  background-color: rgba(250, 250, 250, 0);
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+ }
 
 
 .toolbar-title {
@@ -63,9 +85,7 @@ h4.title {
   left: -10%;
 }
 
-.toolbar-md-navColor .toolbar-title-md {
-  color: #000;
-}
+
 
 .alert-button {
   color: #e91e63 !important;
@@ -152,5 +172,16 @@ p.error-message {
 .text-green, .text-red {
   text-transform: capitalize;
   font-size: 1.3rem;
+}
+
+.bar-button-md {
+  margin: 0 0.2rem;
+  padding: 0 5px;
+  border-radius: 2px;
+  height: 32px;
+  border: 0;
+  font-size: 2.4rem;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 

@@ -1,6 +1,6 @@
-<ion-menu [content]="content" no-border class="side-menu">
+<ion-menu [content]="content" class="side-menu">
 
-  <ion-content class="menu-bg" no-border>
+  <ion-content class="menu-bg" >
     <ion-toolbar>
       <ion-title></ion-title>
       <button ion-button menuToggle right>
@@ -9,13 +9,28 @@
     </ion-toolbar>
     <ion-list no-lines>
       <button menuClose="whisper-menu" ion-item *ngFor="let p of pages" (click)="openPage(p)" class="menu-button">
-        <ion-icon name="{{p.icon}}" color="{{p.color}}"></ion-icon>  {{p.title}}
+        <ion-icon name="{{p.icon}}" color="{{p.color}}" class="settings-icon"></ion-icon>  {{p.title}}
         <span class="notification-light" *ngIf="p.enableNotification && notificationCount > 0" item-end></span>
       </button>
-      
     </ion-list>
   </ion-content>
-
+  <ion-footer >
+    <ion-grid>
+      <ion-row>
+        <ion-col col-9>
+          <ion-list no-lines>
+            <button menuClose="whisper-menu" ion-item (click)="openPage({title: 'Logout'})" class="menu-button">
+              <ion-icon name="power" color="#fff"></ion-icon> Log out
+            </button>
+             <p class="username">{{currentUser?.firstName}} {{currentUser?.lastName}}</p>
+          </ion-list>
+        </ion-col>
+        <ion-col col-3>
+          
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
 </ion-menu>
 
 <ion-nav id="nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

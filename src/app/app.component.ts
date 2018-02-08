@@ -24,9 +24,10 @@ export class MyApp {
   rootPage:any;
   pages: Array<{title: string, component: any, icon: string, color: string, enableNotification: boolean}>;
   loggedInUser: boolean = false;
-  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: 'logout'};
-  loginParams: any = { title: 'Login', component: '', icon: '', color: ''};
+  logoutParams: any = { title: 'Logout', component: '', icon: 'power', color: '#fff'};
   notificationCount: number = 0;
+  currentUser: any;
+
   constructor(
     public _authService: AuthenticationProvider,
     public platform: Platform,
@@ -35,14 +36,16 @@ export class MyApp {
     public menu: MenuController,
     public events: Events
     ) {
+      this.currentUser = this._authService.currentUser();
+
     this.initializeApp();
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home', color: "home", enableNotification: false },
-      { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive", enableNotification: false},
-      { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile", enableNotification: false},
-      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings", enableNotification: true},
-      { title: 'Contact us', component: ContactListPage, icon: 'ios-call', color: "black", enableNotification: false},
-      { title: 'About us', component: UserProfilePage, icon: 'information-circle', color: "profile", enableNotification: false},
+      { title: 'Home', component: HomePage, icon: 'home', color: "#fff", enableNotification: false },
+      { title: 'Assessments', component: UserAssesmentsPage, icon: 'clipboard', color: "#fff", enableNotification: false},
+      { title: 'Profile', component: UserProfilePage, icon: 'person', color: "#fff", enableNotification: false},
+      { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "#fff", enableNotification: true},
+      { title: 'Contact us', component: ContactListPage, icon: 'ios-call', color: "#fff", enableNotification: false},
+      { title: 'About us', component: UserProfilePage, icon: 'information-circle', color: "#fff", enableNotification: false},
     ];
     
 
@@ -61,9 +64,6 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.rootPage = IntroPage;
-      if(this._authService.currentUser != null) {
-        this.pages.push(this.logoutParams);
-      }
     });
   }
 

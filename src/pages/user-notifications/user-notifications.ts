@@ -4,6 +4,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
 import { AssesmentResponsePage } from '.././assesment/assesment-response/assesment-response';
+import { ContactConversationPage } from '.././contact-list/contact-list';
 
 @IonicPage()
 @Component({
@@ -62,6 +63,8 @@ export class UserNotificationsPage {
     this.updateNotificationStatus(notification)
     if (notification.notification_type == "openConversation") {
       this.navCtrl.push(AssesmentResponsePage, {conversationId: notification.notification_type_id})
+    } else if (notification.notification_type == "message") {
+      this.navCtrl.push(ContactConversationPage, { thread: notification.notification_type_id });
     }
   }
 
