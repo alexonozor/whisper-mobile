@@ -1,0 +1,39 @@
+<ion-header no-border>  
+    <ion-navbar color="navColor">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Conversation with {{thread?.reciepaint.firstName}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+
+
+  <ion-content>
+    <div *ngFor="let message of messages" class="message-wrapper" >
+      <!--  wave-->
+      <div [ngClass]="message?.isSender? 'right slide-right' : 'left slide-left'" class="chat-bubble">
+
+        <div class="message" [innerHTML]="message?.content" autolinker>
+        </div>
+
+        <div class="message-detail">
+          <!-- change to {{message.date | moment:"ago" | lowercase}} -->
+          <span> {{message?.createdAt | date:'shortTime'}}</span>
+        </div>
+      </div>
+
+      <div class="cf"></div>
+
+    </div>
+  </ion-content>
+
+  <ion-footer no-border>
+    <form [formGroup]="messageForm" (ngSubmit)="submitMessage()" novalidate>
+      <ion-item>
+        <ion-textarea class="message" autocomplete="true" formControlName="content" placeholder="Write a message" type="text" rows="2" >
+        </ion-textarea>
+        <button ion-button color="info_button" [hidden]="!messageForm.valid" clear item-end><ion-icon class="footer-btn" name="send"></ion-icon></button>
+      </ion-item>
+    </form>
+  </ion-footer>

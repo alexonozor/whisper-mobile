@@ -14,6 +14,7 @@ import { PersonalInformationPage } from '../pages/user-profile/personal-informat
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { UserNotificationsPage } from '../pages/user-notifications/user-notifications';
 import { BookAppointmentPage } from '../pages/book-appointment/book-appointment';
+import { ContactListPage } from "../pages/contact-list/contact-list";
 
 @Component({
   templateUrl: 'app.html'
@@ -40,7 +41,7 @@ export class MyApp {
       { title: 'Assesments', component: UserAssesmentsPage, icon: 'clipboard', color: "archive", enableNotification: false},
       { title: 'Profile', component: UserProfilePage, icon: 'person', color: "profile", enableNotification: false},
       { title: 'Notifications', component: UserNotificationsPage, icon: 'notifications', color: "settings", enableNotification: true},
-      { title: 'Contact us', component: UserProfilePage, icon: 'ios-call', color: "black", enableNotification: false},
+      { title: 'Contact us', component: ContactListPage, icon: 'ios-call', color: "black", enableNotification: false},
       { title: 'About us', component: UserProfilePage, icon: 'information-circle', color: "profile", enableNotification: false},
     ];
     

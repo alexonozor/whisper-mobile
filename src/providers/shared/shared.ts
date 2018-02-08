@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AuthHttp } from 'angular2-jwt';
+import { Observable } from 'rxjs/Rx';
+import { BaseurlProvider } from '../baseurl/baseurl';
+import { AuthenticationProvider } from '../authentication/authentication';
+
 
 /*
   Generated class for the SharedProvider provider.
@@ -11,10 +16,32 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class SharedProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello SharedProvider Provider');
+  public host = this._baseUrl.getEnvironmentVariable();
+  public token = '';
+
+  constructor(
+      public http: Http,
+      public authHttp: AuthHttp,
+      public _baseUrl: BaseurlProvider,
+      public _authService: AuthenticationProvider
+  ) { }
+
+  getUserThreads(userId: string): Observable<any> {
+    return this.authHttp.get(`${this.host}/user-threads/${userId}`)
+			.map((res:Response) => res.json())
+			.catch((error:any) => Observable.throw(error || 'server error'));
   }
 
-  
+  createMessageThread(reciepaint, currentUser, subject) {
+    return this.http.post(`${this.host}/threads`, {startedBy: currentUser, reciepaint: reciepaint, subject: subject})
+    .map((res: Response) => res.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'server error'));
+  }
 
+
+  createThreadMessage(params) {
+    return this.http.post(`${this.host}/threads-message`, params)
+    .map((res: Response) => res.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'server error'));
+  }
 }

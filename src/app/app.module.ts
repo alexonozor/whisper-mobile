@@ -10,6 +10,7 @@ import { BookAppointmentPage, AppointmentLandingPage } from '../pages/book-appoi
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage, FoundPharmaciesPage, NonEligiblePage } from '../pages/assesment/assesment';
+import { ContactListPage, ContactConversationPage, ContactFormPage } from '../pages/contact-list/contact-list';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
@@ -72,7 +73,10 @@ export function getAuthHttp(http) {
     BookAppointmentPage,
     AppointmentLandingPage,
     AssesmentResponsePage,
-    UserNotificationsPage
+    UserNotificationsPage,
+    ContactListPage,
+    ContactConversationPage, 
+    ContactFormPage 
   ],
   imports: [
     BrowserModule,
@@ -104,7 +108,10 @@ export function getAuthHttp(http) {
     BookAppointmentPage,
     AppointmentLandingPage,
     AssesmentResponsePage,
-    UserNotificationsPage
+    UserNotificationsPage,
+    ContactListPage,
+    ContactConversationPage, 
+    ContactFormPage
   ],
   providers: [
     LocationAccuracy,
