@@ -10,6 +10,7 @@ import { BookAppointmentPage, AppointmentLandingPage } from '../pages/book-appoi
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { AssesmentPage, FoundPharmaciesPage, NonEligiblePage } from '../pages/assesment/assesment';
+import { ContactListPage, ContactConversationPage, ContactFormPage } from '../pages/contact-list/contact-list';
 import { AssesmentResponsePage } from '../pages/assesment/assesment-response/assesment-response';
 import { ContraceptiveQuantityPage } from '../pages/contraceptive-quantity/contraceptive-quantity';
 import { ContraceptivePage } from '../pages/contraceptive/contraceptive';
@@ -36,6 +37,11 @@ import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { NotificationProvider } from '../providers/notification/notification';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { PasswordCheckerProvider } from '../providers/password-checker/password-checker';
+import { AppVersion } from '@ionic-native/app-version';
+import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
+import { AboutUsPage } from '../pages/about-us/about-us';
+import { AppRate } from '@ionic-native/app-rate';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 const config: SocketIoConfig = { url: 'https://whisper-admin.herokuapp.com', options: {} };
 export function getAuthHttp(http) {
@@ -72,7 +78,12 @@ export function getAuthHttp(http) {
     BookAppointmentPage,
     AppointmentLandingPage,
     AssesmentResponsePage,
-    UserNotificationsPage
+    UserNotificationsPage,
+    ContactListPage,
+    ContactConversationPage, 
+    ContactFormPage,
+    TermsAndConditionsPage,
+    AboutUsPage
   ],
   imports: [
     BrowserModule,
@@ -104,11 +115,20 @@ export function getAuthHttp(http) {
     BookAppointmentPage,
     AppointmentLandingPage,
     AssesmentResponsePage,
-    UserNotificationsPage
+    UserNotificationsPage,
+    ContactListPage,
+    ContactConversationPage, 
+    ContactFormPage,
+    TermsAndConditionsPage,
+    AboutUsPage
+    
   ],
   providers: [
+    SocialSharing,
+    AppRate,
     LocationAccuracy,
     Geolocation,
+    AppVersion,
     StatusBar,
     SplashScreen,
     AuthenticationProvider,

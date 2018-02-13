@@ -1,18 +1,18 @@
-<ion-header no-border>
+<ion-header>
 
-  <ion-navbar color="navColor">
+  <ion-navbar color="primary">
     <ion-buttons left>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
-        <span *ngIf="notificationCount > 0" class="notification-indicator"></span>
       </button>
     </ion-buttons>
-    <div text-center>
+    <div>
       <ion-title>Home</ion-title>
     </div>
     <ion-buttons right>
-      <button ion-button>
-        <ion-icon name="bell"></ion-icon>
+      <button ion-button (click)="goToNotification()">
+        <ion-icon name="notifications"></ion-icon>
+        <span *ngIf="notificationCount > 0" class="notification-indicator"></span>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -26,7 +26,7 @@
   <div text-center class="menu-buttons">
     <ion-row>
   	    <ion-col class="buttons">
-  	    	<button class="home_buttons" fab-center ion-button outline round default color="rounded_buttons" (click)="getContraceptive()">Get a Contraceptive</button>
+  	    	<button class="" fab-center ion-button   default color="primary" (click)="getContraceptive()">Get a Contraceptive</button>
   	    </ion-col>
     </ion-row>
     <!-- <ion-row>

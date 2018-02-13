@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons left>
+          <button ion-button icon-only color="royal" (click)="closeModal()">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+      <ion-title>Compose</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="submitMessage()" [disabled]="!messageForm.valid" color="royal">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+    
+    
+    <ion-content>
+      <form [formGroup]="messageForm"  novalidate>
+        <ion-item>
+          <ion-label color="primary">To</ion-label>
+          <ion-input value="Whisper Admin" [disabled]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Subject</ion-label>
+          <ion-input formControlName="subject" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea class="message" style="height: 400px;" autocomplete="true" formControlName="content" placeholder="Compose message" type="text" rows="2" >
+          </ion-textarea>
+      
+        </ion-item>
+      </form>  
+    </ion-content>

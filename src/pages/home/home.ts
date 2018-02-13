@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController, NavController, Events } from 'ionic-angular';
 import { ContraceptivePage } from '../../pages/contraceptive/contraceptive';
+import { UserNotificationsPage } from '../../pages/user-notifications/user-notifications';
 import { LoginPage } from '../../pages/login/login'
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UserProvider } from '../../providers/user/user';
@@ -14,6 +15,7 @@ export class HomePage {
   rootPage: any = HomePage;
   public backgroundImage = 'assets/img/background.png';
   notificationCount: Number = 0;
+  currentUser: any;
 
   constructor(
     public navCtrl: NavController,
@@ -23,6 +25,8 @@ export class HomePage {
     public _notification: NotificationProvider,
     public events: Events
   ) {
+    
+    console.log(this.currentUser)
     events.subscribe('notification:count', (count) => {
       this.notificationCount = count;
     })
@@ -61,5 +65,9 @@ export class HomePage {
     }, err => {
 
     })
+  }
+
+  goToNotification() {
+    this.navCtrl.push(UserNotificationsPage)
   }
 }

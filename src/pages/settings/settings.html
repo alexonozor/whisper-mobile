@@ -6,7 +6,10 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
+  <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>settings</ion-title>
   </ion-navbar>
 
@@ -14,5 +17,79 @@
 
 
 <ion-content padding>
-
+  <ion-list>
+    
+        <ion-list-header>Account</ion-list-header>
+    
+        <ion-item (click)="changeAccount()">
+          <ion-avatar item-start>
+            <ion-icon name="person"></ion-icon>
+          </ion-avatar>
+          <h2>Account Type</h2>
+          <p>{{currentUser?.accountType}}</p>
+          <ion-note item-end> <ion-icon name="ios-arrow-down"></ion-icon></ion-note>
+        </ion-item>
+    
+        <ion-item (click)="deleteAccount()">
+          <ion-avatar item-start>
+            <ion-icon name="trash" color="danger"></ion-icon>
+          </ion-avatar>
+          <h2>Delete Account</h2>
+          <p>{{currentUser?.email}}</p>
+        </ion-item>
+    
+        <ion-item (click)="logout()">
+          <ion-avatar item-start>
+            <ion-icon name="log-out"></ion-icon>
+          </ion-avatar>
+          <h2>Logout</h2>
+          <p>{{currentUser?.firstName}} {{currentUser?.lastName}}</p>
+        </ion-item>
+    
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-icon name="flag"></ion-icon>
+          </ion-avatar>
+          <h2>Language</h2>
+          <p>English</p>
+        </ion-item>
+    
+      </ion-list>
+    
+      <ion-list>
+    
+        <ion-list-header>Notifications</ion-list-header>
+    
+        <ion-item>
+            <ion-avatar item-start>
+              <ion-icon name="mail"></ion-icon>
+            </ion-avatar>
+          <ion-label>Receive Emails</ion-label>
+          <p>Receive mails as a reminder?</p>
+          <ion-toggle item-end (ionChange)="recieveEmail($event)" [checked]="currentUser?.recieveEmail"></ion-toggle>    
+        </ion-item>
+      </ion-list>
+    
+      <ion-list>
+    
+        <ion-list-header>About Whisper</ion-list-header>
+    
+     
+    
+        <ion-item (click)="gotToTermsAndConditions()">
+          <ion-avatar item-start>
+            <ion-icon name="book"></ion-icon>
+          </ion-avatar>
+          <h2>Terms and Conditions</h2>
+          <ion-note item-end> <ion-icon name="arrow-forward"></ion-icon></ion-note>
+        </ion-item>
+    
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-icon name="speedometer"></ion-icon>
+          </ion-avatar>
+          <h2>Version</h2>
+          <p> {{versionNumber}}</p>
+        </ion-item>
+      </ion-list>
 </ion-content>

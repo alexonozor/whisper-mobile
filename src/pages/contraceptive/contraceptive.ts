@@ -150,6 +150,7 @@ export class StartPage {
     public _authService: AuthenticationProvider
   ) {
     this.username = this._authService.currentUser().firstName;
+    console.log(this.username)
     this.contraceptive = this.navParams.get('contraceptive');
   }
 

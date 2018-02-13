@@ -1,6 +1,6 @@
 <ion-header no-border>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>book appointment</ion-title>
   </ion-navbar>
 
@@ -26,8 +26,8 @@
         <ion-datetime formControlName="appointmentTime" displayFormat="h:mm A" [(ngModel)]="date"></ion-datetime>
       </ion-item>
     </ion-list>
-    <div text-right>
-      <button [disabled]="!appointmentFormGroup.valid && !submited" small ion-button outline round color="rounded_buttons" right>Save</button>
+    <div >
+      <button [disabled]="!appointmentFormGroup.valid && !submited"  ion-button   color="primary" right>Save</button>
     </div>
   </form>
 

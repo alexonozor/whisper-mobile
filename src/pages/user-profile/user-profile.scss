@@ -1,37 +1,23 @@
 page-user-profile {
-  button.profile_button .item-inner {
-    border-bottom: none !important;
-  }
-
-  ion-icon.person {
-    font-size: 3.0em;
-    color: #5c6bc0;
-  }
+ 
 
   .bg {
     height: 155px;
     background-size: cover;
     filter: blur(0px);
     background-position: center center;
-    background-color: #f53d3d;
+    background-color: #488aff;
 }
-.dp {
-    border-radius: 50%;
-    height: 100px;
-    width: 100px;
-    z-index: 10;
-    margin-top: 70px;
-    position: relative;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 6px 15px 81px 3px rgba(0, 0, 0, 0.75);
+
+
+.hero-subtitle {
+    color: #fff;
 }
-ion-item,
-.bg-light-grey {
-    background-color: #FAF9F8 !important;
+
+.profile-name {
+    margin-top: 30px !important;
+    font-size: 23px;
+    line-height: 20px;
 }
-.main-cnt {
-    margin: 0;
-}
+
 }

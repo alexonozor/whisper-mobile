@@ -1,18 +1,25 @@
-<ion-header no-border>  
-  <ion-navbar color="navColor">
+<ion-header >  
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Your Profile</ion-title>
+    <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToSettings()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="bg-light-grey">
+<ion-content>
     <div class="bg">
-        <img class="dp" id="dp" src="assets/img/gravatar.jpg" alt="" (click)="presentActionSheet()">
-        <div class="hero-subtitle">{{currentUser?.firstName}} {{currentUser?.lastName}}</div>
+        <div class="hero-subtitle" padding text-center>
+          <h5 class="profile-name">{{currentUser?.firstName}} {{currentUser?.lastName}}</h5>
+          {{currentUser?.accountType}}
+        </div>
     </div>
-    <form [formGroup]="basicInfoForm" (submit)="updateUser()">
+    <form [formGroup]="basicInfoForm" (submit)="updateUser()" padding>
         <ion-list>
           <ion-item>
             <ion-label stacked>First name</ion-label>
@@ -43,20 +50,11 @@
             </ion-select>
           </ion-item>
     
-          <ion-item *ngIf="currentUser?.dateOfBirth">
+          <ion-item>
             <ion-label>Date of Birth</ion-label>
             <ion-datetime displayFormat="MM/DD/YYYY" type="text"   formControlName="dateOfBirth"></ion-datetime>
           </ion-item>
-    
-      
-          <ion-item>
-            <ion-label stacked>Account Type</ion-label>
-            <ion-input type="text" [value]="currentUser?.accountType"  formControlName="accountType"></ion-input>
-          </ion-item>
-         
-        </ion-list>
-        <div text-right>
-          <button [disabled]="!basicInfoForm.valid && !submited" small ion-button outline round color="rounded_buttons" right>Save</button>
-        </div>
+        </ion-list>   
+        <button [disabled]="!basicInfoForm.valid && !submited"  ion-button block color="primary">Save</button>
       </form>
 </ion-content>
