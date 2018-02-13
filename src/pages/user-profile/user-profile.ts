@@ -3,6 +3,7 @@ import { DatePipe, I18nPluralPipe } from '@angular/common';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { BasicInformationPage } from '../user-profile/basic-information/basic-information';
+import { SettingsPage } from '../settings/settings';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
 
@@ -68,25 +69,9 @@ export class UserProfilePage {
       lastName: [this.currentUser.lastName, Validators.required ],
       email: [this.currentUser.email, Validators.required ],
       gender: [this.currentUser.gender, Validators.required ],
-      dateOfBirth: [this.currentUser.dateOfBirth, Validators.required ],
-      accountType: [{value: '', disabled: true} ],
+      dateOfBirth: [this.currentUser.dateOfBirth, Validators.required ]
     })
   }
-
-
-  // calculateUserAge(user){
-  //   this.firstName = user.firstName;
-  //   this.lastName = user.lastName;
-  //   this.userBirthDate = user.dateOfBirth;
-  //   this.userId = user._id;
-  //   let today = new Date();
-  //   this.birthDate = new Date(user.dateOfBirth);
-  //   this.userAge = today.getFullYear() - this.birthDate.getFullYear();
-  //   if(this.userAge < 1) {
-  //     this.ageless = true;
-  //   }
-  //   this.ageInMonths = today.getMonth() - this.birthDate.getMonth();
-  // }
 
   goToBasicInfo() {
     this.navCtrl.push(BasicInformationPage, {
@@ -95,6 +80,10 @@ export class UserProfilePage {
       // 'dateOfBirth': this.userBirthDate,
       'userId': this.userId
     });
+  }
+
+  goToSettings() {
+    this.navCtrl.push(SettingsPage);
   }
 
 
@@ -118,7 +107,7 @@ export class UserProfilePage {
       this.dismissLoader()
       // caught error
       let toast = this.toastCtrl.create({
-        message: 'an error occurred',
+        message: 'An error occurred',
         duration: 3000,
         position: 'top'
       });

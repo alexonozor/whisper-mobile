@@ -23,8 +23,7 @@
               <p class="error-message" [ngClass]="password_checker.error ? 'text-red' : 'text-green' ">{{password_checker.message}}</p>
             </ion-item>
           </ion-list>
-          <button [disabled]="!form.valid || loading" ion-button round color="rounded_buttons" 
-          class="login-button">Login</button>
+          <button [disabled]="!form.valid || loading" ion-button  color="primary" full>Login</button>
 
         </form>
       </ion-col>
@@ -33,7 +32,7 @@
     <ion-row>
       <ion-col>
         <span class="new">Have an account?</span>
-        <button ion-button round color="signup_button" (click)="goToSignup()" class="signup-button">Create an account</button>
+        <button ion-button  color="darkblue" (click)="goToSignup()">Create an account</button>
       </ion-col>
     </ion-row>
   </div>

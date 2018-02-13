@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="danger">
+  <ion-navbar color="primary">
 	  <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -21,7 +21,7 @@
   <ion-grid>
       <ion-row>
        <ion-col col-6 *ngFor="let contraceptive of contraceptives; let i = index;">
-        <button [color]="i > 0 ? 'rounded_buttons' : 'primary'" ion-button block  outline icon-end  (click)="goToAssesment(contraceptive)">{{contraceptive?.name}}
+        <button [color]="i > 0 ? 'primary' : 'rounded_buttons'" ion-button block  icon-end  (click)="goToAssesment(contraceptive)">{{contraceptive?.name}}
           <ion-icon name="info"></ion-icon>
         </button>
        </ion-col>   

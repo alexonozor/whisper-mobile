@@ -1,6 +1,6 @@
-<ion-header no-border>
+<ion-header>
 
-  <ion-navbar color="navColor">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -29,8 +29,8 @@
       </ion-item>
     </ion-list>
         
-    <div text-right>
-      <button small ion-button outline round color="rounded_buttons" [disabled]='!quantityForm.valid || submitted' right>Submit</button>
+    <div>
+      <button  ion-button block  color="primary" [disabled]='!quantityForm.valid || submitted'>Submit</button>
     </div>
   </form>
 </ion-content>

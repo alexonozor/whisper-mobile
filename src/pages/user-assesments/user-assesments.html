@@ -1,18 +1,23 @@
 <ion-header>  
-    <ion-navbar color="danger">
+    <ion-navbar color="primary">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Recent Assesments</ion-title>
+      <ion-title>Recent Assessments</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="getContraceptive()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-navbar>
   </ion-header>
 
 
 <ion-content padding>
   <div text-center *ngIf="none_found" class="no-assesment">
-    <img src="assets/img/error.png" *ngIf="none_found"/>
+    <ion-icon name="clipboard" color="home" class="clip"></ion-icon>
     <h4 class="empty" *ngIf="none_found">No assesment found</h4>
-    <button color="rounded_buttons" ion-button round small (click)="getContraceptive()">Get a contraceptive</button>
+    <button color="danger" ion-button  small (click)="getContraceptive()">Get a contraceptive</button>
   </div>
   <ion-grid class="assesment-grid">
     <ion-row>
@@ -34,10 +39,10 @@
         <ion-card *ngFor="let assesment of userAssesments; let i = index" (press)="openOptions(assesment, i)">
           <ion-card-content *ngIf="assesment?.user">
             <div text-left>
-              <h3>{{assesment.createdAt | date:'longDate'}}</h3>
+              <h3>{{assesment?.createdAt | date:'longDate'}}</h3>
             </div>
             <div text-right>
-              <h3>{{ assesment.createdAt | date:'shortTime' }}</h3>
+              <h3>{{ assesment?.createdAt | date:'shortTime' }}</h3>
             </div>
             <ion-grid>
               <ion-row>

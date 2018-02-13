@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="danger">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -19,7 +19,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12 class="welcome">
-        <h3 class="title">Hello <i class="username">{{username}}</i>, are you ready to start your assessment</h3>
+        <h3 class="title">Hello <i>{{username}}</i>, are you ready to start your assessment?</h3>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -27,12 +27,10 @@
   <ion-grid>
       <ion-row>
        <ion-col col-6>
-        <button color="primary" ion-button block outline (click)="contraceptiveInfo()">Contraceptive Info
-          <ion-icon name="info"></ion-icon>
-        </button>
+        <button color="rounded_buttons" ion-button block  (click)="contraceptiveInfo()">Contraceptive Info</button>
        </ion-col>  
         <ion-col col-6>
-         <button color="rounded_buttons" ion-button block outline (click)="startAssesment()">Start Assesment</button>
+         <button color="primary" ion-button block (click)="startAssesment()">Start Assesment</button>
         </ion-col>   
       </ion-row>
   </ion-grid>

@@ -1,12 +1,29 @@
 <ion-menu [content]="content" class="side-menu">
 
-  <ion-content class="menu-bg" >
     <ion-toolbar>
-      <ion-title></ion-title>
-      <button ion-button menuToggle right>
-        <ion-icon name="close"></ion-icon>
-      </button>
-    </ion-toolbar>
+        <ion-title></ion-title>
+        <button ion-button menuToggle right>
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-toolbar>
+
+  <ion-content class="menu-bg" >
+    <ion-grid>
+      <p text-center style="color: #fff">Share Whisper</p>
+        <ion-row>
+          <ion-col col-6  justify-content-center >
+              <button right ion-button [round]="true" [outline]="true" class="shareButton"  (click)="facebook()">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </button>
+          </ion-col>
+            <ion-col col-6  justify-content-center>
+                <button  ion-button class="shareButton" [round]="true" [outline]="true" (click)="whatsApp()">
+                    <ion-icon name="logo-whatsapp" ></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+
     <ion-list no-lines>
       <button menuClose="whisper-menu" ion-item *ngFor="let p of pages" (click)="openPage(p)" class="menu-button">
         <ion-icon name="{{p.icon}}" color="{{p.color}}" class="settings-icon"></ion-icon>  {{p.title}}

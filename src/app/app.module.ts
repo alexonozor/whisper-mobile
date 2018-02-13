@@ -37,6 +37,11 @@ import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { NotificationProvider } from '../providers/notification/notification';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { PasswordCheckerProvider } from '../providers/password-checker/password-checker';
+import { AppVersion } from '@ionic-native/app-version';
+import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
+import { AboutUsPage } from '../pages/about-us/about-us';
+import { AppRate } from '@ionic-native/app-rate';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 const config: SocketIoConfig = { url: 'https://whisper-admin.herokuapp.com', options: {} };
 export function getAuthHttp(http) {
@@ -76,7 +81,9 @@ export function getAuthHttp(http) {
     UserNotificationsPage,
     ContactListPage,
     ContactConversationPage, 
-    ContactFormPage 
+    ContactFormPage,
+    TermsAndConditionsPage,
+    AboutUsPage
   ],
   imports: [
     BrowserModule,
@@ -111,11 +118,17 @@ export function getAuthHttp(http) {
     UserNotificationsPage,
     ContactListPage,
     ContactConversationPage, 
-    ContactFormPage
+    ContactFormPage,
+    TermsAndConditionsPage,
+    AboutUsPage
+    
   ],
   providers: [
+    SocialSharing,
+    AppRate,
     LocationAccuracy,
     Geolocation,
+    AppVersion,
     StatusBar,
     SplashScreen,
     AuthenticationProvider,

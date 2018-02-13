@@ -1,9 +1,9 @@
-<ion-header no-border>
-  <ion-navbar color="navColor">
+<ion-header>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Whisper</ion-title>
+    <ion-title>Search or select pharmacies</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,14 +15,14 @@
   <span *ngIf="pharmacies.length > 0">
     <ion-card *ngFor="let pharmacy of pharmacies" padding>
       <ion-card-content>
-        <ion-card-title><b>Pharmacy: </b> {{pharmacy.name}}</ion-card-title>
-        <p><b>Description: </b> {{pharmacy.description}} </p>
-        <p><b>Address: </b>{{pharmacy.contact.address}} </p>
+        <ion-card-title><b>Pharmacy: </b> {{pharmacy?.name}}</ion-card-title>
+        <p><b>Description: </b> {{pharmacy?.description}} </p>
+        <p><b>Address: </b>{{pharmacy?.contact?.address}} </p>
       </ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col col-10>
-            <button ion-button outline round small color="rounded_buttons" (click)="updateUserAssessmentResponse(pharmacy._id)" small icon-start>
+            <button ion-button outline round small color="primary" (click)="updateUserAssessmentResponse(pharmacy._id)" small icon-start>
               Use pharmacy
             </button>
           </ion-col>

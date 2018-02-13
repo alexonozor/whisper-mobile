@@ -64,7 +64,7 @@ export class UserNotificationsPage {
     if (notification.notification_type == "openConversation") {
       this.navCtrl.push(AssesmentResponsePage, {conversationId: notification.notification_type_id})
     } else if (notification.notification_type == "message") {
-      this.navCtrl.push(ContactConversationPage, { thread: notification.notification_type_id });
+      this.navCtrl.push(ContactConversationPage, { threadId: notification.notification_type_id });
     }
   }
 

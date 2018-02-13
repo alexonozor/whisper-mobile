@@ -44,4 +44,21 @@ export class SharedProvider {
     .map((res: Response) => res.json())
     .catch((error: any) => Observable.throw(error.json().error || 'server error'));
   }
+
+  getThread(id) {
+    return this.http.get(`${this.host}/thread/${id}`)
+    .map((res: Response) => res.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  
+  saveAppConfig() {
+    return this.http.get(`${this.host}/app-config`)
+    .map((res: Response) => res.json())
+    .catch((error: any) => Observable.throw(error.json().error || 'server error'));
+  }
+
+  getAppConfig(token: string) {
+    return (localStorage.getItem(token));
+  }
 }

@@ -109,7 +109,6 @@ export class UserAssesmentsPage {
       if (resp.success) {
         this.updateAssesmentResponse(response._id, { hasConversation: true, conversation: resp.responseId });
         this._userService.allAdmin().forEach((el, index) => {
-          console.log(el._id)
           this._notification.create(
             { 
               sender: params.startedBy, 
@@ -120,7 +119,6 @@ export class UserAssesmentsPage {
             }
           ).subscribe((res) => {
             if (res.success) {
-              console.log(res);
             } else {
 
             }

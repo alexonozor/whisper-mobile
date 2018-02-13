@@ -66,7 +66,8 @@ export class ContactListPage {
   }
 
   openThread(thread) {
-    this.navCtrl.push(ContactConversationPage, { thread: thread });
+    console.log(thread)
+    this.navCtrl.push(ContactConversationPage, { threadId: thread._id });
   }
 
   openThreadForm() {
@@ -78,7 +79,6 @@ export class ContactListPage {
     });
     modal.present();
   }
-
 }
 
 
@@ -96,6 +96,7 @@ export class ContactConversationPage {
   isSender: boolean = false;
   messages: Array<any> = [];
   messageForm: FormGroup;
+  threadId: Number;
   
 
   constructor(
@@ -108,8 +109,8 @@ export class ContactConversationPage {
     private fb: FormBuilder,
     public _notification: NotificationProvider
   ) {
-    this.currentUser = this._auth.currentUser()
-    this.thread = this.navParams.get('thread')
+    this.currentUser = this._auth.currentUser();
+    this.threadId = this.navParams.get('threadId');
     this.createForm();
   }
 
@@ -124,19 +125,34 @@ export class ContactConversationPage {
 
   dismissLoader() { 
     this.loading.dismiss();
-  } 
+  }
+  
+  getThread(id) {
+    this.loader()
+    this._shared.getThread(id)
+    .subscribe((res) => {
+      if (res.success) {
+        this.dismissLoader();
+        this.thread = res.thread;
+      
+        this.checkSender(this.thread.messages)
+      }
+    }, err => {
+      this.dismissLoader();
+      alert(`Error fetching your treads.`);
+    })
+  }
 
   ionViewDidLoad() {
-    this.checkSender(this.thread.messages)
+    this.getThread(this.threadId); 
   }
 
   checkSender(messageResponse) {
     this.userId = this.currentUser._id;
     messageResponse.forEach((el, i) => {
-      el['isSender'] = ( el.user === this.userId );
-      if (el['isSender']) {
-        this.isSender = true;
-      }
+     
+      el['isSender'] = ( el.user._id === this.userId );
+      
     });
     this.messages = messageResponse;
   }
@@ -144,7 +160,7 @@ export class ContactConversationPage {
   createForm() {
     this.messageForm = this.fb.group({
       content: ['', Validators.required],
-      thread: [this.thread._id],
+      thread: [this.threadId],
       user: [this.currentUser._id],
       createdAt: [Date.now()]
     });
