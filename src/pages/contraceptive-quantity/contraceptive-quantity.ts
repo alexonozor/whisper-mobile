@@ -62,6 +62,7 @@ export class ContraceptiveQuantityPage {
 
   createForm() {
     this.quantityForm = this.fb.group({
+      success: [true],
       grandTotal: ['', Validators.required],
       shippingMethod: ['', Validators.required]
     })
@@ -86,17 +87,14 @@ export class ContraceptiveQuantityPage {
         this.contraceptive = resp.contraceptive;
         this.quantityRange = this.range(resp.contraceptive.minimumShippingQuantity, resp.contraceptive.maximumShippingQuantity);
         this.isFirstTimeOrder = this.firstTimeOrder(this.userOrders, this.contraceptiveId);
-        // mocking min & max shipping quantit
       }
     }, err => {
-      // caught errors
       console.log('An error occured, can\'t find contraceptive');
     })
   };
 
   firstTimeOrder(orders: Array<any>, contraceptiveId: number ) :boolean {
     orders.forEach(element => {
-      console.log(element == contraceptiveId);
       if (element == contraceptiveId) { 
         return false;
       }

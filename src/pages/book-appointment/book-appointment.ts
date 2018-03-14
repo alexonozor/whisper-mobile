@@ -41,23 +41,23 @@ export class BookAppointmentPage {
 
   appointmentForm() {
     this.appointmentFormGroup = this.fb.group({
+      success: [true],
       appointment: this.fb.group({
-        appointmentNote: ['', Validators.required ],
-        appointmentTime: ['', Validators.required ],
-        appointmentDate: ['', Validators.required ],
+        appointmentNote: ['' ],
+        appointmentTime: [''],
+        appointmentDate: [''],
         isAppointment:[true]
       })
     })
   }
 
   bookAppointment() {
-    console.log('appointment booked');
     this.submited = true;
     this._assesmentService.updateResponse(this.responseId, this.appointmentFormGroup.value)
     .subscribe((res) => {
       if (res.success) {
         // this.submited = false;
-        this.navCtrl.push(AppointmentLandingPage, {message: "Thanks for booking an appointment, We would contact you shortly."});
+        this.navCtrl.push(AppointmentLandingPage, { message: "Thanks for booking an appointment, We would contact you shortly." });
         //add toast
         // push to a page that says go home /take another assesment
       } else {

@@ -25,8 +25,6 @@ export class HomePage {
     public _notification: NotificationProvider,
     public events: Events
   ) {
-    
-    console.log(this.currentUser)
     events.subscribe('notification:count', (count) => {
       this.notificationCount = count;
     })
@@ -44,6 +42,8 @@ export class HomePage {
       
     })
   }
+
+
 
   getContraceptive() {
     if (this._authService.currentUser() != null) {

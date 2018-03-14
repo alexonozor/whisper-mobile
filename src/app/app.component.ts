@@ -95,7 +95,8 @@ export class MyApp {
     this._shared.saveAppConfig()
     .subscribe((resp) => {
       if (resp.success) {
-        this._authService.saveToken('config', resp.config);
+        
+        this._shared.saveConfigToClinet('config', resp.config);
         this.config = this._shared.getAppConfig('config')
       }
     }, err => {

@@ -58,6 +58,12 @@ export class SharedProvider {
     .catch((error: any) => Observable.throw(error.json().error || 'server error'));
   }
 
+
+  saveConfigToClinet(config, configParams){
+    let user = JSON.stringify(configParams);
+    localStorage.setItem('config', user);
+  }
+
   getAppConfig(token: string) {
     return (localStorage.getItem(token));
   }

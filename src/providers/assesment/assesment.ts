@@ -38,14 +38,14 @@ export class AssesmentProvider {
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  updateResponse(id: string, params, updatingShippingForm = false) : Observable<any> {
-    return this.http.put(`${this.host}/update-assessment-responses/${id}?updatingShippingForm=${updatingShippingForm}`, params)
+  updateResponse(id: string, params, updatingShippingForm = false, reOrder = false) : Observable<any> {
+    return this.http.put(`${this.host}/update-assessment-responses/${id}?updatingShippingForm=${updatingShippingForm}&reOrder=${reOrder}`, params)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
 
-  getAssementResponses(id: string) : Observable<any> {
-    return this.authHttp.get(`${this.host}/user-assessment-responses/${id}`)
+  getAssementResponses(id: string, eligability) : Observable<any> {
+    return this.authHttp.get(`${this.host}/user-assessment-responses/${id}?isEligable=${eligability}`)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
