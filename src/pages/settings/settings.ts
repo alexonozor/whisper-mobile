@@ -96,13 +96,14 @@ export class SettingsPage {
     .subscribe((resp) => {
       this.dismissLoader()
       if (resp.success) {
-        this.toaster.create({
+        let toast =  this.toaster.create({
           message: `Thank you! We have received your request to become an/a ${data}.
             We will contact you shortly..
           `,
           duration: 4000,
           position: 'top'
         })
+        toast.present();
       }
     }, err => {
       this.dismissLoader();

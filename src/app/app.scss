@@ -184,15 +184,18 @@ p.error-message {
   text-transform: uppercase;
 }
 
-
 .shareButton {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   display: block;
   margin: auto;
-  color: #84aef7;
-  border: 1px solid #65d7f5;
-  border-radius: 96%;
-  width: 37%;
-  height: 50px;
+  color: #c6dbff;
+  border: 2px solid #38d6ff;
+  border-radius: 100%;
+  width: 20%;
   font-size: 24px;
+  line-height: 0px;
+  padding: 25px !important;
 }

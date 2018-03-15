@@ -37,7 +37,7 @@ export class UserProvider {
   }
 
   getAdminUsers() : Observable<any> {
-    return this.http.get(`${this.host}/users?accountType=admin`)
+    return this.http.get(`${this.host}/users?accountType=Admin`)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'server error'));
   }
@@ -51,5 +51,4 @@ export class UserProvider {
     let allAdmins = JSON.parse(localStorage.getItem('admin'))
     return allAdmins;
   }
-
 }

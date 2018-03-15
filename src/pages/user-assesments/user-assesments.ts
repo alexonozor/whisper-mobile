@@ -7,7 +7,7 @@ import { NotificationProvider } from '../../providers/notification/notification'
 import { LoginPage } from '../login/login';
 import { AssesmentResponsePage } from '../assesment/assesment-response/assesment-response';
 import { ContraceptivePage } from   '../contraceptive/contraceptive';
-
+import { AssesmentPage } from '../assesment/assesment';
 
 @IonicPage()
 @Component({
@@ -21,6 +21,7 @@ export class UserAssesmentsPage {
   userId: string;
   loaded: boolean = false;
   none_found: boolean = false;
+  assessment: Boolean = true;
 
   constructor(
     public modalCtrl: ModalController,
@@ -37,8 +38,8 @@ export class UserAssesmentsPage {
   }
 
   ionViewDidLoad() {
-    this.getUser();
-  }
+    this.getUser()
+  } 
 
   getContraceptive() {
     this.navCtrl.push(ContraceptivePage);
@@ -52,10 +53,10 @@ export class UserAssesmentsPage {
   getUserDetails(user) {
     this.birthDate = new Date(user.dateOfBirth);
     this.userId = user._id;
-    this.getUserAssesment(this.userId);
+    this.getUserAssesment(this.userId, this.assessment);
   }
 
-  getUserAssesment(user_id) {
+  getUserAssesment(user_id, assementType) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
       showBackdrop: false,
@@ -64,7 +65,7 @@ export class UserAssesmentsPage {
 
     loading.present();
 
-    this._assesmentService.getAssementResponses(user_id)
+    this._assesmentService.getAssementResponses(user_id, assementType)
     .subscribe((resp) => {
 
       if (resp.success && resp.status == 200) {
@@ -93,8 +94,84 @@ export class UserAssesmentsPage {
   }
 
 
+  reOrderORRetake(assessment) {
+    if (assessment.success) {
+      // reorder
+      let loading = this.loadingCtrl.create({
+        spinner: 'show',
+        showBackdrop: true,
+        content: '<img src="assets/img/loader.svg" />'
+      });
+  
+      loading.present();
+      this.submitAssesment(assessment, loading);
+    } else {
+      // retake
+      this.navCtrl.push(AssesmentPage, { contraceptive: assessment.contraceptive });  
+    }
+  }
+
+  statusColor(status) {
+    if (status == 'Pending') {
+      return "default"
+    } else if (status == 'Delivered') {
+      return "secondary"
+    } else if (status == 'Failed') {
+      return "danger"
+    } else if (status == 'Shipping') {
+      return "dark"
+    } else {
+      return "light"
+    }
+  }
+
+  submitAssesment(assessment, loading) {
+    this._assesmentService.updateResponse(assessment._id, { reOrderedAt: Date.now()}, false, true)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this._userService.allAdmin().forEach((el, index) => {
+          this._notification.create(
+            { 
+              sender: assessment.user, 
+              receiver: el._id, 
+              notification_type_id: assessment._id,
+              notification_type: 'openConversation',
+              content: `reordered a ${assessment.contraceptive.name} assessment`
+            }
+          ).subscribe((res) => {
+            if (res.success) {
+              loading.dismiss();
+              let toast = this.toastCtrl.create({
+                message: 'You have successfully retaken this order you will be contacted shortly',
+                duration: 3000,
+                position: 'top'
+              });
+              toast.present();
+            } else {}
+          })
+        })
+      }
+    }, (err) => {
+      // Unable to submit assesment
+      loading.dismiss();
+      let toast = this.toastCtrl.create({
+        message: 'internal server error',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
+  }
+
+
   startConversation(response) {
-    // we need a loader
+    let loading = this.loadingCtrl.create({
+      spinner: 'show',
+      showBackdrop: false,
+      content: '<img src="assets/img/loader.svg" />'
+    });
+
+    loading.present();
     let params = { 
       'startedBy': response.user, 
        'assessmentResponse': response._id,  
@@ -119,6 +196,7 @@ export class UserAssesmentsPage {
             }
           ).subscribe((res) => {
             if (res.success) {
+              loading.dismiss();
             } else {
 
             }
@@ -126,9 +204,14 @@ export class UserAssesmentsPage {
         })
       }
     }, err => {
-      //toaster is fyn for err don't for get to dismiss loader
+      loading.dismiss();
+      let toast = this.toastCtrl.create({
+        message: 'internal server error',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
     })
-
   }
 
   updateAssesmentResponse(id, params) {

@@ -44,7 +44,7 @@ export class AssesmentPage {
   // resizes textarea on keydown
   @ViewChild('myInput') myInput: ElementRef;
 
-  loading : any;
+  loading: any;
   assesment: any;
   related_contraceptives: Array<any> = [];
   contraceptive_id: string;
@@ -142,8 +142,8 @@ export class AssesmentPage {
     this.slides.lockSwipeToPrev(false);
     this.isEnd = this.slides.isEnd();
     if(this.isEnd) {
-      this.hasPrev = false;    
-      this.slides.lockSwipeToPrev(true);
+      this.hasPrev = true;
+      this.slides.lockSwipeToPrev(false);
     }
   }
 
@@ -165,6 +165,7 @@ export class AssesmentPage {
     if (isEditedAnswer) {
       this.editedInput = true;
       this.editedInputLabel = label;
+      this.presentPrompt();  
     } else {
       this.answer_exists = this.findOrReplaceAnswer(this.assesmentParams.questions, 'question', question_id, this.assesment_obj)
       if (!this.answer_exists) {
@@ -176,6 +177,40 @@ export class AssesmentPage {
     }
   }
 
+  presentPrompt() {
+    let alert = this.alertCtrl.create({
+      title: this.editedInputLabel,
+      inputs: [
+        {
+          name: 'edited',
+          placeholder: 'Tell us..'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+           if (data.edited.length > 2) {
+            this.getText(data.edited);
+            this.submitEditedAnswer()
+           } else {
+             return false;
+           }
+          }  
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  
   findOrReplaceAnswer(assesment, key, value, obj) {
     for( let question in this.assesmentParams.questions){
       if(assesment[question][key] === value) {
@@ -200,8 +235,8 @@ export class AssesmentPage {
     }
   }
 
-  getText(event) {
-    this.edited_answer = event._value;
+  getText(params) {
+    this.edited_answer = params;
   }
 
   submitEditedAnswer() {
@@ -236,9 +271,9 @@ export class AssesmentPage {
         this.responseId = resp.responseId;
         // checks eligibility count
         if(this.nonEligibilityCount >= 1) {
-          this.navCtrl.push(NonEligiblePage, {contraceptive_name: this.contraceptive_name, 
-          related_contraceptives: this.related_contraceptives});
-        }else{
+          this.navCtrl.push(NonEligiblePage, { contraceptive_name: this.contraceptive_name, 
+          related_contraceptives: this.related_contraceptives });
+        } else {
           this.confirmIfUserWantsToPurchase(this._authService.currentUser(), this.responseId);
         }
       } else {
@@ -276,9 +311,8 @@ export class AssesmentPage {
           text: 'Yes',
           handler: () => {
             if(this.isAppointment) {
-              this.navCtrl.push(BookAppointmentPage, {responseId: this.responseId});
-            }
-            else{
+              this.navCtrl.push(BookAppointmentPage, { responseId: this.responseId });
+            } else {
               this.navCtrl.push(
                  ContraceptiveQuantityPage,
                 { contraceptive: this.contraceptive_id, user: user, assesmentId: assesmentId }
@@ -339,8 +373,8 @@ export class FoundPharmaciesPage {
   updateUserAssessmentResponse(pharmacyId) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
-      showBackdrop: false,
-      content: 'contacting pharmacy...'
+      showBackdrop: true,
+      content: '<img src="assets/img/loader.svg" />'
     });
     loading.present();
     this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
@@ -398,8 +432,7 @@ export class NonEligiblePage {
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
     this.contraceptive = this.navParams.get('contraceptive_name');
