@@ -33,6 +33,7 @@ export class MyApp {
   notificationCount: number = 0;
   currentUser: any;
   config: any;
+  firstTimeUser: any;
 
   constructor(
     public _authService: AuthenticationProvider,
@@ -46,7 +47,8 @@ export class MyApp {
     public _shared: SharedProvider
     ) {
       this.currentUser = this._authService.currentUser();
-      
+      this.firstTimeUser = this._shared.iSFirstTimeUser();
+      console.log(this.firstTimeUser)
 
     this.initializeApp();
     this.pages = [
@@ -72,7 +74,13 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.rootPage = IntroPage;
+      if (this.firstTimeUser) {
+        this.rootPage = HomePage;
+      } else {
+        this._shared.saveFirstTimeUser();
+        this.rootPage = IntroPage;
+      }
+      
     });
   }
 
@@ -134,17 +142,8 @@ export class MyApp {
     this.appRate.promptForRating(false);
   }
 
-  whatsApp() {
-    this.socialSharing.shareViaWhatsApp('Download the new whisper application for free contracpetive assessment', this.config.SHARE_PHOTO_URL, this.config.STORE_URL)
-    .then(() => {
-
-    }).catch(() => {
-      alert('Error: unable to share');
-    })
-  }
-
-  facebook() {
-    this.socialSharing.shareViaFacebook('Download the new whisper application for free contracpetive assessment', this.config.SHARE_PHOTO_URL, this.config.STORE_URL)
+ share() {
+    this.socialSharing.share('Download the new whisper application for free contracpetive assessment', this.config.SHARE_PHOTO_URL, this.config.STORE_URL)
     .then(() => {
 
     }).catch(() => {

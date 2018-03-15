@@ -51,5 +51,4 @@ export class UserProvider {
     let allAdmins = JSON.parse(localStorage.getItem('admin'))
     return allAdmins;
   }
-
 }

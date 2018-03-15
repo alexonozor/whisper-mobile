@@ -67,4 +67,13 @@ export class SharedProvider {
   getAppConfig(token: string) {
     return (localStorage.getItem(token));
   }
-}
+
+  iSFirstTimeUser() {
+    let firstTimeUser = JSON.parse(localStorage.getItem('firstTimeUser'))
+    return firstTimeUser;
+  }
+
+  saveFirstTimeUser() {
+    localStorage.setItem('firstTimeUser', 'true');
+  }
+ }

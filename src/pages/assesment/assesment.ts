@@ -373,8 +373,8 @@ export class FoundPharmaciesPage {
   updateUserAssessmentResponse(pharmacyId) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
-      showBackdrop: false,
-      content: 'contacting pharmacy...'
+      showBackdrop: true,
+      content: '<img src="assets/img/loader.svg" />'
     });
     loading.present();
     this._assesmentService.updatAssessmenteResponse(this.responseId, pharmacyId)
@@ -432,8 +432,7 @@ export class NonEligiblePage {
     public loadingCtrl: LoadingController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
     this.contraceptive = this.navParams.get('contraceptive_name');

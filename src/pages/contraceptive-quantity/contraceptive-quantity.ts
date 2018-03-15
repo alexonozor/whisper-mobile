@@ -193,8 +193,8 @@ export class ContraceptiveQuantityPage {
   findPharmacies(longitude, latitude) {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
-      showBackdrop: false,
-      content: 'finding pharmacies...'
+      showBackdrop: true,
+      content: '<img src="assets/img/loader.svg" />'
    });
 
 
@@ -214,8 +214,8 @@ export class ContraceptiveQuantityPage {
   getLocation() {
     let loading = this.loadingCtrl.create({
       spinner: 'show',
-      showBackdrop: false,
-      content: 'Finding location...'
+      showBackdrop: true,
+      content: '<img src="assets/img/loader.svg" />'
    });
 
     loading.present();

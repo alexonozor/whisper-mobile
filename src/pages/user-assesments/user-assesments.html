@@ -32,51 +32,31 @@
   </div>
    <ion-grid class="assesment-grid">
     <ion-row *ngIf="userAssesments && userAssesments.length > 0">
-      <ion-col col-3> <img src="assets/img/touch.png"/> </ion-col>
-      <ion-col col-9> 
+      <ion-col col-2> <img src="assets/img/touch.png"/> </ion-col>
+      <ion-col col-10> 
         <h4 class="more_options">Press and hold each assessment below to view more options</h4>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-1>
-        <div class="timeline">
-          <ul *ngFor="let assesment of userAssesments">
-            <li></li>
-          </ul>
-        </div>
-      </ion-col>
-      <ion-col col-1></ion-col>
-      <ion-col col-10>
-        <ion-card *ngFor="let assesment of userAssesments; let i = index" (press)="openOptions(assesment, i)">
-          <ion-card-content *ngIf="assesment?.user">
-            <ion-grid>
-              <ion-row>
-                <ion-col text-left>
-                  <h3>{{assesment?.createdAt | date:'longDate'}}</h3>
-                </ion-col>
-                <ion-col text-right>
-                  <h3>{{ assesment?.createdAt | date:'shortTime' }}</h3>
-                </ion-col>
-              </ion-row>
-            </ion-grid>     
-            <ion-grid>
-              <ion-row>
-                <ion-col col-9>
-                  <ion-card-title>
-                    {{assesment?.contraceptive?.name}}
-                  </ion-card-title>
-                  <p class="assesments_user_info">
-                    {{user?.firstName}} {{user?.lastName}}
-                  </p>
-                </ion-col>
-                <ion-col col-3>
-                  <button [color]="assesment?.success ? 'primary' : 'danger'" ion-button  small (click)="reOrderORRetake(assesment)">{{assesment?.success? "Order":"Retake"}}</button>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+    <ion-card *ngFor="let assesment of userAssesments; let i = index" (press)="openOptions(assesment, i)">      
+      <ion-item>
+        <ion-icon name="clipboard" item-start large></ion-icon>
+        <h2>{{assesment?.contraceptive?.name}}</h2>
+        <p>{{assesment?.createdAt | date:'longDate'}} - {{ assesment?.createdAt | date:'shortTime' }}</p>
+        <!-- <ion-icon name="timer" item-end medium color='primary'></ion-icon> -->
+      </ion-item>
+
+      <ion-item *ngIf="assesment?.appointment.isAppointment">
+        <ion-icon name="calendar" item-left large ></ion-icon>
+        <h2>Appointment Date</h2>
+        <p>{{assesment?.appointment?.appointmentDate | date:'longDate'}} - {{ assesment?.appointment?.appointmentDate | date:'shortTime' }}</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-badge item-left [color]="statusColor(assesment?.responseStatus)">{{assesment?.responseStatus}}</ion-badge>
+          <!-- <span item-left>{{ assesment?.orders }}</span> -->
+        <button ion-button  item-end [color]="assesment?.success ? 'primary' : 'danger'"  (click)="reOrderORRetake(assesment)">{{assesment?.success? "Reorder":"Retake"}}
+        </button>
+      </ion-item>
+    </ion-card>
   </ion-grid>
 </ion-content>
